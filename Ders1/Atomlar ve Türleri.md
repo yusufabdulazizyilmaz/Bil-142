@@ -1,22 +1,21 @@
-# Temel Kavramlar ve Terimler
-## Atomlar ve Türleri
+# Atomlar ve Türleri
 Bir programlama dilinde yazılmış kaynak dosyanın (program) anlamlı en küçük parçalarına "atom" (token) denir. Bir programlama dilinde yazılmış bir metin, atomlardan oluşur.
 Atomlar aşağıdaki gibi gruplara ayrılabilir:
-### 1. Anahtar Sözcükler (Keyword)
+## 1. Anahtar Sözcükler (Keyword)
 Anahtar sözcükler (keywords - reserved words) programlama dili tarafından önceden belirlenmiş anlamlara sahip atomlardır. Bu atomlar kaynak dosya içinde başka bir anlama gelecek biçimde kullanılamazlar. Örneğin bu atomların değişken ismi olarak kullanılmaları geçerli değildir.
 https://en.cppreference.com/w/cpp/keyword adresinden C++ dili anahtar sözcükleri incelenebilir.
-### 2. İsimler (İdentifiers)
+## 2. İsimler (İdentifiers)
 Değişkenler, işlevler, makrolar, değişmezler gibi yazılımsal varlıklara programlama dili
 tarafından belirlenmiş kurallara uyulmak koşuluyla isimler verilebilir. Yazılımsal bir varlığa
 verilen isme ilişkin atomlar isimlerdir (identifier).
-### 3. İşleçler (Operators)
+## 3. İşleçler (Operators)
 İşleçler (operators) önceden tanımlanmış bir takım işlemleri yapan atomlardır.
 https://en.cppreference.com/w/cpp/language/operator_precedence adresinden operatörler ve öncelik ilişkileri incelenebilir.
-### 4. Değişmezler (Constants)
+## 4. Değişmezler (Constants)
 Değişmezler (constants) doğrudan işleme sokulan, değişken bilgi içermeyen atomlardır. sayac = son + 10 gibi bir ifadede 10 değişmezi doğrudan son isimli değişken ile işleme sokulur.
-### 5. Dizgeler (String)
+## 5. Dizgeler (String)
 İki tırnak içindeki ifadelere "Dizge" (string / string litaerals) denir. Dizgeler programlama dillerinin çoğunda tek bir atom olarak alınır, daha fazla parçaya bölünemezler. "STRİNGLER DE BİRER ATOMDUR" ifadesi bir dizgedir.
-### 6. 6. Ayraçlar, Noktalama İşaretleri
+## 6. Ayraçlar, Noktalama İşaretleri
 Yukarıda sayılan atom sınıflarının dışında kalan tüm atomlar bu gruba sokulabilir. Genellikle diğer atomları birbirinden ayırma amacıyla kullanıldıkları için ayraç (separators, punctuators, delimiters) olarak isimlendirilirler.
 ```cpp
 # include <stdio.h>
