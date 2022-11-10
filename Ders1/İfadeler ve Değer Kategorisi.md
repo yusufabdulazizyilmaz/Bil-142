@@ -1,13 +1,15 @@
 # İfade (Expression)
 
-Değişken, işleç ve değişmezlerin bileşimlerine ifade (expression) denir. (a + b / 2, a) İfadenin 2 önemli niteliği vardır. Bunlar:
+Değişken, işleç ve değişmezlerin bileşimlerine ifade (expression) denir. Örneğin: a + b / 2, a, foo(), 30.  Tekbaşına bir değişken ve sabit ifade belirtir, fakat tek başına bir operatör ifade belirtmez. Derleyicinin derleme zamanında değerlerini bilme ya da hesaplama garantisi olan ifadelere sabit ifadesi (constant expression) denir.
+
+İfadenin 2 önemli niteliği vardır. Bunlar:
 
 Türü (Data Type)
 
 Değer kategorisi (value category)
 
-Hemen her araç değer kategorisiyle / value category ilgili hale geliyor bu dilde.
-İfadenin değer kategorisi, o ifadenin dilin kurallarına göre nerelerde kullanılabileceğini ve kullanımmlarının ne ifade edeceğini belirliyor.
+Hemen her araç değer kategorisiyle / value category ilgili hale geliyor C++ dilinde.
+İfadenin değer kategorisi, o ifadenin dilin kurallarına göre nerelerde kullanılabileceğini ve kullanımlarının ne ifade edeceğini belirliyor.
 Bir ifadenin değer kategorisi 3 farklı kategoriden birine ait olmak zorunda. Bunlara primary value categories deniyor.
 
 Lvalue Expression 
