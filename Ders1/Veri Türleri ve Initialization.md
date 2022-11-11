@@ -134,6 +134,10 @@ int main() {
   int printf = 0;
   printf(“Merhaba Dunya\n”);
 }
+
+// Name lookup
+// Context control
+// Access control (sınıflarla ilgili)
 ```
 
 function scope: Bir ismin, bildirildikten sonra yalnızca bir blok içinde bilinmesidir. Yalnızca goto etiketlerini kapsayan özel bir tanımdır.
