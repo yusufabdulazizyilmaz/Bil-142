@@ -62,7 +62,7 @@ Fonksiyon bildirimi, derleyiciye bir fonksiyon hakkında bilgi veren bir deyimdi
 çağrısına ilişkin kodu buradan aldığı bilgiye göre üretir. Ayrıca derleyici, aldığı bu bilgiyle,
 bazı kontroller de yapabilir. Bir fonksiyon bildiriminin genel biçimi aşağıdaki gibidir:
 
-<geri dönüş değeri türü> <işlev ismi> ([tür1], [tür2].....);
+<geri dönüş değeri türü> <fonksiyon ismi> <(> [ tür1, tür2..... ] <)> <;>
 ```cpp
 double get_val(double, double); //declaration
 double get_val(double a, double b) //definition
