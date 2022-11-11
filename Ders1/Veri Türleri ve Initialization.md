@@ -58,6 +58,18 @@ int a;
 long b, c, d; 
 double x, y;
 ```
+Fonksiyon bildirimi, derleyiciye bir fonksiyon hakkında bilgi veren bir deyimdir. Derleyici, fonksiyon
+çağrısına ilişkin kodu buradan aldığı bilgiye göre üretir. Ayrıca derleyici, aldığı bu bilgiyle,
+bazı kontroller de yapabilir. Bir fonksiyon bildiriminin genel biçimi aşağıdaki gibidir:
+
+<geri dönüş değeri türü> <işlev ismi> ([tür1], [tür2].....);
+```cpp
+double get_val(double, double); //declaration
+double get_val(double a, double b) //definition
+{
+    return a+b;
+}
+```
 ### ilk değer verme (Initialization)
 Bir değişken tanımlandığında bu değişkene bir ilkdeğer verilebilir (initialize). int a = 20;
 
