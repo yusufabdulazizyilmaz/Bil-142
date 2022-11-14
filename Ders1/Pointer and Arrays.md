@@ -1,15 +1,41 @@
+# DİZİLER
+Bellekte bitişik bir biçimde bulunan, aynı türden nesnelerin oluşturduğu veri yapısına dizi (array) denir. Dizi veri yapısının en önemli özelliği, mantıksal bir ilişki içindeki aynı türden
+verilerin bellekte bitişik (contigous) olarak tutulmasıdır. Bunun da uygulamalarda
+sağladığı fayda şudur: Dizinin bir elemanına, elemanın konum bilgisiyle değişmez bir
+zamanda ulaşılabilir. Yani dizinin eleman sayısı ne olursa olsun, konumu bilinen bir
+elemana ulaşım zamanı aynıdır.  
+Dizi tanımlamalarının genel biçimi:  
+**<tür> <dizi ismi> [<eleman sayısı>];**  
+eleman sayısı belirten ifadenin bir tamsayı türünden değişmez ifadesi olması zorunludur. Bir başka deyişle derleyici bu ifadenin değerini derleme
+zamanında elde edebilmelidir:
+```cpp
+double a[20];
+int ave[10];
+char path[80];
+int x = 100;
+int arr[x];    //geçersiz
+int arr2[5.];  //geçersiz
+double sample[5] = {1.3, 2.5, 3.5, 5.8, 6.0};
+int a[20] = {0};  
+/*ilk elemanına 0 ilkdeğeri veriliyor. Bu durumda derleyici dizinin kalan
+elemanlarına otomatik olarak 0 değeri yerleştirecek kodu üretir*/
+```
+Dizi elemanlarına [] operatörüyle erişilir. Köşeli parantezlerin içerisine tamsayı türlerine ilişkin bir indeks ifadesi
+yazılmak zorundadır. Bu ifade sabit ifadesi olmak zorunda değildir. Dizinin ilk elemanı sıfırıncı ideks'li elemanıdır.
+Bu durumda son eleman (n elemanlı bir dizide) n - 1'inci indeksteki eleman olur.  
+int a[10];  
+a[3] ifadesi int türdendir. a ifadesi ise int[10] türündendir.
+  
 # GÖSTERİCİLER
 Her nesne bellekte yer kapladığına göre belirli bir adrese sahiptir. Nesnelerin adresleri,
 sistemlerin çoğunda, derleyici ve programı yükleyen işletim sistemi tarafından ortaklaşa
 belirlenir. Nesnelerin adresleri program yüklenmeden önce kesin olarak bilinemez ve
 programcı tarafından da önceden saptanamaz. Programcı nesnelerin adreslerini ancak
-programın çalışması sırasında (run time) öğrenebilir.
-
+programın çalışması sırasında (run time) öğrenebilir.  
 Adres bilgilerinin saklanması için kullanılan nesnelere gösterici (pointer) denir. Bir adres bilgisi C'de int, long
 türlerde tutulamaz. Ancak gösterici denilen türlerde tutulabilir. Benzer biçimde göstericiler de adi birer int, long
-türleri tutamazlar. Ancak adres tıtarlar. Gösterici bildiriminin genel biçimi şöyledir:
-
-<tür> *<gösterici ismi>;
+türleri tutamazlar. Ancak adres tıtarlar. Gösterici bildiriminin genel biçimi şöyledir:  
+**<tür> *<gösterici ismi>;**
 ```cpp
 int *p;
 long *t;
@@ -27,7 +53,6 @@ yerlerin uzunluğu donanıma bağlı olup sistemden sisteme değişebilir. Göst
 UNIX işletim sisteminde 4 byte değerindedir.
 
 ## & (Address Of) Operatörü
-
 & operatörü operand olarak bir nesne alır. Operatör bize nesnenin bellekteki yerleşim adresini verir. T x; olmak üzere &x ifadesinin türü T* türüdür.
 Bir gösterici değişkeni, içinde bir adres bilgisi tutan bir nesne olduğuna göre, bir gösterici
 değişkene adres işlecinin ürettiği bir adres bilgisi atanabilir.
@@ -58,7 +83,7 @@ değişkenin değeri 1 artırılırsa bu kez gösterici değişkeni, gösterdiğ
 İşlecin birinci terimi köşeli ayraçtan önce yer alır. Bu terim bir adres bilgisi olur. İkinci terim ise köşeli ayraç içine yazılacak tam sayı türünden bir ifade olur.
 p[n] ifadesi ile *(p + n) tamamen eşdeğer ifadelerdir. Yani köşeli ayraç işleci, bir adresten n ilerideki nesneye erişmek için kullanılır.
 
-Dizi isimleri dizilerin başlangıç adresini belirttiği için dizi elemanlarına köşeli parantez operatörü ile erişilebilmektedir.
+Dizi isimleri dizilerin başlangıç adresini belirttiği için dizi elemanlarına köşeli parantez operatörü ile erişilebilmektedir. (**array to pointer conversion**)
 ```cpp
 int a[3] = {10, 20, 30};
 // a[2] ifadesi a adresinden 2 ilerinin (yani 2 * sizeof(*a) kadar byte ilerinin) içeriği anlamına gelir. Yani a[2] ile *(a + 2) aynı anlamdadır 30.
@@ -74,7 +99,3 @@ printf("%d\n", ptr[0]);
 printf("%d\n", ptr[1]);
 }
 ```
-
-# DİZİLER
-
-
