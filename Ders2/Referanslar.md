@@ -181,16 +181,63 @@ int main()
     return 0;
 }
 ```
-İşlevin Parametre Değişkeni Gösterici mi Referans mı Olmalı 
+**İşlevin Parametre Değişkeni Gösterici mi Referans mı Olmalı** 
+
 Nesne yönelimli programlama söz konusu olduğunda, gösterici kullanmak yerine mümkün olduğu kadar referans kullanmak
-gerektiği söylenebilir. Bir çok programcı şu ilkeyi benimser: 
+gerektiği söylenebilir. Bir çok programcı şu ilkeyi benimser:  
 "Kullanabildiğin her yerde referans kullan, ancak zorunlu olduğun yerde gösterici kullan!" (use references
-wherever you can, use pointers when you have to!). 
-C++‟da, a bir nesne olmak üzere aşağıdaki gibi bir işlev çağrısının yapıldığını düşünelim: 
-func(a); 
-Argüman olan ifadede a nesnesinin ismi yazılmıştır. Bu durumda iki olasılık söz konusudur: 
-İşlevin parametre değişkeni aynı türden bir nesnedir. (call by value) Bu durumda derleyici argüman olan nesnenin değerini parametre değişkenine kopyalayacak bir kod üretir. 
+wherever you can, use pointers when you have to!).  
+C++‟da, a bir nesne olmak üzere aşağıdaki gibi bir işlev çağrısının yapıldığını düşünelim:  
+func(a);  
+Argüman olan ifadede a nesnesinin ismi yazılmıştır. Bu durumda iki olasılık söz konusudur:   
+İşlevin parametre değişkeni aynı türden bir nesnedir. (call by value) Bu durumda derleyici argüman olan nesnenin değerini parametre değişkenine kopyalayacak bir kod üretir.  
 İşlevin parametre değişkeni aynı türden bir referanstır. (call by value) Bu durumda gizli bir adres aktarımı söz
 konusudur. Yani derleyici, çağrı ifadesinde argüman olarak kullanılan nesnenin adresini çağrılan işlevin
 referans parametresine kopyalayacak bir kod üretir. 
-Hangisi olduğunu bilmemiz için bildirimi görmemiz gerekmektedir. 
+Hangisi olduğunu bilmemiz için bildirimi görmemiz gerekmektedir.  
+
+**Referansa Geri Dönen İşlevler**
+
+İşlevlerin geri dönüş değerlerinin derleyici tarafından önce geçici bir bölgeye alındığını, buradan çekilerek kullanıldığını anımsayın.   
+x = func();  
+temp = return ifadesi;  
+x = temp;  
+
+İşlevin geri dönüş değerinin referans olması geçici bölgenin referans olması anlamına gelir. Bu durumda
+return ifadesi bir referansa ilk değerini verir, değil mi?
+```cpp
+#include <iostream>
+
+int x = 10;
+
+int& func()
+{
+    return x;
+}
+
+int main()
+{
+    func() = 20;
+    std::cout << "x = " << x << std::endl;
+    ++func();
+    std::cout << "x = " << x << std::endl;
+    return 0;
+}
+```
+Geri dönüş değeri bir referans olan işlevlerin, kendilerini çağıran kod parçasına, doğrudan bir nesnenin
+kendisini ilettiğini düşünebilirsiniz.  
+Bir fonksiyonun referans yolu ile aldığı nesneyi yine referans yolu ile geri döndürmesi tipik bir durumdur:  
+```cpp
+int &func(int &r)
+{
+    //...
+    r = 777;
+    return r;
+}
+```
+Referans döndüren işlevler  
+. Statik ömürlü bir nesneyi (global bir değişkeni ya da statik bir yerel değişkeni)  
+. Dinamik ömürlü bir nesneyi  
+. Kendisini çağıran koddan yine referans yoluyla ile aldığı bir nesneyi döndürebilir.  
+
+ASLA AMA ASLA otomatik ömürlü bir nesne adresi döndürmemelidir.
