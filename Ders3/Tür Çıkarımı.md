@@ -66,3 +66,49 @@ for (const auto &r : namelist) {
 	std::cout << r << "\n";
 }
 ```
+## Decltype Belirleticisi
+C++11 ile birlikte decltype dile eklendi. decltype anahtar sözcüğü “declaration type” (bildirim türü) sözcüklerinden uydurulmuş. Bir tür kullanılması söz konusu olan her yerde decltype kullanabiliyoruz.  (decltype(expr))
+1- decltype operandı isim formundaysa Bu isim hangi türden declere edildiyse bizim elde ettiğimizde o tür.
+```cpp
+int x = 56;
+int& r = x;
+
+decltype(x) // int türü
+decltype(r) // int& türü
+
+int a[10]{};
+decltype(a) // int[10] türü.
+const int b[3]{};
+decltype(b) // const int[3] türü
+
+const int y{ 12 };
+decltype(y) // const int türü
+decltype(r) t; //
+decltype(a) k; // sentaks hatası yok. int k[10] demek;
+
+const int x = 56;
+decltype(x) y; // hatalı çünkü const nesneye ilk değer verme şartı var.
+```
+2- İsim formunda değilse Bu durumda decltype karşılığı elde edilen tür parantez içindeki ifadenin value kategorisine bağlı.  
+a - eğer ifade pr value expr ise, decltype yerine gelen tür 	T türü  
+b - eğer ifade L value exp.ise decltype yerine gelen tür 	T & türü  
+c - eğer ifade X value exp.ise decltype yerine gelen tür 	T && türü  
+```cpp
+int x = 10;
+decltype(x + 5) y; // isim değil x+5 PR value ve int türünden öyleyse ==> int y;
+int* ptr = &x;
+decltype(*ptr) z = y; // isim değil *ptr L value ve int türünden öyleyse int& z = y;
+
+decltype(x) a = y; // x isim türü int dılayısıyla int a = y;
+decltype((x)) b = y; // (x) isim formunda değil  L value ve int türünden dolayısıyla int& b = y;
+
+int x = 10;
+int y = 20;
+decltype(++x) z = y;
+
+++z;
+
+std::cout << x << " " << y << " " << z; 
+```
+decltype unevaluated contex oluşturuyor. sizeof gibi. & gibi.
+burada ++x için compiler işlem kodu üretmiyor.birkaç yerde daha var unevaluated contex.
