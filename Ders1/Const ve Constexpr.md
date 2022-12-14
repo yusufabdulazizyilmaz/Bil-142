@@ -38,9 +38,12 @@ int main()
 }
 ```
 Sonuç olarak const sentaks bileşeni. ifadenin değişmeyeceğini söylüyor. eğer biz insanların masum bakışları ile değeri biliniyorsa da const değişkenler
-sabit ifadesi olarak kullanılabilir. constexpr ise ifadenin bir sabit ifadesine eşitleneceğini söylüyor. Bir ifadenin sabit ifadesi olup olmadığını anlamanın
-en kolay yolu onu constexpr bir değişkene ilk değer vermede kullanmaktır.  
+sabit ifadesi olarak kullanılabilir. constexpr ise ifadenin bir sabit ifadesine eşitleneceğini söylüyor. Bir ifadenin sabit ifadesi olup olmadığını anlamanın en kolay yolu onu constexpr bir değişkene ilk değer vermede kullanmaktır.
+
+Costexpr değişkenler için [inceleyiniz](http://plepa.com/2016/08/23/constexpr_1/)  
+
 **CONSTEXPR Fonksiyonlar**  
+
 ```cpp
 constexpr int square(int x)
 {
