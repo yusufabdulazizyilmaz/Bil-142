@@ -143,4 +143,35 @@ int main()
     10+mydata; // Data'dan int'e conversion
 }
 ```
+```cpp
+int foo(int);        //1
+int foo(double);    //2
+void foo(char);        //3
+long foo(long);        //4
+void foo(int, int);    //5
+void foo(char*);    //6
+void foo(int*);    //7
+void func()
+{
+    foo(10);
+    foo(3.4F);
+    foo((double*) 0x1FC0);
+    foo(6U);
+}
+```
+foo(10); için  
+1, 2, 3, 4, 5, 6, 7 numaralı fonksiyonlar adaydır.  
+1, 2, 3, 4 numaralı fonksiyonlar uygundur.  
+Tam uyum sağladığı için, 1 numaralı fonksiyon en uygun olanıdır.  
+foo(3.4F) için  
+1, 2, 3, 4, 5, 6, 7 numaralı fonksiyonlar adaydır.  
+1, 2, 3, 4 numaralı fonksiyonlar uygundur.  
+Yükseltme durumu olarak değerlendirildiğinden 2 numaralı fonksiyon en uygun olanıdır.  
+foo((double *) 0x1FC0) için  
+1, 2, 3, 4, 5, 6, 7 numaralı fonksiyonlar adaydır.
+Uygun fonksiyon yoktur (no match). Fonksiyon çağrısı geçersizdir.  
+foo(6U) için  
+1, 2, 3, 4, 5, 6, 7 numaralı fonksiyonlar adaydır.  
+1, 2, 3, 4 numaralı fonksiyonlar uygundur.  
+1, 2, 3 ve 4 numaralı fonksiyonlar için standart dönüşüm uygulanabilir. Çift anlamlılık hatası (ambiguity) söz oluşur. Fonksiyon çağrısı geçersizdir.  
 Fonksiyon yüklemesi için [inceleyiniz](https://necatiergin2019.medium.com/fonksiyon-y%C3%BCklemesi-function-overloading-388ec04e5e72).
