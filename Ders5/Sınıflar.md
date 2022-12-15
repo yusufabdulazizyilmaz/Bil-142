@@ -16,43 +16,52 @@ class Nec {
 };
 ```
 classları yukarıdaki gibi boş şekilde tanımlarsak empty class olur. Empty class türden nesneler memory de 1 byte yer kaplar.
-Küme parantezi içerisinde(Declerative Region) bildirilen varlıklara sınıfın elemanları deniyor. Bu memberlar 3 kategoriye ayrılır.
-1- Data members(veri elemanları)
-  a - static
-  b - nonstatic
-2- Member function(üye fonksiyon)
-  a - static
-  b - nonstatic
-3 - Member Type - Type Member - Nested Type(Tür elemanları)
+Küme parantezi içerisinde(Declerative Region) bildirilen varlıklara sınıfın elemanları deniyor. Bu memberlar 3 kategoriye ayrılır.  
+1- **Data members(veri elemanları)**  static ya da nonstatic  
+2- **Member function(üye fonksiyon)** static ya da nonstatic  
+3- **Member Type - Type Member - Nested Type(Tür elemanları)**   
 ```cpp
 class Nec {
-    int mx; // nonstatic data member
-    static int y; // static data member.
+public:
+    int m_x; // nonstatic data member
+    static int m_y; // static data member.
     void func123(int, int);  // nonstatic member function
-    static void foo(int); // static member function
+    // static member function sınıfın içinde inline olarak tanımlanmış
+    static void foo(int)
+    {
+    
+    }
     using value_type = int; //type member 
-    value_type myInt = 5; // nonstatic data member
-    class Iterator{  // Nested type
+    value_type m_Int = 5; // nonstatic data member
+    class Iterator {  // Nested type
     };
 };
-```
-Nonstatic data memberlar sınıf boyutunu (sizeof) artırıyor. fiziksel olarak class içinde yer alıyorlar. Fakat static data memberlar sınıf sizeofuna girmiyor.  
-Member functionlar sınıfın içinde bildiriliyor ama içinde yer kaplamıyor.
-Sınıf türden yeni bir nesne yaratılınca bu sınıf türden instance yaratılmış oluyor. **Nec n1; // instantiate nesne oluşturmaya karşılık gelen terim.**
-```cpp
-class Point {
-    double mx, my, mz;
-};
+
+//sınıfın member fonksiyonu tanımlanırken fonksiyon isminin önüne <sınıf_ismi> :: konulmalı
+// Çözünürlük operatörü (::) bir ismin nerede aranacağını belirtmek için kullanılır.
+
+void Nec::func123(int x, int y) 
+{
+
+}
 
 int main()
 {
-    Point a, b, c;
+    Nec n1;   // instantiate nesne oluşturmaya karşılık gelen terim
+    n1.m_x;
+    n1.func123(1,2);
+    Nec::m_y;
+    Nec::foo(3);
+    Nec::Iterator myNecIter;
+    std::cout << sizeof (Nec);    // m_Int ve m_x değişkenleri toplam 8 byte
+    std::cout << sizeof (Nec::Iterator);  // empty class 1 byte
 }
 ```
+Nonstatic data memberlar sınıf boyutunu (sizeof) artırıyor. fiziksel olarak class içinde yer alıyorlar. Fakat static data memberlar sınıf sizeofuna girmiyor. Member functionlar sınıfın içinde bildiriliyor ama içinde yer kaplamıyor.  
 ## ACCESS CONTROL - ERİŞİM KONTROLÜ
 Sınıfın herhangi bir üyesi erişim kontrolü açısından 3 kategoriden birine ait olmalıdır.
 a - Public members: Herkese açık kodlar
-b - Private members: Sadece sınıfın kendisinin kullanacağı kodlar
+b - Private members: Sadece sınıfın kendisinin kullanacağı kodlar.
 c - Protected members: Inheritance konusunda görülecek. Clientlara yasak ama kalıtım yoluyla elde edilen sınıflara açık.
 ```cpp
 class Myclass {
@@ -72,29 +81,30 @@ protected:
     //buraya kadar protected.
 };
 ```
-Class için varsayılan erişim kontrolü private iken struct için publictir. Ayrıca public private protected sıralaması önemli değil. İstenilen sırada yazılır. Tercih edilen public yukarıda private aşağıda 
+Class için varsayılan erişim kontrolü private iken struct için publictir. Ayrıca public private protected sıralaması önemli değil. İstenilen sırada yazılır. Tercih edilen ise public yukarıda private aşağıda. 
 Sınıfın public private veya protected bölümleri ayrı scopelar oluşturmaz. sadece erişim kontolü olarak kullanılır.
-``cpp
+```cpp
 class Myclass {
 public:
     int x;
 private:
     int x;  // sentaks hatası aynı scope aynı isimli değişken tanımlanamaz
 };
-``
-``cpp
+```
+```cpp
 class Myclass {
     void func(int x); //1
 };
 
 void func(int x); //2
-``
-func fonksiyonlarının farkları nedir?
-  1- Scope farklı 1 numaralı fonksiyon Myclass scope içerisinde (class scope) 2 numaralı fonksiyon namespace scope (global) Fonksiyon yüklenmesi var mıdır?  
-  2- Parametre sayısı. 2 numaralı fonksiyonun sadece 1 adet int parametresi varken sınıfın nonstatic üye fonksiyonlarının sınıf türünden pointer olan (Myclas*) 
-  gizli bir parametre değişkeni vardır. Aslında void func(Myclass * p, int x); yani bu fonksiyonu sınıf nesnesi olmadan kullanamayız. 
-  Sınıf nesnesinin adresi ile arka planda bu fonksiyona erişeceğiz.
-``cpp
+```
+
+func fonksiyonlarının farkları nedir?  
+
+1- Scope farklı 1 numaralı fonksiyon Myclass scope içerisinde (class scope) 2 numaralı fonksiyon namespace scope (global) 
+Fonksiyon yüklenmesi var mıdır? Kesinlikle HAYIR!!! (Scope farklı)    
+2- Parametre sayısı. 2 numaralı fonksiyonun sadece 1 adet int parametresi varken sınıfın nonstatic üye fonksiyonlarının sınıf türünden pointer olan (Myclas*) gizli bir parametre değişkeni vardır. Aslında void func(Myclass * p, int x); yani bu fonksiyonu sınıf nesnesi olmadan kullanamayız. Sınıf nesnesinin adresi ile arka planda bu fonksiyona erişeceğiz.
+```cpp
 class Fighter {
 public:
     void func();
@@ -110,32 +120,57 @@ int main()
     C de iki tane adres döndermek gerekiyordu. C++ bu adres gönderme işini
     gizli bir şekilde yapıyor zaten.*/
 }
-``
-Name lookup 	    1. adım
-Context control		2. adım
-Access control  	3. adım
-C++'da isimler **nitelenmiş(qualified)** ve **nitelenmemiş(unqualified) name** bu ikisinin arama kuralları farklı  
+```
+Name lookup 	    1. adım  
+Context control		2. adım  
+Access control  	3. adım  
+C++'da isimler **nitelenmiş(qualified)** ve **nitelenmemiş(unqualified) name** bu ikisinin arama kuralları farklıdır.    
 Nitelenmiş isimler çözünürlük operatörün (::) sağ tarafında görülen isimlerdir. Çözünürlük operatörü unary ya da binary olarak kullanılabilir.
-Çözünürlük operatörü binary olduğunda nün sol operandi bir değişken ismi olamaz!! Sadece namespace, class ya da enum ismi olur.
-``cpp
+Çözünürlük operatörü binary olduğunda nün sol operandi bir değişken ismi olamaz!! Sadece namespace, class ya da enum ismi olur. Arama işlemi de öncelikle varsa sol operand (Nec) bulunacak sonra **onun scopunda** sağ operand(x) aranacak.
+```cpp
 ::x;  //bu direk Namespace scopeta aranır.
 Nec::x; // Nec ya namespace ya class ya da enum.
-``
-Arama işlemi de öncelikle varsa sol operand (Nec) bulunacak sonra onun scopunda sağ operand(x) aranacak.
-Normalde isim nasıl aranırdı blok onu kapsayan blok ... namespace'e bakılırdı
+```
+Nitelenmemiş isimler olduğunda normalde isim nasıl aranırdı blok onu kapsayan blok ... namespace'e bakılırdı. İşin içine sınıfla ilgili bir arama geldiğinde blok onu kapsayan blok ... **CLASS scope** ve Namespace'e bakılır.
 ```cpp
-class Data {
+class Nec {
 public:
-    int mx;
-    void func();
+    void foo();
+    int x;
 };
+
+int x = 87;
+
+void Nec::foo()
+{
+    int x{};    //ÖNEMLİ !!!
+    x = 10;     //bu x local x, Eğer local scopeta Bulamazsa class scope a bakacak. Bulamazsa Namespace scope
+    ::x;        //Bu ise Namespace yani global x
+    Nec::x = x + ::x;  //Sınıfın veri elemanı x = local x + global x
+}
+```
+```cpp
+class Nec
+{
+public:
+    void foo();
+private:
+    int x;
+};
+Nec gnec;
+void Nec::foo()
+{
+    Nec a;
+
+    gnec.x = 10; 	//Geçerli.Farklı obje bile olsa private bölümüne erişir.
+
+    a.x = 20;	    //Geçerli.Farklı obje bile olsa private bölümüne erişir.
+    x = 20;         //fonksiyonu hangi nesne çağırırsa onun x değişkeni.
+}
 
 int main()
 {
-    mx = 5; // burada sentaks hatası var.
-    Data mydata;
-		mydata.mx;  // Data class scopeta arandı. Hata yok
-    Data* ptr = &mydata;
-    ptr->mx;  // Data class scopeta arandı. Hata yok
+    Nec mynec;
+    mynec.foo();
 }
 ```
