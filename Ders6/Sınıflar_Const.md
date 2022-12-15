@@ -63,7 +63,7 @@ public:
     void shoot();
 
     // const mu nonconst mu olmalı
-    // Probleme göre değişir Yakın ihtimal const ama her tell_name() çağrıldığında bir can gidiyorsa herşey değişir.
+    // Probleme göre değişir Yakın ihtimal const ama her tell_name() çağrıldığında bir can gidiyorsa her şey değişir.
     void tell_name();
 };
 
@@ -71,5 +71,36 @@ int main()
 {
     Fighter myfigher;
     myfigher.shoot();
+}
+```
+Nesnenin problem domainninde anlamını değiştirmeyecek veri elemanları olabilir mi? olursa bunları const üye fonksiyonlarda kullanmamız en doğal hakkımız.
+Bunu nasıl gerçekleştirebiliriz.
+```cpp
+class Fighter {
+public:
+    int get_age() const;
+
+private:
+    int debug_call_count{}; // kaç kere get_age() fonksiyonu çağrılmış onu hesaplıyor.
+};
+
+int Fighter::get_age() const
+{
+    ++debug_call_count; //sentaks hatası const üye fonksiyonda sınıfın veri elemanını değiştiremeyiz.
+}
+```
+İşte tam burada **mutable** anahtar sözcüğü imdadımıza yetişiyor. Mutable keywordü ile bu değişkenin değişmesi problem domainindeki anlamını değiştirmiyor diyoruz derleyiciye. Dolayısıyla const üye fonksiyonlarda değeri değiştirilebilir oluyor.
+```cpp
+class Fighter {
+public:
+    int get_age() const;
+
+private:
+    mutable int debug_call_count{};
+};
+
+int Fighter::get_age() const
+{
+    ++debug_call_count; //geçerli çünkü debug_call_count mutable.
 }
 ```
