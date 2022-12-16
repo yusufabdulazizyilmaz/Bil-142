@@ -105,7 +105,3 @@ int main()
     //
 }
 ```
-### Nesnelerin Ömürleri (storage duration / lifespan)
-Ömür (storage duration / lifespan), nesnelerin, programın çalışma zamanı içinde bellekte yer kapladığı süreyi anlatmak için kullanılan bir terimdir. Bir kaynak kod içinde tanımlanmış değişkenlerin hepsi, program çalışmaya başladığında aynı zamanda yaratılmaz.  
-**Statik ömürlü varlıklar** (static duration – static storage class), programın çalışmaya başlamasıyla bellekte yerlerini alır, programın çalışması bitene kadar varlıklarını sürdürür, yani bellekte yer kaplar. global değişkenler dizgeler (çift tırnak içindeki yazılar) statik yerel değişkenler  
-**Otomatik ömürlü nesneler** programın çalışmasının belli bir zamanında yaratılan, belli süreetkinlik gösterdikten sonra yok olan, yani ömürlerini tamamlayan nesnelerdir. Bu tür nesnelerin ömürleri, programın toplam çalışma süresinden kısadır. Yerel değişkenler, otomatik ömürlüdür. Programın çalışma zamanında tanımlandıkları bloğun çalışması başladığında yaratılırlar, bloğun çalışması bitince yok olurlar, yani ömürleri sona erer.
