@@ -83,4 +83,105 @@ void run() {
 // object_1's lifetime ends: 2
 
 // Answer: 1342
+
+void run()
+{
+    {
+        {
+            S object_1("c", "b");                   //c
+            {
+                static S object_2("t", "k");        //t
+                S object_3("y", "p");               //y
+            }                                       //p
+            S object_4("e", "_");                   //e
+        }                                           //_
+                                                    //b
+        S object_5("a", ":");                       //a
+        static S object_6("s", "s");                //s
+        S object_7("e", ":");                       //e
+    }                                               //:
+                                                    //:
+    S object_8("m", "a");                           //m
+}                                                   //a
+// Program ends
+// s
+// k
+
+// Answer: ctype_base::mask
 ```
+**Dinamik ömürlü varlıklar** ömürleri new ifadesi ile başlayıp, delete ifadesi ile biten nesnelerdir. Hayatlarının kontrolü tamamen
+yazılımcıya aittir. Eğer öldürülmezse kaynak sızıntısına neden olur.
+
+```cpp
+void run() {
+    S *object_1 = new S("l", "c");          //l
+    S *object_2 = nullptr;
+    object_2 = new S("o", "g");             //o
+    delete object_1;                        //c
+    S *object_3 = new S("k", "y");          //k
+}
+// Answer: lock
+
+void run() {
+    {
+        S object_1("l", "c");               //l
+        S *object_2 = new S("o", "q");      //o
+        S *object_3 = nullptr;
+    }                                       //c
+    S *object_4 = new S("a", "q");          //a
+    S object_5("l", "e");                   //l
+    S *object_6 = nullptr;
+}                                           //e
+// Answer: locale
+
+void run() {
+    {
+        S *object_1 = new S("n", "m");      //n
+        static S object_2("u", "t");        //u
+        {
+            delete object_1;                //m
+            S *object_3 = nullptr;
+            object_3 = new S("p", "a");     //p
+        }
+        static S object_4("u", "c");        //u
+    }
+    S *object_5 = new S("n", "v");          //n
+    S *object_6 = nullptr;
+}
+// Program ends
+// c
+// t
+
+// Answer: numpunct
+
+void run() {
+    S object_1("i", "t");                   //i
+    S object_2("n", "p");                   //n
+    static S object_3("o", "t");            //o
+    S *object_4 = new S("u", "y");          //u
+    static S object_5("t", "_");            //t
+    {
+        static S object_6("_", "r");        //_
+    }
+}                                           //p
+                                            //t
+// Program ends
+// r
+// _
+// t
+
+// Answer: inout_ptr_t
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
