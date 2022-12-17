@@ -129,4 +129,55 @@ CONSTRUCTOR NEDEN VAR?
 BİR SINIF NESNESİ HAYATA GELDİĞİNDE ONUN ELEMANLARIDA HAYATA GELİYOR. CONSTRUCTOR IN EN ÖNEMLİ ÖZELLİKLERİNDEN BİRİ, SINIF NESNESİ ELEMANLARINA 
 İLK DEĞER VERİYOR.  
 DESTUCTOR İSE SINIFIN HAYATI SONA ERDİĞİNDE YAPILMASI GEREKEN İŞLER VAR. CONSTUCTOR BİR KAYNAK KULLANIYOR. DESTRUCTOR İSE KAYNAĞI GERİ VERİYOR.
-Resource Acquisition Is Initialization (RAII) idiyom kaynak edinimi nesne hayata gelirken olur kaynak geri verilmesi nesnenin hayatı sonlanırken olur.
+Resource Acquisition Is Initialization (RAII) idiyom kaynak edinimi nesne hayata gelirken olur kaynak geri verilmesi nesnenin hayatı sonlanırken olur.  
+CONSTRUCTOR INITIALIZER LIST or MEMBER INITIALIZER LIST(MIL).  
+DEFAULT MEMBER INITIALIZER or in-class initializer.  
+```cpp
+#include <iostream>
+
+class Myclass {
+public:
+    Myclass();
+
+    void print() const;
+
+private:
+    int m_first{0};         // DEFAULT MEMBER INITIALIZER or in-class initializer
+    int m_a, m_b, m_c, m_d;
+    const int m_constx;
+};
+
+Myclass::Myclass()
+        :m_a{10}, m_b{20}, m_constx{100},  //Member Initializer List (MIL)
+         m_first{1}                     // tüm veri elemanlarına değer vermek zorunda değiliz (m_c).
+{
+    // bu initialize değil assignment önce bu satıra kadar m_d değişkeni çöp
+    // değer ile hayata gelir sonra m_d değişkenine 40 değeri atanır.
+    // mümkün olduğunca bunu yapmamaya çalışacağız.
+    m_d = 40;
+    // veri elemanı referans ya da const olduğunda atama işlemi yapamayız. mecbur MIL kullanacağız
+    // m_constx = 25; // sentaks hatası
+}
+void Myclass::print() const
+{
+    std::cout << "m_first = " << m_first << "\n"
+              << "m_a = " << m_a << "     mb = " << m_b << "\n"
+              << "m_c = " << m_c << "     md = " << m_d << "\n"
+              << "mconstx = " << m_constx << "\n";
+}
+
+int main()
+{
+    Myclass x;
+    x.print();
+}
+/* ÇIKTI:
+m_first = 1                 // !!!!!! MILin default member initializera üstünlüğü var. Oyüzden m_first = 1 oldu.
+m_a = 10     mb = 20
+m_c = 1     md = 40
+mconstx = 100*/
+```
+Veri elemanlarının hayata gelme sırası sınıfın tanımındaki bildirim sırasına göredir. Bizim örneğimizde öncelikle m_first hayata gelecektir.
+MIL sırası değişkenlerin hayata gelme zamanında etkisizdir. Mülakatlarda da sıkça sorulan bu soru bize deneyimsiz yazılımcıları yanlış yönlendirmemek
+için bildirim sırasına uygun şekilde MIL sırası gözetmemizi önermektedir.
+
