@@ -181,3 +181,39 @@ Veri elemanlarının hayata gelme sırası sınıfın tanımındaki bildirim sı
 MIL sırası değişkenlerin hayata gelme zamanında etkisizdir. Mülakatlarda da sıkça sorulan bu soru bize deneyimsiz yazılımcıları yanlış yönlendirmemek
 için bildirim sırasına uygun şekilde MIL sırası gözetmemizi önermektedir.
 
+CONVERSION CONSTRUCTOR
+```cpp
+#include <iostream>
+
+class Myclass {
+public:
+    Myclass()
+    {
+    }
+
+    Myclass(int x).  // conversion constructor
+    {
+        std::cout << "Myclass(int x) x : " << this << "\n";
+    }
+
+    operator int()   // Type-cast Operator Function
+    {
+        std::cout << " operator int \n";
+        return 12;
+    }
+};
+
+int main()
+{
+    int ival = 10;
+    Myclass m;
+    m = ival;      // derleyici gözünden m = Myclass(ival);
+    int x = Myclass();
+    std::cout << x;   // 12 yazar
+}
+```
+Compiler ne zaman int, myclass türünden bir değişkene dönüşmesi gerekiyorsa, bu durumdan vazife çıkaracak,
+Myclass(int); Constructor ile geçiçi nesne yaratıp daha sonra da Copy Assignment/Move assignment func ile atama yapacak. 
+
+
+
