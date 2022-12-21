@@ -58,6 +58,42 @@ int main()
 }
 ```
 Nonstatic data memberlar sınıf boyutunu (sizeof) artırıyor. fiziksel olarak class içinde yer alıyorlar. Fakat static data memberlar sınıf sizeofuna girmiyor. Member functionlar sınıfın içinde bildiriliyor ama içinde yer kaplamıyor.  
+
+```cpp
+// Geçici Nesneler(Temporary Objects)
+/*
+Öyle bir nesne ki kaynak kodda bir isme sahip değil ama yine de o bir nesne.
+Geçici nesneler bilerek isteyerek özel bir sentaks ile oluşturulabiliyorlar.
+Sentaks:
+SınıfTürü( Ctora gönderilecek argüman veya argümanlar ) 
+SınıfTürü{ Ctora gönderilecek argüman veya argümanlar }
+Nec ();
+Nec {};*/
+
+//GEÇICI NESNELER PR VALUE EXPRESSIONDUR
+void f1(Myclass);
+void f2(const Myclass&);
+void f3(Myclass&&);
+void f4(Myclass&);
+int main()
+{
+	f1(Myclass{});   //geçerli
+	f2(Myclass{});   //geçerli
+	f3(Myclass{});	 //geçerli
+	f4(Myclass{});   //BURASI SENTAKS HATASI. sol taraf referansına sağ taraf değeri bağlanamaz.
+}
+
+// Daha etkin kod ve scope leakage engellemek için kullanılırlar
+void f1(Myclass);
+int main()
+{
+	Myclass m{12};
+	f1(m);
+    //Yukarıda m main bitene kadar yaşıyor. Scope leakage var. Doğrusu
+    f1(Myclass{12});
+}
+
+```
 ## ACCESS CONTROL - ERİŞİM KONTROLÜ
 Sınıfın herhangi bir üyesi erişim kontrolü açısından 3 kategoriden birine ait olmalıdır.
 a - Public members: Herkese açık kodlar
