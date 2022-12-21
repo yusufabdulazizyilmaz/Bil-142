@@ -4,7 +4,7 @@ Referans Modern C++ tan önce 1 taneydi. Şimdi 2 ayrı referans kategorisi oldu
 R Value reference (Taşıma/Move Semantics ve Mükemmel gönderim / Perfect forwarding)
 L Value reference (Nesnenin yerine geçen bir isim)
 
-L Value Referans
+## L Value Referans
 L value referanslar için [inceleyiniz](https://necatiergin2019.medium.com/referanslar-references-1-8770705b8673). 
 Referans bir nesnenin yerine geçen bir isim olarak düşünülebilir. Öyle ki biz referans olan ismi kullandığımızda aslında o ismin bağlandığı (yerine geçtiği) nesneyi kullanmış oluyoruz.
 Referanslar & atomu (declarator) ile tanımlanır. T bir tür olmak üzere 
