@@ -182,6 +182,13 @@ MIL sırası değişkenlerin hayata gelme zamanında etkisizdir. Mülakatlarda d
 için bildirim sırasına uygun şekilde MIL sırası gözetmemizi önermektedir.
 
 CONVERSION CONSTRUCTOR
+User Defined Conversion 2 ye ayrılıyor.  
+	Conversion Constructor  
+	Type-cast Operator Function  
+Standart Conversion Zaten var olan dönüşümler. Ör int --> double  
+
+Eğer bir dönüşüm Standart dönüşüm + User defined dönüşüm ya da User defined dönüşüm + Standart dönüşüm gibi olabiliyorsa derleyici bu dönüşümü gerçekleştrmek zorundadır.
+
 ```cpp
 #include <iostream>
 
@@ -190,8 +197,12 @@ public:
     Myclass()
     {
     }
-
-    Myclass(int x).  // conversion constructor
+    /*
+    conversion constructor
+    Compiler ne zaman int, myclass türünden bir değişkene dönüşmesi gerekiyorsa, bu durumdan vazife çıkaracak,
+    Myclass(int); Constructor ile geçiçi nesne yaratıp daha sonra da Copy Assignment/Move assignment func ile atama yapacak.
+    */
+    Myclass(int x). 
     {
         std::cout << "Myclass(int x) x : " << this << "\n";
     }
@@ -203,17 +214,66 @@ public:
     }
 };
 
+void func(Myclass p);
 int main()
 {
-    int ival = 10;
+    double dval = 10.;
     Myclass m;
-    m = ival;      // derleyici gözünden m = Myclass(ival);
-    int x = Myclass();
+    m = dval;      // derleyici gözünden m = Myclass(static_cast<int>(dval));
+    dval x = Myclass();  // derleyici gözünden m = static_cast<double>(Myclass().operator int());
     std::cout << x;   // 12 yazar
+    func(15);     //geçerli derleyici gözünden p = Myclass(15);
+    
+    Myclass m2 = 18; // derleyici gözünden Myclass m2 = Myclass(18); 
 }
+
+/*
+ÇIKTI:
+*/
 ```
-Compiler ne zaman int, myclass türünden bir değişkene dönüşmesi gerekiyorsa, bu durumdan vazife çıkaracak,
-Myclass(int); Constructor ile geçiçi nesne yaratıp daha sonra da Copy Assignment/Move assignment func ile atama yapacak. 
+ C++ TA CONVERSION CTOR BAŞIMIZI BELAYA BU DURUMDAN ÖTÜRÜ SOKMASIN DİYE BİR ARAÇ VAR. ADI EXPLICIT CONSTRUCTOR  
 
+EXPLICIT CONSTRUCTOR
 
+```cpp
+#include <iostream>
+
+class Myclass {
+public:
+    Myclass()
+    {
+    }
+    /*
+    explicit constructor
+    int türünden myclass türüne ben açıkça (explicit) belirttiğim zaman dönüşüme izin ver. Üzerine vazife olmayan bu dönüşümü yapma.
+    */
+    explicit Myclass(int x). 
+    {
+        std::cout << "Myclass(int x) x : " << this << "\n";
+    }
+
+    operator int()   // Type-cast Operator Function
+    {
+        std::cout << " operator int \n";
+        return 12;
+    }
+};
+
+void func(Myclass p);
+int main()
+{
+    double dval = 10.;
+    Myclass m;
+    m = dval;      	//SENTAKS HATASI
+    m = static_cast<Myclass>(dval); //geçerli
+    func(15);     //geçersiz
+    func(static_cast<Myclass>(15));     //geçerli 
+    
+    Myclass m2 = 18; // geçersiz
+    Myclass m2{18};  // geçerli
+}
+/*
+ÇIKTI:
+*/
+```
 
