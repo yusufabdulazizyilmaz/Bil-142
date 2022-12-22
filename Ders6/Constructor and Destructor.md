@@ -7,9 +7,9 @@ CONSTRUCTOR KURALLARI.
 3 - SINIFIN STATİC ÜYE FONKSİYONU OLAMAZ(non-static). 
 4 - GERİ DÖNÜŞ DEĞERİ KAVRAMI YOK.  
 5 - CONST ÜYE FONKSIYON OLAMAZ.  
-6 - SINIFIN PUBLIC, PRIVATE, PROTECTED FONKSIYONLARI OLABILIR. PRIVATE VE PROTECTED OLUNCA CLIENT KODLAR TARAFINDAN ÇAĞRILAMAZ.  
-7 - CONSTRUCTOR OVERLOAD EDILEBILIYOR. 
-8 - BIR SINIFIN PARAMETRE DEĞIŞKENI OLMAYAN YA DA TÜM PARAMETRELERI DEFAULT ARGÜMAN ALAN CONSTRUCTORLARA DEFAULT CONSTRUCTOR DENIR.  
+6 - SINIFIN PUBLIC, PRIVATE, PROTECTED FONKSIYONLARI OLABILIR. PRIVATE VE PROTECTED OLUNCA CLIENT KODLAR TARAFINDAN ÇAĞRILAMAZ.   
+7 - CONSTRUCTOR OVERLOAD EDILEBILIYOR.  
+8 - BIR SINIFIN PARAMETRE DEĞIŞKENI OLMAYAN YA DA TÜM PARAMETRELERI DEFAULT ARGÜMAN ALAN CONSTRUCTORLARA DEFAULT CONSTRUCTOR DENIR.   
 9 - CONSTRUCTOR İSMİ İLE ÇAĞRILAMAZ. YANİ . -> OPERATÖRLERİYLE ÇAĞRILAMAZ.  
 
 DESTRUCTOR KURALLARI.   
@@ -194,17 +194,15 @@ Eğer bir dönüşüm Standart dönüşüm + User defined dönüşüm ya da User
 
 class Myclass {
 public:
-    Myclass()
-    {
-    }
+    Myclass() {}
     /*
     conversion constructor
     Compiler ne zaman int, myclass türünden bir değişkene dönüşmesi gerekiyorsa, bu durumdan vazife çıkaracak,
     Myclass(int); Constructor ile geçiçi nesne yaratıp daha sonra da Copy Assignment/Move assignment func ile atama yapacak.
     */
-    Myclass(int x). 
+    Myclass(int x) 
     {
-        std::cout << "Myclass(int x) x : " << this << "\n";
+        std::cout << "Myclass(int x) x : \n";
     }
 
     operator int()   // Type-cast Operator Function
@@ -214,21 +212,26 @@ public:
     }
 };
 
-void func(Myclass p);
+void func(Myclass p) { }
+
 int main()
 {
     double dval = 10.;
     Myclass m;
     m = dval;      // derleyici gözünden m = Myclass(static_cast<int>(dval));
-    dval x = Myclass();  // derleyici gözünden m = static_cast<double>(Myclass().operator int());
-    std::cout << x;   // 12 yazar
+    dval = Myclass();  // derleyici gözünden m = static_cast<double>(Myclass().operator int());
+    std::cout << dval << "\n";   // 12 yazar
     func(15);     //geçerli derleyici gözünden p = Myclass(15);
-    
-    Myclass m2 = 18; // derleyici gözünden Myclass m2 = Myclass(18); 
+    Myclass m2 = 18; // derleyici gözünden Myclass m2 = Myclass(18);
 }
 
 /*
 ÇIKTI:
+Myclass(int x) 
+operator int 
+12
+Myclass(int x) 
+Myclass(int x)
 */
 ```
  C++ TA CONVERSION CTOR BAŞIMIZI BELAYA BU DURUMDAN ÖTÜRÜ SOKMASIN DİYE BİR ARAÇ VAR. ADI EXPLICIT CONSTRUCTOR  
@@ -240,16 +243,15 @@ EXPLICIT CONSTRUCTOR
 
 class Myclass {
 public:
-    Myclass()
-    {
-    }
+    Myclass() {}
     /*
     explicit constructor
-    int türünden myclass türüne ben açıkça (explicit) belirttiğim zaman dönüşüme izin ver. Üzerine vazife olmayan bu dönüşümü yapma.
+    int türünden myclass türüne ben açıkça (explicit) belirttiğim zaman dönüşüme izin ver. 
+    Üzerine vazife olmayan bu dönüşümü yapma.
     */
-    explicit Myclass(int x). 
+    explicit Myclass(int x) 
     {
-        std::cout << "Myclass(int x) x : " << this << "\n";
+        std::cout << "Myclass(int x) \n";
     }
 
     operator int()   // Type-cast Operator Function
@@ -259,21 +261,23 @@ public:
     }
 };
 
-void func(Myclass p);
+void func(Myclass p) { }
 int main()
 {
     double dval = 10.;
     Myclass m;
-    m = dval;      	//SENTAKS HATASI
+    //m = dval;      	//SENTAKS HATASI
     m = static_cast<Myclass>(dval); //geçerli
-    func(15);     //geçersiz
-    func(static_cast<Myclass>(15));     //geçerli 
-    
-    Myclass m2 = 18; // geçersiz
+    //func(15);     //geçersiz
+    func(static_cast<Myclass>(15));     //geçerli
+    //Myclass m2 = 18; // geçersiz
     Myclass m2{18};  // geçerli
 }
 /*
 ÇIKTI:
+Myclass(int x) 
+Myclass(int x) 
+Myclass(int x)
 */
 ```
 
