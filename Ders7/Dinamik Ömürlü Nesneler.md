@@ -63,4 +63,14 @@ int main()
     std::cout << "p = " << p << "\n";
     delete p;
 }
+/*
+ÇIKTI:
+sizeof(Myclass) = 1024
+Operator new called n = 1024
+the address of the allocated block = 0x129809800
+Myclass def ctor called this = 0x129809800
+p = 0x129809800
+Myclass destructor called this = 0x129809800
+operator delete called... vp = 0x129809800
+*/
 ```
