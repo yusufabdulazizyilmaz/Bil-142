@@ -5,3 +5,6 @@ Hayata istenildiği zaman getirilip istenildiği zaman bitirilen nesneler dinami
 3 - Test-Debug-Değişiklik daha zor.  
 
 C++'ta Dinamik ömürlü nesne oluşturan new operatörleri ve nesnenin hayatını sonlandıran delete operatörleri vardır. 
+```cpp
+// <new> <tür>;  
+```
