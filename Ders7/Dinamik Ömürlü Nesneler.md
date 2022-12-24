@@ -4,7 +4,12 @@ Hayata istenildiği zaman getirilip istenildiği zaman bitirilen nesneler dinami
 2 - Kullanımı otomatik ömürlüye göre daha zor, hata yapmak daha kolay.  
 3 - Test-Debug-Değişiklik daha zor.  
 
-C++'ta Dinamik ömürlü nesne oluşturan new operatörleri ve nesnenin hayatını sonlandıran delete operatörleri vardır. 
-```cpp
-// <new> <tür>;  
+C++'ta Dinamik ömürlü nesne oluşturan new operatörleri ve nesnenin hayatını sonlandıran delete operatörleri vardır.  
+** new <tür>;**. 
+  
+```cpp 
+
+new ifadesi = operator new() --> constructor
+delete ifadesi = destructor --> operator delete()
+//void * operator new(size_t n); C++ ın global functionu.
 ```
