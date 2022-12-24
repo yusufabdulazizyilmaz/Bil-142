@@ -8,14 +8,18 @@ C++'ta Dinamik ömürlü nesne oluşturan new operatörleri ve nesnenin hayatın
   
 ```cpp 
 /*
-new Myclass(); derleyici ne yapıyor
+Myclass* d_ptr = new Myclass(); derleyici ne yapıyor
 Derleyici ismi operator new olan fonksiyonuna çağrı yapıyor, bu fonkisyona argüman olarak sizeof Myclass
 gönderiyor ve bu fonksiyonun geri dönüş değeri olan void * türünden adresi Myclass * türüne dönüştürerek ve bunu this adresi olarak kullanıp,
 sınıfın ilgili Constructoruna çağrı yapıyor
-
+void * operator new(size_t n); C++ ın global functionu. overload yapılabiliyor
 new ifadesi = operator new() --> constructor
+
+delete d_ptr; derleyici ne yapıyor
+Önce delete operatörünün operandı olan adresi this pointerı olarak kullanıp sınıfın destructorunu çağırır.
+Burada operator delete isimli function çağrılıp bellek adresi geri verilmeli
+void operator delete(void *);
 delete ifadesi = destructor --> operator delete()
-//void * operator new(size_t n); C++ ın global functionu. overload yapılabiliyor
 */
 
 #include <iostream>
