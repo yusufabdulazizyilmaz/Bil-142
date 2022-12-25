@@ -97,3 +97,69 @@ Bunu include eden herkeste de bu bildirim olur.Bu durumda da namespace lerin var
 
 3 - ADL(Argument Depended Lookup)  
 
+KURAL: EĞER BİR FONKSİYON ÇAĞRISINDA FONKSİYONA ARGÜMAN OLARAK GÖNDERİLEN İFADE, BİR NAMESPACE İÇİNDE TANIMLANAN TÜRLERDEN BİRİNE İLİŞKİN İSE, O ZAMAN BU İSİM NORMAL ARANDIĞI YERİN DIŞINDA BU İSMİN AİT OLDUĞU TÜRÜN AİT OLDUĞU NAMESPACE İÇİNDE ARANIR.
+
+```cpp
+namespace Nec {
+    class Myclass {
+    };
+
+    enum color {
+        Red, Green, White
+    };
+
+    void foo(Myclass m);
+
+    void func(int);
+
+    void baz(Myclass m);
+}
+
+void baz(Nec::Myclass m);
+
+int main()
+{
+    func(4); //SENTAKS HATASI.
+    Nec::Myclass m;
+    foo(m); // SENTAKS HATASI DEĞİL. :D:D	Nec::foo(m) diye çağrılmadığı halde sentaks hatası değil.
+    func(Nec::color::Red);
+
+    std::vector<std::string> svec;
+    // code
+    auto iter = find(next(svec.begin()), prev(svec.end()), "ali");
+    auto iter = std::find(std::next(svec.begin()), std::prev(svec.end()), "ali");
+
+    baz(m); //BURADA AMBIGIUTY VAR. FUNC İSMİ HEM GLOBALDA HEM DE NEC İÇİNDE BULUNDU. ÖNCELİK YOK BURADA.
+}
+```
+## UNNAMED NAMESPACE
+
+Sadece ilgili kaynak dosyada geçerli olan ve bir using bildirimi olmadan bu namespacedeki isimleri bunu kapsayan namespacede (genelde global namespacede) kullanabileceğimiz bir özellik.
+```cpp
+namespace Nec {
+
+    namespace {
+        int x;
+    }
+    int y = x;
+
+}
+
+namespace {
+    int x;
+}
+
+/*namespace name1
+{
+    int x;
+}
+using namespace name1;*/
+
+int main()
+{
+    x = 12;
+}
+```
+UNNAMED NAMESPACE LER INTERNAL LINKAGE A AIT.
+EXTERNAL LINKAGE = FARKLI KAYNAK DOSYALARDA AYNI VARLIĞA İŞARET EDİYORSA
+INTERNAL LİNKAGE = SADECE O KAYNAK DOSYADA KULLANILDIĞINDA AYNI VARLIĞI GÖSTERİYORSA
