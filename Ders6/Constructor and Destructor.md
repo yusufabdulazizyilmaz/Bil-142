@@ -254,7 +254,7 @@ public:
         std::cout << "Myclass(int x) \n";
     }
 
-    operator int()   // Type-cast Operator Function
+    explicit operator int() const  // Type-cast Operator Function
     {
         std::cout << " operator int \n";
         return 12;
