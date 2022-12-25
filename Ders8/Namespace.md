@@ -160,6 +160,39 @@ int main()
     x = 12;
 }
 ```
-UNNAMED NAMESPACE LER INTERNAL LINKAGE A AIT.
-EXTERNAL LINKAGE = FARKLI KAYNAK DOSYALARDA AYNI VARLIĞA İŞARET EDİYORSA
-INTERNAL LİNKAGE = SADECE O KAYNAK DOSYADA KULLANILDIĞINDA AYNI VARLIĞI GÖSTERİYORSA
+UNNAMED NAMESPACE LER INTERNAL LINKAGE A AIT.  
+EXTERNAL LINKAGE = FARKLI KAYNAK DOSYALARDA AYNI VARLIĞA İŞARET EDİYORSA.  
+INTERNAL LİNKAGE = SADECE O KAYNAK DOSYADA KULLANILDIĞINDA AYNI VARLIĞI GÖSTERİYORSA.  
+```cpp
+//nutility.h
+const int x = 10;
+void fx();
+
+//nutility.cpp
+#include "nutility.h"
+#include <iostream>
+
+void fx()
+{
+    std::cout << "nutility &x = " << &x << "\n";
+}
+//main.cpp
+#include "nutility.h"
+#include <iostream>
+
+int main()
+{
+    fx(); // buradaki x adres ile
+    std::cout << "&x = " << &x << "\n";
+}
+/* 
+ÇIKTI: (inline olmadan)  INTERNAL LİNKAGE
+nutility &x = 0x10041fe18
+&x = 0x10041fe14
+
+ÇIKTI: (inline)  EXTERNAL LİNKAGE
+nutility &x = 0x102607e18
+&x = 0x102607e18
+*/
+
+```
