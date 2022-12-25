@@ -165,7 +165,14 @@ EXTERNAL LINKAGE = FARKLI KAYNAK DOSYALARDA AYNI VARLIĞA İŞARET EDİYORSA.
 INTERNAL LİNKAGE = SADECE O KAYNAK DOSYADA KULLANILDIĞINDA AYNI VARLIĞI GÖSTERİYORSA.  
 ```cpp
 //nutility.h
-const int x = 10;
+
+const int x = 10;   // internal linkage
+//inline const int x = 10; //external linkage
+
+// int x = 10;  ODR direk hata
+/*namespace {
+    int x = 23;
+}*/
 void fx();
 
 //nutility.cpp
@@ -182,7 +189,7 @@ void fx()
 
 int main()
 {
-    fx(); // buradaki x adres ile
+    fx();
     std::cout << "&x = " << &x << "\n";
 }
 /* 
@@ -193,6 +200,10 @@ nutility &x = 0x10041fe18
 ÇIKTI: (inline)  EXTERNAL LİNKAGE
 nutility &x = 0x102607e18
 &x = 0x102607e18
+
+ÇIKTI: (unnamed namespace)
+nutility &x = 0x104760004
+&x = 0x104760000
 */
 
 ```
