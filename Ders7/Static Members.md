@@ -175,3 +175,36 @@ int main()
     p->func();            
 }
 ```
+# SINGLETON İDİYOMU
+Pattern = Öyle bir kalıp ki birden fazla problemde bunu kullanabiliyoruz. Dilden bağımsızdır.  
+idiom = dile bağımlı.  
+Öyle durumlar var ki sınıf türünden tek bir nesnenin oluşturulmasına izin verilecek. Bu nesneye global bir access de sağlamak gerekecek.
+```cpp
+class Singleton {
+public:
+    static Singleton& get_instance() // Global bir access verildi.
+    {
+        static Singleton instance; // Default CTor çağrıldı. Statik ömürlü bir Singleton nesnesi yaratıldı.
+        // Tekrar çağrılsa bile yine aynı nesne dönecek varsa yaratmayacak tekrar.
+        return instance;
+    }
+
+    Singleton(const Singleton&) = delete;
+
+    Singleton& operator=(const Singleton&) = delete;
+
+    void func();
+
+    void foo();
+
+private:
+    Singleton() = default;
+};
+
+int main()
+{
+    Singleton::get_instance().foo();
+    Singleton::get_instance().func();
+    auto& rs = Singleton::get_instance();
+}
+```
