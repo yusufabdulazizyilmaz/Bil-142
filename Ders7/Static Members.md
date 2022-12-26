@@ -5,6 +5,7 @@ Nonstatic veri elemanları instanceları ilgilendirir. Sınıfın storage ihtiya
 
 ```cpp
 /*
+Derleyicinin varlığından haberdar olduğu ancak henüz tanımını görmediği bir türe “tamamlanmamış tür” (incomplete type) denir. 
  * ICOMPLETE İLE NELER YAPILIR ?
 class Myclass;
 Myclass* p = nullptr; pointer yada referans değişken tanımında.
