@@ -41,7 +41,7 @@ Bir türü ön bildirimle kullanabildiğimiz durumlarda bu türün tanımını i
 // ScopedColor.h
 enum class ScopedColor : char {white = 3, red, magenta = 12, black};
 
-//.cpp
+//Myclass.h
 #include "ScopedColor.h";
 class Myclass{
 	ScopedColor mycolor;
@@ -49,14 +49,14 @@ class Myclass{
 
 
 // FORWARD DECLERATIONS 
-//.h
-enum class ScopedColor : char;
+//Myclass.h
+enum class ScopedColor : char;  //forward decleration
 class Myclass{
 	ScopedColor mycolor;
 };
-//.cpp
+//Myclass.cpp
 #include "ScopedColor.h";
-
+ScopedColor::mycolor = static_cast<ScopedColor>(12);
 ```
 Scoped Enum için [inceleyiniz](https://necatiergin2019.medium.com/numaraland%C4%B1rma-s%C4%B1n%C4%B1flar%C4%B1-enum-classes-a6276c93f06d) 
 ## C++20 Using Enum Declerations
