@@ -42,7 +42,7 @@ Bir türü ön bildirimle kullanabildiğimiz durumlarda bu türün tanımını i
 enum class ScopedColor : char {white = 3, red, magenta = 12, black};
 
 //.cpp
-#include "ScopedColor.h"
+#include "ScopedColor.h";
 class Myclass{
 	ScopedColor mycolor;
 };
@@ -55,7 +55,7 @@ class Myclass{
 	ScopedColor mycolor;
 };
 //.cpp
-enum class ScopedColor : char {white = 3, red, magenta = 12, black};
+#include "ScopedColor.h";
 
 ```
 Scoped Enum için [inceleyiniz](https://necatiergin2019.medium.com/numaraland%C4%B1rma-s%C4%B1n%C4%B1flar%C4%B1-enum-classes-a6276c93f06d) 
