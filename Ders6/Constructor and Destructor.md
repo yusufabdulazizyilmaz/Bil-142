@@ -194,13 +194,13 @@ Eğer bir dönüşüm Standart dönüşüm + User defined dönüşüm ya da User
 
 class Myclass {
 public:
-    Myclass() {}
+    Myclass(): m_a{0} {}
     /*
     conversion constructor
     Compiler ne zaman int, myclass türünden bir değişkene dönüşmesi gerekiyorsa, bu durumdan vazife çıkaracak,
     Myclass(int); Constructor ile geçiçi nesne yaratıp daha sonra da Copy Assignment/Move assignment func ile atama yapacak.
     */
-    Myclass(int x) 
+    Myclass(int x) : m_a{x}
     {
         std::cout << "Myclass(int x) x : \n";
     }
@@ -210,6 +210,8 @@ public:
         std::cout << " operator int \n";
         return 12;
     }
+  private:
+  int m_a;
 };
 
 void func(Myclass p) { }
@@ -218,6 +220,7 @@ int main()
 {
     double dval = 10.;
     Myclass m;
+    Myclass m3 {10};
     m = dval;      // derleyici gözünden m = Myclass(static_cast<int>(dval));
     dval = Myclass();  // derleyici gözünden m = static_cast<double>(Myclass().operator int());
     std::cout << dval << "\n";   // 12 yazar
