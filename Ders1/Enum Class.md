@@ -6,11 +6,12 @@
 ```cpp
 enum Color {white, red, magenta, black};
 enum TrafficLight {red, yellow, green};
-// red için redefinition hatası olur çünkü her ikisinin de kapsamı ait oldukları enumun kapsamıdır ve Color ve TrafficLight kapsamları aynıdır.
+// red için redefinition hatası olur çünkü her ikisinin de kapsamı ait oldukları enumun kapsamıdır.
+// Color ve TrafficLight kapsamları aynıdır.
 
 enum class ScopedColor {white, red, magenta, black};
 enum class ScopedTrafficLight {red, yellow, green};
-//red için hata alamayız çünkü artık red kapsamlandırılmıştır. ScopedColor::red ya da ScopedTrafficLight::red yazmalıyız kullanabilmek için.
+// red için hata alamayız çünkü artık red kapsamlandırılmıştır. ScopedColor::red ya da ScopedTrafficLight::red yazmalıyız.
 ```
 2- Kapsamsız numaralandırma türlerinden tam sayı ve gerçek sayı türlerine örtülü (implicit) tür dönüşümü var. Enum class için örtülü dönüşüm yoktur. 
 Explicit dönüşüm yani programcının bilerek isteyerek yaptığı dönüşümler ikisi için de geçerlidir. Çünkü enum türlerinden underlying type dönüşüm promotion kategorisindedir. (Hatırla integral promotion floating-point promotion)
@@ -35,7 +36,7 @@ ScopedColor myclor = static_cast<Color>(12); //geçerli
 int x = ScopedColor::mycolor; //geçersiz 
 ```
 ## Forward Decleration (Ön Bildirim) ve Enum 
-Bir türü ön bildirimle kullanabildiğimiz durumlarda bu türün tanımını içeren başlık dosyasını kendi kodumuza dahil etmemiz gerekmez. Bu durumda başlık dosyalarının birbirine bağımlılığı ortadan kaldırıldığı gibi derleme süreleri kısalır. 
+Bir türü ön bildirimle kullanabildiğimiz durumlarda bu türün tanımını içeren başlık dosyasını kendi kodumuza dahil etmemiz gerekmez. Bu durumda başlık dosyalarının birbirine bağımlılığı ortadan kaldırır. Önemli artıları yaptığımız değişiklikten etkilenen dosyalar azalır ve derleme süresi kısalır. Ancak bunun için derleyicinin söz konusu numaralandırma türü için bellekte kaç byte yer ayrılacağını bilmesi gerekir.
 ```cpp
 // ScopedColor.h
 enum class ScopedColor : char {white = 3, red, magenta = 12, black};
@@ -46,6 +47,8 @@ class Myclass{
 	ScopedColor mycolor;
 };
 
+
+// FORWARD DECLERATIONS 
 //.h
 enum class ScopedColor : char;
 class Myclass{
@@ -55,8 +58,8 @@ class Myclass{
 enum class ScopedColor : char {white = 3, red, magenta = 12, black};
 
 ```
-
-
+Scoped Enum için [inceleyiniz](https://necatiergin2019.medium.com/numaraland%C4%B1rma-s%C4%B1n%C4%B1flar%C4%B1-enum-classes-a6276c93f06d) 
+## C++20 Using Enum Declerations
 
 ```cpp
 //C++20 using enum <enum_name>
