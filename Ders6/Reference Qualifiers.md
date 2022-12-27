@@ -43,3 +43,4 @@ public:
 	//reference qualified fonksiyon reference qualified olmayan fonksiyon ile yüklenemez.
 };
 ```
+Referans Qualifiers için [inceleyiniz](http://plepa.com/2016/12/17/uye-islev-referans-niteleyicileri/) 
