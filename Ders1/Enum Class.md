@@ -1,0 +1,1 @@
+# Numaralandırma Sabitleri (ENUM)
