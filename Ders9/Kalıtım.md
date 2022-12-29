@@ -77,6 +77,23 @@ Türemiş sınıf nesnesi içinde fiziksel olarak taban sınıf nesnesi vardır.
 
 RUNTIME POLYMORPHISM / ÇALIŞMA ZAMANI ÇOKBİÇİMLİLİĞİ
 Kalıtımda Airplane isimli taban sınıfımız olsun. Taban sınıfın interface indeki funcionlar 3'e ayrılabilir.
-1. Hem bir arayüz / interface, hemde bir kod / implementation veren.
-2. Hem bir arayüz / interface, hemde bir kod / **Default** implementation veren. İsteyen değiştirebilir.
-3. bir arayüz / interface veriyor ama kod / implementation vermeyen.
+1. Hem bir arayüz / interface, hemde bir kod / implementation veren. (normal fonksiyonlar)
+2. Hem bir arayüz / interface, hemde bir kod / **Default** implementation veren. İsteyen değiştirebilir. (virtual function)
+3. bir arayüz / interface veriyor ama kod / implementation vermeyen. Benden türemiş sınıflar bu özelliği sağlamalı ve kodlarını kendileri implemente etmeliler. (pure virtual function)
+
+2. KATEGORIDEN EN AZ BIR FONKSIYONA SAHIPSE BÖYLE SINIFLARA POLIMORPHIC SINIF DENIYOR.
+HEM BÖYLE SINIFLARA HEMDE BU SINIFLARDAN KALITIM YOLUYLA ELDE EDILEN SINIFLARA DENIYOR.
+3. KATEGORIN EN AZ BIR FONKSIYON VARSA BÖYLE SINIFLARADA ABSTRACT / SOYUT CLASS DENIYOR. NESNE OLUŞTURMAK SENTAKS HATASI OLUYOR AMA BU SINIFI POINTER VEYA REFERANS SEMANTIĞI ILE KULLANABILIYORUZ.
+```cpp
+class Airplane {
+public:
+	void takeoff(); 		//Nonvirtual function. Buna dokunmamak lazım
+	virtual void land(); 	// Virtual Function Bunu ister override et, istersen de verileni kullan
+	virtual void fly() = 0; //Pure virtual function Override etmek gerekir. Yoksa soyut sınıf olur ve nesne üretilemez.
+};
+
+int main()
+{
+	Airplane ax; //SENTAKS HATASI.Çünkü Abstract class türden nesne oluşturulamaz.
+}
+```
