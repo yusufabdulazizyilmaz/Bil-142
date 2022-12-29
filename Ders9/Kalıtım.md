@@ -75,3 +75,8 @@ Modelleme dillerinde kalıtım ilişkisi türemiş sınıftan taban sınıfa do�
 Türemiş sınıf nesnesi içinde fiziksel olarak taban sınıf nesnesi vardır. Taban sınıfı türden nesneye türemiş sınıf nesnesini atayınca, fiilen türemiş sınıf nesnesi içerisindeki taban sınıf nesnesi kopyalamış oluruz. Türemiş sınıfın diğer veri elemanlarını kullanmamış oluruz. Bu eğer türemiş sınıf nesnesinin taban sınıfı nesnesine dönüşümü şeklindeyse dil izin verse de yanlıştır buna object slicing (Nesne dilimlenmesi) denir.  
 
 
+RUNTIME POLYMORPHISM / ÇALIŞMA ZAMANI ÇOKBİÇİMLİLİĞİ
+Kalıtımda Airplane isimli taban sınıfımız olsun. Taban sınıfın interface indeki funcionlar 3'e ayrılabilir.
+1. Hem bir arayüz / interface, hemde bir kod / implementation veren.
+2. Hem bir arayüz / interface, hemde bir kod / **Default** implementation veren. İsteyen değiştirebilir.
+3. bir arayüz / interface veriyor ama kod / implementation vermeyen.
