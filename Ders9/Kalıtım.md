@@ -87,8 +87,17 @@ HEM BÖYLE SINIFLARA HEMDE BU SINIFLARDAN KALITIM YOLUYLA ELDE EDILEN SINIFLARA 
 ```cpp
 class Airplane {
 public:
-	void takeoff(); 		//Nonvirtual function. Buna dokunmamak lazım
-	virtual void land(); 	// Virtual Function Bunu ister override et, istersen de verileni kullan
+	//Nonvirtual function. Buna dokunmamak lazım
+	void takeoff()
+	{
+		//kodlar
+	} 		
+	
+	// Virtual Function Bunu ister override et, istersen de verileni kullan
+	virtual void land()
+	{
+		//kodlar
+	} 	
 	virtual void fly() = 0; //Pure virtual function Override etmek gerekir. Yoksa soyut sınıf olur ve nesne üretilemez.
 };
 
