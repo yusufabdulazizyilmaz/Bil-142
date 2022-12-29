@@ -67,23 +67,22 @@ int main()
 }
 ```
 
-TABAN SINIF İLE TÜREMİŞ SINIF ARASINDAKİ TÜR DÖNÜŞÜMLERİ
-
+## TABAN SINIF İLE TÜREMİŞ SINIF ARASINDAKİ TÜR DÖNÜŞÜMLERİ
 Modelleme dillerinde kalıtım ilişkisi türemiş sınıftan taban sınıfa doğru çizin okla çizildiği için, türemiş sınıftan taban sınıfa doğru yapılan dönüşümlere UPCASTING deniyor. Bu dönüşümü sadece pointer ve referanslar için kullanmalıyız. (Der*(Der&)  ------> Base*(Base&))
 
 **mybase = myder;**
 Türemiş sınıf nesnesi içinde fiziksel olarak taban sınıf nesnesi vardır. Taban sınıfı türden nesneye türemiş sınıf nesnesini atayınca, fiilen türemiş sınıf nesnesi içerisindeki taban sınıf nesnesi kopyalamış oluruz. Türemiş sınıfın diğer veri elemanlarını kullanmamış oluruz. Bu eğer türemiş sınıf nesnesinin taban sınıfı nesnesine dönüşümü şeklindeyse dil izin verse de yanlıştır buna object slicing (Nesne dilimlenmesi) denir.  
 
 
-RUNTIME POLYMORPHISM / ÇALIŞMA ZAMANI ÇOKBİÇİMLİLİĞİ
+## RUNTIME POLYMORPHISM / ÇALIŞMA ZAMANI ÇOKBİÇİMLİLİĞİ
 Kalıtımda Airplane isimli taban sınıfımız olsun. Taban sınıfın interface indeki funcionlar 3'e ayrılabilir.
 1. Hem bir arayüz / interface, hemde bir kod / implementation veren. (normal fonksiyonlar)
 2. Hem bir arayüz / interface, hemde bir kod / **Default** implementation veren. İsteyen değiştirebilir. (virtual function)
 3. bir arayüz / interface veriyor ama kod / implementation vermeyen. Benden türemiş sınıflar bu özelliği sağlamalı ve kodlarını kendileri implemente etmeliler. (pure virtual function)
 
-2. KATEGORIDEN EN AZ BIR FONKSIYONA SAHIPSE BÖYLE SINIFLARA POLIMORPHIC SINIF DENIYOR.
+İKİNCİ KATEGORIDEN EN AZ BIR FONKSIYONA SAHIPSE BÖYLE SINIFLARA POLIMORPHIC SINIF DENIYOR.
 HEM BÖYLE SINIFLARA HEMDE BU SINIFLARDAN KALITIM YOLUYLA ELDE EDILEN SINIFLARA DENIYOR.
-3. KATEGORIN EN AZ BIR FONKSIYON VARSA BÖYLE SINIFLARADA ABSTRACT / SOYUT CLASS DENIYOR. NESNE OLUŞTURMAK SENTAKS HATASI OLUYOR AMA BU SINIFI POINTER VEYA REFERANS SEMANTIĞI ILE KULLANABILIYORUZ.
+ÜÇÜNCÜ KATEGORIDEN EN AZ BIR FONKSIYON VARSA BÖYLE SINIFLARADA ABSTRACT / SOYUT CLASS DENIYOR. NESNE OLUŞTURMAK SENTAKS HATASI OLUYOR AMA BU SINIFI POINTER VEYA REFERANS SEMANTIĞI ILE KULLANABILIYORUZ.
 ```cpp
 class Airplane {
 public:
@@ -104,5 +103,18 @@ public:
 int main()
 {
 	Airplane ax; //SENTAKS HATASI.Çünkü Abstract class türden nesne oluşturulamaz.
+}
+```
+## VIRTUAL - POLYMORPHIC DISPATCH / SANAL GÖNDERİM
+
+ Araba yarışı düşünelim şimdi. Car sınıfı kalıtımda kullanılacak taban sınıf olsun. Aşağıdaki fonksiyonda Car türünden kalıtımla elde edilmiş tüm sınıf nesnelerini aşağıdaki fonksiyona gönderebilirim. Burada arabaya özgü start run ... kodların çalıştığını düşünelim. Burada hangi fonksiyonun çağrılacağı runtime da belli oluyor. Eski kodların yeni kodları kullanması olayı bu. Eskiden olmayan bir skoda sınıfını Car sınıfından kalıtım yoluyla elde edersem, game koduna skoda nesnesi gönderilirse, skodanın nesnesinin fonksiyonu çağrılabilir. Buna runtime polymorphism deniyor.
+
+```cpp
+void game(Car &car)
+{
+    car.start();
+    car.run();
+    car.accelerate();
+    car.stop();
 }
 ```
