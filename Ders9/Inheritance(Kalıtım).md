@@ -97,7 +97,8 @@ public:
 	{
 		//kodlar
 	} 	
-	virtual void fly() = 0; //Pure virtual function Override etmek gerekir. Yoksa soyut sınıf olur ve nesne üretilemez.
+	//Pure virtual function Override etmek gerekir. Yoksa soyut sınıf olur ve nesne üretilemez.
+	virtual void fly() = 0; 
 };
 
 int main()
