@@ -366,5 +366,38 @@ int main()
 }
 ```
 Sınıf polimorfik ise mutlaka taban sınıfın destructorunu virtual yapmalıyız böylece türemiş sınıf nesneleri taban sınıf pointerı ile delete edildiğinde veya handle edildiğinde bir problem olmasın.
+```cpp
+#include <iostream>
 
+class Base {
+public:
+    virtual ~Base()
+    {
+        std::cout << "Base destructor\n";
+    }
+};
+
+class Der : public Base {
+    //...
+public:
+    ~Der()
+    {
+        std::cout << "Der destructor\n";
+    }
+};
+
+int main()
+{
+    Base* baseptr = new Der;
+
+    delete baseptr;  //undefined behavior
+}
+/*
+ÇIKTI (non-virtual destructor): 
+Base destructor UB(undefined Behavior)
+ÇIKTI (virtual destructor): 
+Der destructor
+Base destructor
+*/
+```
 destructor ya public virtual ya da protected non-virtual [olmalıdır.](https://necatiergin2019.medium.com/destructor-ya-public-virtual-ya-da-protected-non-virtual-olmal%C4%B1-9bade0adc886)
