@@ -176,6 +176,52 @@ public:
 };
 ```
 Türemiş sınıf, taban sınıfının virtual fonksiyonunu override ederek, virtual dispatch mekanizmasından faydalanma hakkını
-elde etti. Virtual Dispatch: Eğer taban sınıfın bir sanal foksiyonu, bir taban sınıf pointerı ya da bir
+elde etmektedir. Virtual Dispatch: Eğer taban sınıfın bir sanal foksiyonu, bir taban sınıf pointerı ya da bir
 taban sınıf referansı ile çağrılırsa çalışma zamanında çağrılan fonksiyon o pointer yada referans 
 hangi türden sınıf nesnesini gösteriyorsa, o sınıfın üye fonksiyonu olacak.
+
+```cpp
+#include <iostream>
+
+class Base {
+public:
+    virtual void func()
+    {
+        std::cout << "Base::func()\n";
+    }
+};
+
+class Der : public Base {
+private:
+    void func() override //private olsa bile virtual dispatch devreye girer
+    {
+        std::cout << "Der::func()\n";
+    }
+};
+
+void gfooPointer(Base* p)
+{
+    p->func();
+}
+
+void gfooRef(Base& baseref)
+{
+    baseref.func();
+}
+
+int main()
+{
+    Der myder;
+    Base mybase = myder; //object slicing
+    mybase.func();      // Base:func() virtual dispatch olmaz çümkü referans ya da pointer değil
+    Base* baseptr = &myder; // upcasting Der* ----> Base*
+    baseptr->func(); // Der:func()
+
+    Base& baseref = myder; //upcasting Der& ---->Base&
+    baseref.func(); // Der:func()
+
+    gfooPointer(new Der); // Der:func() upcasting new Der idafesi Der* -----> Base*
+    gfooRef(myder); // Der:func() upcasting Der& ---->Base&
+
+}
+```
