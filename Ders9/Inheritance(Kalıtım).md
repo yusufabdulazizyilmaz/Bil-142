@@ -320,7 +320,8 @@ private:
 
 class Fiat : public Car {
 private:
-    Car* clone() override
+    // !!!! covariance return type Car* yerine Fiat* yazılabilir.
+    Fiat* clone() override  
     {
         // new operatorüyle dinamik ömürlü bir nesne copy constructor ile oluşturuldu.
         return new Fiat(*this);
