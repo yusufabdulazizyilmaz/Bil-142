@@ -160,6 +160,8 @@ Audi has started (virtual + override)	 late/dynamic binding    run time
 ```
 
 Override C++11 de dile eklenen contexual keyword. Yazmazsak sentaks hatası olmaz ama yazılmalı. Yoksa birtakım kötü hata senaryolar oluşabilir. 
+Override anahtar sözcüğü için [inceleyiniz.](http://plepa.com/2016/07/27/override-baglamsal-anahtar-sozcugu/)
+
 ```cpp
 class Base {
 public:
@@ -225,3 +227,60 @@ int main()
 
 }
 ```
+## NON-VIRTUAL INTERFACE (NVI)
+Virtual fonksiyonlar implementasyonla ilgili olduğu interface alanında bulunması mantıklı değildir. virtual fonksiyonu çağıracak public kısımda
+tanımlanan non-virtual fonksiyonlar ile bu idiyom gerçekleştirilir. Çağırmadan önce ve sonra bazı şeyleri kontrol edebiliriz böylelikle.
+**Virtual fonksiyonlar private bölümde olmalılar.**
+```cpp
+#include <iostream>
+
+class Base {
+public:
+
+    // public kısımda virtual function yok.
+    void foo()
+    {
+        //kod
+	func();
+	//kod
+    }
+
+    void pvfoo()
+    {
+        //kod
+        pvfunc();
+        //kod
+    }
+
+private:
+    virtual void func()
+    {
+        std::cout << "Base::func()\n";
+    }
+
+    virtual void pvfunc() = 0; //pure virtual func
+};
+
+class Der : public Base {
+private:
+    void func() override
+    {
+        std::cout << "Der::func()\n";
+    }
+
+    void pvfunc() override
+    {
+        std::cout << "Der::pvfunc()\n";
+    }
+};
+
+int main()
+{
+    Der myder;
+    myder.foo(); // Der::func() çağrıldı. this parametresi.
+    myder.pvfoo(); // Der::pvfunc() çağrıldı.
+}
+```
+
+
+destructor ya public virtual ya da protected non-virtual [olmalıdır.](https://necatiergin2019.medium.com/destructor-ya-public-virtual-ya-da-protected-non-virtual-olmal%C4%B1-9bade0adc886)
