@@ -119,3 +119,63 @@ void game(Car &car)
     car.stop();
 }
 ```
+Peki bunu nasıl gerçekleştireceğiz. Upcasting + virtual dispatch
+
+```cpp
+class Car {
+public:
+    virtual void start() 
+    {
+        std::cout << "Car has started\n";
+    }
+};
+
+class Audi : public Car {
+public:
+    void start() override
+    {
+        std::cout << "Audi has started\n";
+    }
+    //int start(); virtual fonksiyonun geri dönüş değeri farklı olamaz. sentaks hatası
+    
+    void start (int) 
+};
+
+void car_game(Car& car)
+{
+    car.start();
+}
+
+int main()
+{
+    Audi myaudi;
+    car_game(myaudi); //Myaudi& den Car& upcasting
+    return 0;
+}
+/*
+ÇIKTI : 
+Car has started (virtual olmazsa) early/static binding   compile time
+Audi has started (virtual + override)	 late/dynamic binding    run time
+*/
+```
+
+Override C++11 de dile eklenen contexual keyword. Yazmazsak sentaks hatası olmaz ama yazılmalı. Yoksa birtakım kötü hata senaryolar oluşabilir. 
+```cpp
+class Base {
+public:
+    virtual void func(int, int);
+};
+
+class Der : public Base {
+public:
+    void func(int, int) override; // override mutlaka yazılmalı
+    //int func(int, int);  //BURASI SENTAKS HATASI. Return değer farklı
+    void func(int); // hata yok ama override değil function overloading
+    //OVERRIDE OLMASI IÇIN HEM RETURN DEĞERI TÜRÜ HEMDE IMZASI AYNI FONKSIYON BILDIRMELIYIZ.
+
+};
+```
+Türemiş sınıf, taban sınıfının virtual fonksiyonunu override ederek, virtual dispatch mekanizmasından faydalanma hakkını
+elde etti. Virtual Dispatch: Eğer taban sınıfın bir sanal foksiyonu, bir taban sınıf pointerı ya da bir
+taban sınıf referansı ile çağrılırsa çalışma zamanında çağrılan fonksiyon o pointer yada referans 
+hangi türden sınıf nesnesini gösteriyorsa, o sınıfın üye fonksiyonu olacak.
