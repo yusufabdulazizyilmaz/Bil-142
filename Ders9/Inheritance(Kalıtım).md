@@ -83,6 +83,7 @@ Kalıtımda Airplane isimli taban sınıfımız olsun. Taban sınıfın interfac
 İKİNCİ KATEGORIDEN EN AZ BIR FONKSIYONA SAHIPSE BÖYLE SINIFLARA POLIMORPHIC SINIF DENIYOR.
 HEM BÖYLE SINIFLARA HEMDE BU SINIFLARDAN KALITIM YOLUYLA ELDE EDILEN SINIFLARA DENIYOR.
 ÜÇÜNCÜ KATEGORIDEN EN AZ BIR FONKSIYON VARSA BÖYLE SINIFLARADA ABSTRACT / SOYUT CLASS DENIYOR. NESNE OLUŞTURMAK SENTAKS HATASI OLUYOR AMA BU SINIFI POINTER VEYA REFERANS SEMANTIĞI ILE KULLANABILIYORUZ.
+
 ```cpp
 class Airplane {
 public:
@@ -111,7 +112,7 @@ int main()
  Araba yarışı düşünelim şimdi. Car sınıfı kalıtımda kullanılacak taban sınıf olsun. Aşağıdaki fonksiyonda Car türünden kalıtımla elde edilmiş tüm sınıf nesnelerini aşağıdaki fonksiyona gönderebilirim. Burada arabaya özgü start run ... kodların çalıştığını düşünelim. Burada hangi fonksiyonun çağrılacağı runtime da belli oluyor. Eski kodların yeni kodları kullanması olayı bu. Eskiden olmayan bir skoda sınıfını Car sınıfından kalıtım yoluyla elde edersem, game koduna skoda nesnesi gönderilirse, skodanın nesnesinin fonksiyonu çağrılabilir. Buna runtime polymorphism deniyor.
 
 ```cpp
-void game(Car &car)
+void game(Car &carref)
 {
     car.start();
     car.run();
@@ -119,6 +120,7 @@ void game(Car &car)
     car.stop();
 }
 ```
+Statik tür, değişkenlerin türü çevirici program tarafından koda bakarak anlaşılıyorsa buna statik tür denir. Dinamik tür, türün ne olduğunun programın runtime da belli olmasıdır. carref statik türü Car& iken dinamik türü Mercedes olabilir.
 Peki bunu nasıl gerçekleştireceğiz. Upcasting + virtual dispatch
 
 ```cpp
@@ -229,7 +231,7 @@ int main()
 ```
 ## NON-VIRTUAL INTERFACE (NVI)
 Virtual fonksiyonlar implementasyonla ilgili olduğu interface alanında bulunması mantıklı değildir. virtual fonksiyonu çağıracak public kısımda
-tanımlanan non-virtual fonksiyonlar ile bu idiyom gerçekleştirilir. Çağırmadan önce ve sonra bazı şeyleri kontrol edebiliriz böylelikle.
+tanımlanan non-virtual fonksiyonlar ile bu idiyom gerçekleştirilir. Invariant, sınıf/func ın doğru çalışması için mutlaka sağlanması gereken koşullardır. Bu invariantlar sağlanmadıysa bir yanlışlık vardır. Çağırmadan önce ve sonra invariantları kontrol edebiliriz böylelikle.
 **Virtual fonksiyonlar private bölümde olmalılar.**
 ```cpp
 #include <iostream>
@@ -281,6 +283,88 @@ int main()
     myder.pvfoo(); // Der::pvfunc() çağrıldı.
 }
 ```
+## Virtual Constructor ve Virtual Destructor
 
+C++ ta constructor virtual olamaz. Virtual keywordü constructor için kullanılamaz. Bu yüzden run time da türü belli olan nesnemizin kopyasını çıkarmak için virtual constructor idiom ya da Clone idiom denilen tekniği kullanacağız.
+```cpp
+#include <iostream>
+
+class Car {
+public:
+    virtual Car* clone() = 0;
+
+    void start()
+    {
+        start_impl();
+    }
+
+    virtual ~Car() = default;  // destructor public virtual olmalı
+private:
+    virtual void start_impl() = 0;
+};
+
+class Mercedes : public Car {
+private:
+    Car* clone() override
+    {
+        // new operatorüyle dinamik ömürlü bir nesne copy constructor ile oluşturuldu.
+        return new Mercedes(*this);
+        // return new Mercedes(); kopyası olmazdı.
+    }
+
+    void start_impl() override
+    {
+        std::cout << "Mercedes has just started\n";
+    }
+};
+
+class Fiat : public Car {
+private:
+    Car* clone() override
+    {
+        // new operatorüyle dinamik ömürlü bir nesne copy constructor ile oluşturuldu.
+        return new Fiat(*this);
+    }
+
+    void start_impl() override
+    {
+        std::cout << "Fiat has just started\n";
+    }
+};
+
+void car_game(Car* p)
+{
+    Car* newcar = p->clone();
+    p->start();
+    newcar->start();
+    std::cout << "----------------------------------------\n";
+    getchar();
+
+}
+
+Car* create_random_car()
+{
+    switch (rand()%2) {
+    case 0:
+        std::cout << "Mercedes Case\n";
+        return new Mercedes;
+    case 1:
+        std::cout << "Fiat Case\n";
+        return new Fiat;
+    }
+
+    return nullptr;
+}
+
+int main()
+{
+    for (;;) {
+        auto c = create_random_car();
+        car_game(c);
+        delete c;
+    }
+}
+```
+Sınıf polimorfik ise mutlaka taban sınıfın destructorunu virtual yapmalıyız böylece türemiş sınıf nesneleri taban sınıf pointerı ile delete edildiğinde veya handle edildiğinde bir problem olmasın.
 
 destructor ya public virtual ya da protected non-virtual [olmalıdır.](https://necatiergin2019.medium.com/destructor-ya-public-virtual-ya-da-protected-non-virtual-olmal%C4%B1-9bade0adc886)
