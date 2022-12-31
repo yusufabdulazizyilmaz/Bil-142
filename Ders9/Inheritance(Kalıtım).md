@@ -402,3 +402,43 @@ Base destructor
 */
 ```
 destructor ya public virtual ya da protected non-virtual [olmalıdır.](https://necatiergin2019.medium.com/destructor-ya-public-virtual-ya-da-protected-non-virtual-olmal%C4%B1-9bade0adc886)
+
+
+## DIAMOND FORMATION - ELMAS FORMASYONU/DDD (Dreaded Diamond of Derivation)
+Base den 2 adet sınıf elde edilsin.Ayrı sınıflar Der1 ve Der2. Sonrasında Der1 ve Der2 nin iterfacesini alıp multiple inheritance ile MDer i elde edelim.
+
+Myder -----> Der1,Der2 -----> Base
+
+Der1 ve Der2 içinde Base nesnesi var.Mder ise Der1 ve Der2 den elde edilmiş türetilmiş sınıf. Mder içerisinde 2 adet Base nesnesi oluşacak. Burada ambigiuty oluşacak. Nitelemezsek hangi Base nesnesi için çağırdığımızı anlama şansı yok. Compile time a yönelik bir hata. FAKAT asıl sorun, modelin yanlış olması.
+```cpp
+class Base{
+public:
+    void foo();
+};
+class Der1 : public Base{
+};
+class Der2 : public Base{
+};
+class Mder : public Der1, public Der2{
+public:
+    void bar()
+    {
+        foo();      //Ambigiuty var
+        Der1::foo();  // Bu şekilde sorun aşılır.GEÇERLİ.
+        Der2::foo();  // GEÇERLİ.İsteğe bağlı hangisi istenirse seçilir.
+    }
+};
+int main()
+{
+    Mder md;
+    md.foo(); 		//SENTAKS HATASI.AMBIGIUTY
+    md.Der1::foo();	// Ambigiuty ismi niteleyerek aşılır.
+    md.Der2::foo();
+}
+```
+Basedeki foo()nun, nonstatic member function olduğu için gizli bir Base* parametresi var.
+Dolayısıyla normalde biz türemiş sınıf nesnesi ile taban sınıfın member fonksiyonunu çağırınca, türemiş sınıf içerisindeki taban
+sınıf nesnesinin adresini this pointer olarak gönderiyoruz. Fakat şimdi ortada bir tane değil 2 adet Base nesnesi var.
+
+## VIRTUAL INHERITANCE
+Derleyici Der1 den gelen Base in adresini mi yoksa Der2 den gelen Base in adresini kullanacak bilme şansı yok.
