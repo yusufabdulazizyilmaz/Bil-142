@@ -37,3 +37,138 @@ int main()
     bx.foo(); //BURASI HATA. İNTERFACE DEVRALINMAZ. KALITIMDA INTERFACE DEVRALINIR.
 }
 ```
+destructor ana bloğundaki kodlar çağrılıyor. Sonrasında hayata gelmesiyle ters sırada elemanlarında destructoru çağrılıyor.
+```cpp
+#include <iostream>
+
+class Member {
+public:
+    Member()
+    {
+        std::cout << "Member Default ctor\n";
+    }
+
+    ~Member()
+    {
+        std::cout << "Member Destructor\n";
+    }
+};
+
+class Owner {
+public:
+    Owner() // burada Member için default ctor çağrılacak.
+    {
+        std::cout << "Owner Default Ctor\n";
+    }
+
+    ~Owner()
+    {
+        std::cout << "Owner Destructor\n";
+    }
+
+private:
+    Member mx;
+};
+
+int main()
+{
+    Owner ox;
+}
+/*ÇIKTI:
+Member Default ctor
+Owner Default Ctor
+Owner Destructor
+Member Destructor*/
+```
+
+```cpp
+#include <algorithm>
+#include <iostream>
+
+class Member {
+public:
+    Member() = default;
+
+    ~Member() = default;
+
+    Member(const Member&)
+    {
+        std::cout << "Member copy ctor\n";
+    }
+
+    Member& operator=(const Member&)
+    {
+        std::cout << "Member copy assignment\n";
+        return *this;
+    }
+
+    Member(Member&&)
+    {
+        std::cout << "Member move ctor\n";
+    }
+
+    Member& operator=(Member&&)
+    {
+        std::cout << "Member move assignment\n";
+        return *this;
+    }
+};
+
+class Owner {
+public:
+    Owner() = default;
+
+    ~Owner() = default;
+
+    Owner(const Owner& other)
+            :mx(other.mx)
+    {
+        std::cout << "Owner copy ctor\n";
+    }
+
+    //COPY ASSIGNMENT
+    Owner& operator=(const Owner& other)
+    {
+        std::cout << "Owner copy assigment\n";
+        mx = other.mx;
+        return *this;
+    }
+
+    //MOVE CONSTRUCTOR
+    Owner(Owner&& other)
+            :mx(std::move(other.mx))
+    {
+        std::cout << "Owner move constructor\n";
+    }
+
+    //MOVE ASSIGNMENT
+    Owner& operator=(Owner&& other)
+    {
+        std::cout << "Owner move assigment\n";
+        mx = std::move(other.mx);
+        return *this;
+    }
+
+private:
+    Member mx;
+};
+
+int main()
+{
+    Owner a, b;
+    Owner c = a;
+    b = a;
+    Owner d = std::move(a);
+    Owner e;
+    e = std::move(b);
+}
+/*ÇIKTI:
+Member copy ctor
+Owner copy ctor
+Owner copy assigment
+Member copy assignment
+Member move ctor
+Owner move constructor
+Owner move assigment
+Member move assignment*/
+```
