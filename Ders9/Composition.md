@@ -7,7 +7,7 @@ Aggregation : Eğer bu ilişki içindeki sınıflardan biri, diğerinin sahibi o
 Composition : Yine bir nesne diğerinin sahibi fakat sahip olan ile olunan nesne arasında ömürsel birliktelik varsa yani Sahip hayata gelince, 
 olunan da geliyor sahip ölünce olunan ölüyorsa buna composition deniyor. Composition bir interface edinme ilişkisi değil. Bir sınıf başka sınıf türden 
 bir veri elemanına sahip olunca o veri elemanının interface ini kendi interface ine katmıyor.
-
+```cpp
 class A {
 public:
     void foo();
@@ -35,3 +35,4 @@ int main()
     B bx;
     bx.foo(); //BURASI HATA. İNTERFACE DEVRALINMAZ. KALITIMDA INTERFACE DEVRALINIR.
 }
+```
