@@ -409,7 +409,11 @@ Base den 2 adet sınıf elde edilsin.Ayrı sınıflar Der1 ve Der2. Sonrasında 
 
 Myder -----> Der1,Der2 -----> Base
 
-Der1 ve Der2 içinde Base nesnesi var.Mder ise Der1 ve Der2 den elde edilmiş türetilmiş sınıf. Mder içerisinde 2 adet Base nesnesi oluşacak. Burada ambigiuty oluşacak. Nitelemezsek hangi Base nesnesi için çağırdığımızı anlama şansı yok. Compile time a yönelik bir hata. FAKAT asıl sorun, modelin yanlış olması.
+Der1 ve Der2 içinde Base nesnesi var.Mder ise Der1 ve Der2 den elde edilmiş türetilmiş sınıf. Mder içerisinde 2 adet Base nesnesi oluşacak. Burada ambigiuty oluşacak. Nitelemezsek hangi Base nesnesi için çağırdığımızı anlama şansı yok. Compile time a yönelik bir hata. 
+
+Basedeki foo()nun, nonstatic member function olduğu için gizli bir Base* parametresi var.
+Dolayısıyla normalde biz türemiş sınıf nesnesi ile taban sınıfın member fonksiyonunu çağırınca, türemiş sınıf içerisindeki taban
+sınıf nesnesinin adresini this pointer olarak gönderiyoruz. Fakat şimdi ortada bir tane değil 2 adet Base nesnesi var. Derleyici Der1 den gelen Base in adresini mi yoksa Der2 den gelen Base in adresini kullanacak bilme şansı yok.
 ```cpp
 class Base{
 public:
@@ -436,9 +440,98 @@ int main()
     md.Der2::foo();
 }
 ```
-Basedeki foo()nun, nonstatic member function olduğu için gizli bir Base* parametresi var.
-Dolayısıyla normalde biz türemiş sınıf nesnesi ile taban sınıfın member fonksiyonunu çağırınca, türemiş sınıf içerisindeki taban
-sınıf nesnesinin adresini this pointer olarak gönderiyoruz. Fakat şimdi ortada bir tane değil 2 adet Base nesnesi var.
+FAKAT asıl sorun, modelin yanlış olması. Dilin kurallarına göre çoklu kalıtımla elde türemiş sınıf nesnesi içinde, ortak taban sınıf türünden
+2 adet nesne olsada, genellikle(her zaman değil) bizim istediğimiz 1 adet nesne olması.Çünkü model onu zorluyor. Mesela fax modem örneği öyle. Model diyorki fax modem bir cihaz. Ben onu bir interface i ile kullanacağım ama fiziksel olarak karşılığı aslında onu ben tek cihaz olarak görmek istesem bile 2 adet cihaz var içinde. Mesela ben onu fax tarafı için açacağım modem tarafında bu kapalı görünecek çünkü orada da ayrı bir nesne var. Böyle durumlarda ortak taban türünden 1 nesne oluşturmak gerekiyor. Çözüm Virtual Inheritance.
+
 
 ## VIRTUAL INHERITANCE
-Derleyici Der1 den gelen Base in adresini mi yoksa Der2 den gelen Base in adresini kullanacak bilme şansı yok.
+Eğer ortak taban sınıf nesnesinden(birden fazla taban sınıf nesnesinden), çoklu kalıtım yoluyla yeni bir sınıf elde ettiğimizde,
+onun içine ortak taban sınıf nesnesinden 2 adet değilde 1 tane olmasını istiyorsak çoklu kalıtımda kullanılacak taban sınıfları 
+sanal kalıtım dediğimiz biçimde oluşturacağız. Ortak taban sınıfa virtual base class diyeceğiz. Bu sınıftan kalıtım yoluyla elde edilcek ve daha sonra çoklu kalıtımda taban sınıf rolü oynayacak sınıflarda, kalıtımda virtual keywordü kullanılıyor.
+```cpp
+#include <iostream>
+
+//virtual base class
+class Device {
+public:
+    void turnon()
+    {
+        std::cout << "Cihaz acildi\n";
+        on_flag = true;
+    }
+
+    void turnoff()
+    {
+        std::cout << "Cihaz kapandi\n";
+        on_flag = false;
+    }
+
+    [[nodiscard]] bool is_on() const
+    {
+        return on_flag;
+    }
+
+    virtual ~Device() = default;
+
+private:
+    bool on_flag{false};
+};
+
+class Printer : virtual public Device {  //BURAYA DİKKAT. VİRTUAL GELDİ
+public:
+    virtual void print()
+    {
+        if (!is_on()) {
+            std::cout << "Cihaz kapali oldugundan print yapilamiyor\n";
+        }
+        else {
+            std::cout << "Print islemi yapildi\n";
+        }
+    }
+    //..
+};
+
+class Scanner : virtual public Device {  //BURAYA DİKKAT. VİRTUAL GELDİ
+public:
+    virtual void scan()
+    {
+        if (!is_on()) {
+            std::cout << "Cihaz kapali oldugundan scan yapilamiyor\n";
+        }
+        else {
+            std::cout << "Scan islemi yapildi\n";
+        }
+    }
+    //..
+};
+
+class Combo : public Printer, public Scanner {
+};
+
+int main()
+{
+    Combo cx;
+    cx.Printer::turnon(); // virtual değilken
+    //cx.turnon();  //virtual
+    cx.print();
+    cx.scan();
+    cx.Printer::turnoff(); // virtual değilken
+    //cx.turnoff(); // virtual
+    cx.scan();
+}
+
+/* 
+ÇIKTI: (virtual olmadan)
+Cihaz acildi
+Print islemi yapildi
+Cihaz kapali oldugundan scan yapilamiyor.    !!!!!!!!
+Cihaz kapandi
+Cihaz kapali oldugundan scan yapilamiyor
+
+ÇIKTI: (virtual inheritance) (her şey olması gerektiği gibi)
+Cihaz acildi
+Print islemi yapildi
+Scan islemi yapildi
+Cihaz kapandi
+Cihaz kapali oldugundan scan yapilamiyor
+```
