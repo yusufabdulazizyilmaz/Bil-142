@@ -9,7 +9,7 @@ C++ ta nesnelerin türlerinin çalışma zamanında anlaşılmasına yönelik 3 
 dynamic_cast -> tür dönüştürme operatorü.  
 typeid -> bir operator.  
 typeinfo -> bu da bir sınıf. 
-## DYNAMIC CAST Tür Dönüştürme Operatörü
+## DYNAMIC_CAST Tür Dönüştürme Operatörü
 Base classtan derived classa dönüşüm var mı yok mu ona bakıyor. Programın çalışma zamanında bir down-casting in güvenli olarak yapılıp yapılamadığını test ediyor.
 
 **dynamic_cast<target type>(expr);** 
