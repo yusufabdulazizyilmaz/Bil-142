@@ -14,23 +14,33 @@ Base classtan derived classa dönüşüm var mı yok mu ona bakıyor. Programın
 
 **dynamic_cast<target type>(expr);**.  
 ```cpp
-  Mercedes *p = dynamic_cast<Mercedes *>(carptr);
+Mercedes *p = dynamic_cast<Mercedes *>(carptr);
 ```
 Runtime da bu kod çalıştığında 2 ihtimal var.  
 1 - Carptr nin değeri Fiat ve Fiat124 gibi Fiat taban sınıfından üretilmiş Fiat124 gibi bir nesnesinin adresiyse dynamic cast operatörü başarılı olacak 
   ve bize Fiat nesnesinin adresini üretecek. ve p yi bir Fiat olarak kullanabileceğiz.  
-2 - Diyelimki buraya gelen araba Skoda olsun, burada dynamic_cast başarısız olacak ve nullptr geri döndürecek.
+2 - Diyelim ki buraya gelen araba Skoda olsun, burada dynamic_cast başarısız olacak ve nullptr geri döndürecek.
 Aşağıdakini yazabiliriz yani.  
-  ```cpp
+```cpp
 //İdiyom
 if(Fiat *p = dynamic_cast<Fiat *>(carptr))
 {
-	// Fiat ise buraya girecek 
+// Fiat ise buraya girecek
 }
-  /*
-  Fiat *p = dynamic_cast<Fiat *>(carptr)
-  if (!p).   //(p != nullptr)
-  {
-  }
-  */
-  ```
+/*
+Fiat *p = dynamic_cast<Fiat *>(carptr)
+if (!p).   //(p != nullptr)
+{
+}
+*/
+void car_game(Car* carptr)
+{
+    carptr->start();
+    if (Fiat*p = dynamic_cast<Fiat*>(carptr)) {
+        p->activate_aebs();    //Arabanın Fiattan kalıtım yoluyla elde edilen sınıflarıda kapsıyor. Yani Fiat124 olsa da içerisine girecek.
+    }
+    carptr->run();
+    carptr->stop();
+}
+
+```
