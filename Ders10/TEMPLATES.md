@@ -189,3 +189,52 @@ int main()
 }
 
 ```
+### CALLABLE
+STLde Algorithm denilen fonksiyon şablonlarını öğrenince burası çok önemli olacak.
+Bu templateten derleyicinin yazacağı kodun geçerli olabilmesi için T nin hangi türler olma ihtimali var?
+```cpp
+#include <iostream>
+
+template<typename T>
+void func(T x)
+{
+    x();
+}
+
+void foo()
+{
+    std::cout << "foo()\n";
+}
+
+// ismi functor ama başka bir şeyde olabilirdi. önemli olan call operatörünü overload etmesi
+class Functor {
+public:
+    void operator()()
+    {
+        std::cout << "Functor::operator()()\n";
+    }
+};
+
+int main()
+{
+    func(foo);   //func(void(*x)())
+
+    auto fptr = foo;
+    func(fptr);  //
+
+    Functor f;
+    func(f);
+
+    func([] { std::cout << "yusuf"; });
+}
+/* ÇIKTI:
+foo()
+foo()
+Functor::operator()()
+yusuf
+*/
+```
+a - functionları
+b - function pointerları
+c - Functor sınıfları
+d - Lambda ifadeleri.
