@@ -9,3 +9,4 @@ Alias Template		C++11 ile geldi
 Variable Template		C++11 ile geldi   
 Concept Template		C++20 ile geldi  
 
+Standart Template Library(STL) derleyici bu templatelerden kodları oluşturuyor ve sonra derliyor. Standart kütüphanenin %98-99 oranında şablonlardan oluşuyor.
