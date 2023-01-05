@@ -77,3 +77,115 @@ f 1
 d 10
 i 0
 ```
+### Deduction(çıkarım)
+auto (const volatile ref düşer. array to pointer conversion ve function to pointer conversion olur)
+```cpp
+#include <iostream>
+#include <type_traits>
+
+template<typename T>
+void func(T x)
+{
+    std::cout << typeid(T).name() << std::endl;
+}
+
+int main()
+{
+    func(10);  // auto x = 10; int x=10; func(int)
+    const int a = 5;
+    func(a);   // auto x = a; int x=a; func(int)
+    int i = 3;
+    int& r = i;
+    func(r);   // auto x = r; int x=r; func(int)
+
+    int arr[] = {1, 2, 3, 4, 5};
+    func(arr); // auto x = arr; int* x=arr; func(int*)
+
+    func("yusuf"); //auto x= "yusuf"; const char* x="yusuf"; func(const char*)
+}
+/*
+ÇIKTI:
+i
+i
+i
+Pi
+PKc
+```
+auto &
+```cpp
+#include <iostream>
+#include <type_traits>
+
+template<typename T>
+void func(T& x)
+{
+    std::cout << typeid(T).name() << std::endl;
+}
+
+int main()
+{
+    //func(10);  // auto& x = 10; int& x=10; sentaks hatası
+    const int a = 5;
+    func(a);   // auto& x = a; const int x=a; func(const int) func(int)
+    int i = 3;
+    int& r = i;
+    func(r);   // auto& x = r; int& x=r; func(int&)
+
+    int arr[5] = {1, 2, 3, 4, 5};
+    func(arr); // auto& x = arr; int (&x)[5] = arr; func(int (&x)[5])
+
+    func("yusuf"); //auto& x= "yusuf"; const char x[6]="yusuf"; func(const char (&r)[6])
+}
+/*
+ÇIKTI:
+i
+i
+A5_i
+A6_c
+```
+
+```cpp
+template <typename T>
+void func(T x, T y);
+int main()
+{
+	func(1,2); // GEÇERLİ. int int
+	func("ali","veli"); //GEÇERLİ. const char *, const char *
+	func(3.4,2.44); // GEÇERLİ double double
+	func(2,3.4); //SENTAKS HATASI. int double. int mi double mı ? Ambigiuty.
+		
+}
+
+template<typename T>
+void func(T& x, T& y);
+
+int main()
+{
+    int a[5]{}, b[5]{}, c[4]{};
+    func("Ali", "Can"); //Geçerli
+    func("Umut", "Haydar"); //Geçersiz çünkü const char [5] , const char [7]
+    func(a, b);    //GEÇERLİ
+    func(a, c); //GEÇERSİZ çünkü int [5] , int [4]
+}
+
+template<typename T>
+void func(T*);
+
+int main()
+{
+    int x{};
+    int* ptr{&x};
+    int** p{&ptr};
+    func(p);  // T int*
+}
+
+template<typename T, typename U>
+void func(T (*)(U));
+
+int foo(double);
+int main()
+{
+    func(foo); // T int, U double
+}
+
+```
