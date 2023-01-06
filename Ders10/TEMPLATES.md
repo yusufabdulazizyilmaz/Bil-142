@@ -5,7 +5,7 @@ C++ ın en güçlü olduğu alan belki de bu. C++ terminolojisinde derleyicinin 
 Derleyiciye kod yazdıran kodlara template deniyor. Temel kategorilere ayrılıyor.  
 Function Templates   
 Class Templates   
-Alias Template		C++11 ile geldi   
+Alias Template			C++11 ile geldi   
 Variable Template		C++11 ile geldi   
 Concept Template		C++20 ile geldi  
 
@@ -27,17 +27,26 @@ template<typename T, std::size_t size>
 struct Array {
 };
 
+class Myclass{
+public:
+	template <typename T>
+	void memberFunc(T x);
+};
+
 int main()
 {
     Array<int, 2> ar;
     func(2, 3.);   //func(int x, double y) yazılacak
+    
+    Myclass mx;
+    mx.memberFunc(10.4); // compiler burada double parametreli bir memberFunc yazacak
 }
 ```
 Şablonlar başlık dosyalarında yer alıyor. Çünkü derleyicinin kod üretebilmesi için bu şablonların tanımlarını görmesi gerekiyor. Başlık dosyasına template kodları konulunca ODR ihlal edilmez. Mesela vector headerını include ettiğimizde vector header içindeki fonksiyon şablonlarının kodunu kendi dosyamıza yapıştırmış oluyoruz.
 
 ## FONKSIYON ŞABLONLARI
 
-Template tür parametresi functionun bildirimi ya da tanımı içinde her yerde kullanılabilir.
+Template tür parametresi functionun bildirimi ya da tanımı içinde her yerde kullanılabilir. Burası compile edilirse hata vermez. Çünkü derleyici T nin ne olduğunu bilmiyor. Dolayısıyla T türüne bağlı kontrollerinin bu aşamada yapılma şansı yok. 
 ```cpp
 template<typename T> // T template parametresi
 T& func(T x)   // x ise function paramete veya call parametre 
@@ -50,7 +59,19 @@ T& func(T x)   // x ise function paramete veya call parametre
     return x;
 }
 ```
-Burası compile edilirse hata vermez. Çünkü derleyici T nin ne olduğunu bilmiyor. Dolayısıyla T türüne bağlı kontrollerinin bu aşamada yapılma şansı yok.   
+Diyelim ki T ye bağlı bir nested type oluşturmak istiyoruz.Normalde T::Nec a; gibi yazılabiliyordu
+BU şekilde yazdığımızda dilin kurallarına göre burada öncelik bunun bir nested type olması yönünde değil,
+bunun sınıfın static bir veri elemanı olması yönünde. DOlayısıyle dilin kurallarının çözünürlük operatörünün
+sağ tarafında(Eğer sol tarafı bir template parametresi ise) ki ismin bir tür ismi olarak alınmasını istersek
+burada typename keyword ünü kullanmak zorundayız.
+```cpp
+template <typename T> // buradaki typename yerine class gelebilir
+typename T::value_type func(T x, int y)
+{
+    typename T::Nec; // Buradaki typename yerine class keyword gelemez.
+}
+
+```
 Derleyici Şablon Tür Parametresi Yerine Hangi Türün Kullanılacağını Nasıl Anlayacak?   
 1. Deduction(çıkarım) 
 Template tür parametresinin ne olduğuna derleyici, fonksiyona yapılan çağrıda kullanılan argümanların türünden hareketle karar verecek. auto type deduction ile tek bir istisna dışında aynı.
@@ -190,7 +211,7 @@ int main()
 
 ```
 ### CALLABLE
-STLde Algorithm denilen fonksiyon şablonlarını öğrenince burası çok önemli olacak.
+STL en önemli bileşenlerinden olan Algorithm denilen fonksiyon şablonlarını öğrenince CALLABLE kavramı çok önemli olacak.
 Bu templateten derleyicinin yazacağı kodun geçerli olabilmesi için T nin hangi türler olma ihtimali var?
 ```cpp
 #include <iostream>
@@ -239,7 +260,7 @@ b - function pointerları
 c - Functor sınıfları    
 d - Lambda ifadeleri    
 ### OVERLOADING
-Fonksiyon şablonları ile gerçek fonksiyonlar birbirini overload edebilir. Derleyici fonksiyon şablonuna gelince template argument deduction yaparak bir imza elde ediyor. Bu imza ile gerçek fonksiyon arasından karar verilir. İmza ile gerçek fonksiyonun imzası aynı olduğunda gerçek fonksiyon, function overload resolutionda üstünlüğü vardır.
+Fonksiyon şablonları ile gerçek fonksiyonlar birbirini overload edebilir. Derleyici fonksiyon şablonuna gelince template argument deduction yaparak bir imza elde edilmeye çalışılıyor. Bu aşamaya SUBSTITUTION işlemi denir. SUBSTITUTON işlemi başarılı olursa imza ile gerçek fonksiyon arasından karar verilir. İmza ile gerçek fonksiyonun imzası aynı olduğunda gerçek fonksiyon, function overload resolutionda üstünlüğü vardır. 
 ```cpp
 #include <iostream>
 
@@ -290,4 +311,17 @@ Gercek Function
 TT
 TU
 2*/
+```
+EĞER BIR TEMPLATE TE SUBSTITUTION AŞAMASINDA YANI OVERLOAD RESOLUTIONA KATILACAK FUNCTIONUN IMZASININ, PARAMETRIK YAPISININ ANLAŞILMASI AŞAMASINDA BIR SENTAKS HATASI OLUŞURSA, BU BIR SENTAKS HATASI OLARAK KABUL EDİLMEZ, SADECE OVERLOAD RESOLUTİONDAN ÇIKARTILIR. BUNA SFINAE OUT DENİYOR.   
+SFINAE = SUBSTITUTION FAILURE IS NOT AN ERROR.
+```cpp
+template <typename T>
+typename T::Nec func(T x);
+
+void func(double);
+
+int main()
+{
+	func(12); 
+}
 ```
