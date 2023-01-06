@@ -62,8 +62,27 @@ int main()
     std::vector<Myclass<int>>w2;
 }
 ```
-
+class şablonları, default template argument alabiliyor.
 ```cpp
+template <typename T, typename A = std::allocator<T>>
+class vector{
+	//..
+};
+
+template<typename T = int, typename U = Nec<T>>
+struct Myclass {
+    
+};
+
+int main()
+{
+    Myclass <double,int> m1;    //Myclass<double, int>
+    Myclass<double> m2;         //Myclass<double, Nec<double>>
+    Myclass<> m3;               //Myclass<int, Nec<int>>
+    
+    
+    std::vector<int> vx; //std::vector<int, std::allocator<int>>
+}
 ```
 
 ```cpp
