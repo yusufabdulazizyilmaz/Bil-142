@@ -234,7 +234,60 @@ Functor::operator()()
 yusuf
 */
 ```
-a - functionları
-b - function pointerları
-c - Functor sınıfları
-d - Lambda ifadeleri.
+a - functionları   
+b - function pointerları   
+c - Functor sınıfları    
+d - Lambda ifadeleri    
+### OVERLOADING
+Fonksiyon şablonları ile gerçek fonksiyonlar birbirini overload edebilir. Derleyici fonksiyon şablonuna gelince template argument deduction yaparak bir imza elde ediyor. Bu imza ile gerçek fonksiyon arasından karar verilir. İmza ile gerçek fonksiyonun imzası aynı olduğunda gerçek fonksiyon, function overload resolutionda üstünlüğü vardır.
+```cpp
+#include <iostream>
+
+template<typename T>
+void func(T x)
+{
+    std::cout << "function template \n";
+}
+
+void func(int)
+{
+    std::cout << "Gercek Function\n";
+}
+
+template<typename T>
+void func(T x, T y)
+{
+    std::cout << "TT" << "\n";
+}
+
+template<typename T, typename U>
+void func(T x, U y)
+{
+    std::cout << "TU" << "\n";
+}
+
+template<typename T>
+void func(T* x)
+{
+    std::cout << "2";
+}
+
+int main()
+{
+    func('A');
+    func(1.);
+    func(24);
+    func(1, 2);
+    func(1, 2.);
+    //PARTIAL ORDERING RULES (Function parametresi daha spesifik olan seçilecek.)
+    int x{};
+    func(&x);  
+}
+/* ÇIKTI:
+function template 
+function template 
+Gercek Function
+TT
+TU
+2*/
+```
