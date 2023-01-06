@@ -84,17 +84,130 @@ int main()
     std::vector<int> vx; //std::vector<int, std::allocator<int>>
 }
 ```
-
+## MEMBER TEMPLATES
 ```cpp
+template<typename T>
+class Myclass {
+public:
+    void func(T x);
+
+    Myclass() = default;
+
+    //Copy constructor Myclass(const Myclass &);
+    Myclass(const Myclass<T>&);  //Myclass(const Myclass<int>&) demek !!!!!
+
+    void foo(Myclass);
+
+    // Member template
+    template<typename U>
+    void fooNew(Myclass<U> x);
+};
+
+int main()
+{
+    Myclass<int> mx; // Myclass int açılımı. T burada int
+    mx.func(1.0); // Bu adımda template type deduction yapılmayacak çünkü T belli zaten.
+    Myclass<int> my = mx; //copy constructor
+
+    Myclass<double> md;
+
+    //md.foo(mx); sentaks hatası
+
+    md.fooNew(mx); // geçerli fooNew(Myclass<int>) U int
+
+}
+```
+## Pair Class Template
+STL de en sık kullanılan sınıf şablonlarından biri. Özü çok basit ama içeriği karışık.  
+1 - En çok kullanıldığı yer bir fonksiyondan 2 adet değer döndürmek için.   
+2 - bir sınıfın veri elemanını pair yapabiliriz.   
+3 - Container denen sınıflarda pair tutmak çok sık karşımıza çıkan yapı. insanların yaşlarını ve isimlerini birarada tutmak istedik ama bir nedenden ötürü sınıf yapmak istemedik
+```cpp
+std::pair<int,double> foo();
+
+class Person {
+private:
+    std::pair<std::string, int> mx;
+};
+
+int main()
+{
+    std::vector<std::pair<std::string, int>> ivec;
+}
 ```
 
 ```cpp
+#include <iostream>
+
+template<typename T, typename U>
+struct Pair {
+    Pair() = default;
+
+    // bunun sayesinde Pair<int,double> x{123,5.6}; yapabiliriz.
+    Pair(const T& t, const U& u)
+            :first(t), second(u) { }
+
+    //conversion constructor
+    template<typename K, typename M>
+    Pair(const Pair<K, M>& other)
+            : first(other.first), second(other.second) { }
+
+    T first{}; //value init edildi. Bu da zero init
+    U second{};
+};
+
+//burası idiyom < operatorü STL in en önemli operatörü kabul ediliyor. implementasyonlarda < kullanıyoruz.
+template<typename T, typename U>
+[[nodiscard]] bool operator<(const Pair<T, U>& left, const Pair<T, U>& right)
+{
+    return left.first<right.first || !(right.first<left.first) && left.second<right.second;
+}
+
+template<typename T, typename U>
+Pair<T, U> MakePair(const T& t, const U& u)
+{
+    return Pair<T, U>(t, u); // bu bir geçici nesne
+}
+
+int main()
+{
+    Pair<int, double> p1;
+    std::cout << p1.first << " " << p1.second << "\n";
+    Pair<int, double> p2{123, 5.6};
+    std::cout << p2.first << " " << p2.second << "\n";
+
+    std::cout << std::boolalpha << (p1<p2) << "\n";
+
+    Pair<int, int> p3;
+    p1 = p3; //önce conversion ctor sonra operator=()
+
+    auto p4 = MakePair(12, 4.5);
+}
 ```
 
 ```cpp
-```
+#include <utility>
+#include <string>
+#include <iostream>
 
-```cpp
+//PAIRIN BIR INSERTERI YOK. ÖYLE BIR FUNC YAZALIM KI HERTÜRLÜ PAIRI ÇIKIŞ AKIMINA VERSIN.
+template<typename T, typename U>
+std::ostream& operator<<(std::ostream& os, const std::pair<T, U>& p)
+{
+    return os << "(" << p.first << ", " << p.second << ")";
+}
+
+int main()
+{
+    std::pair<int, double>p{ 23, 5.6 };
+    std::cout << p << "\n";
+    std::cout << std::make_pair(12, 4.5)<<"\n";
+    std::cout << std::make_pair(std::make_pair(33, 6.7), 
+            std::make_pair(std::bitset<32>{1234u},std::string("Alican"))) << "\n";
+    
+    std::cout << std::make_pair("Veli", 
+            std::make_pair(std::bitset<32>{1234u},std::string("Alican"))) << "\n";
+}
 ```
 
 ```cpp
