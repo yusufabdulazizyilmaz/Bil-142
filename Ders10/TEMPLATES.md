@@ -91,7 +91,7 @@ int main()
 {
     func(1.f);  //func(float x)  deduction
     func<double>(10.); // expcilit
-    func();  //varsayılan argüman
+    func();  //varsayılan argüman C++11 ile dile eklendi
 }
 /* ÇIKTI:
 f 1
