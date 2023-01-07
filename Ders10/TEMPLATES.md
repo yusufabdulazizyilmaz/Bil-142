@@ -29,14 +29,17 @@ struct Array {
 
 class Myclass{
 public:
+	
 	template <typename T>
 	void memberFunc(T x);
 };
 
 int main()
 {
-    Array<int, 2> ar;
+    
     func(2, 3.);   //func(int x, double y) yazılacak
+    
+    Array<int, 2> ar;
     
     Myclass mx;
     mx.memberFunc(10.4); // compiler burada double parametreli bir memberFunc yazacak
@@ -96,8 +99,28 @@ int main()
 /* ÇIKTI:
 f 1
 d 10
-i 0
+i 0 */
 ```
+Bir fonksiyon derleyici tarafından yazıldıktan sonra gerekli olduğu zaman kullanılabilir. 
+```cpp
+#include <iostream>
+
+template<class T>
+void func(T)
+{
+    static int ival = 0;
+    std::cout << ++ival;
+}
+
+int main()
+{
+    func(1);
+    func(1.0);
+    func(1);
+}
+// ÇIKTI: 112
+```
+
 ### Deduction(çıkarım)
 auto (const volatile ref düşer. array to pointer conversion ve function to pointer conversion olur)
 ```cpp
