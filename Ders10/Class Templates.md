@@ -209,6 +209,108 @@ int main()
             std::make_pair(std::bitset<32>{1234u},std::string("Alican"))) << "\n";
 }
 ```
+## EXPLICIT SPECIALIZATION
+Sınıf ve fonksiyon şablonlarında, bir şablonun belirli tür açılımı için derleyicinin kod yazması yazması yerine benim verdiğim kodun kullanılmasını sağlayabilirim. Buna TEMPLATE EXPLICIT SPECIALIZATION denir. Belirli bir tür template in ana yapisina uymuyorsa ve o tür için özel bir koda ihtiyaç varsa onu specialization olarak verebiliriz.
 
 ```cpp
+template<typename T, int n> // burası görünür durumda olmalı.
+class Myclass {
+public:
+};
+// <> (diamond) explicit specialization
+template <>
+class Myclass<int, 5>
+{
+};
+
+int main()
+{
+    Myclass <char,4> cx;
+    Myclass <double,5> dx;
+    Myclass <int,5> ix; // Bunun için bizim yazdığımız specialization çalışır.
+}
+#include <iostream>
+// 1 -100 arası sayıları ekrana döngü kodu olmadan yazdır.
+template<int n>
+struct A : A <n-1> {
+    A()
+    {
+        std::cout << n << " ";
+    }
+};
+template<>
+struct A<0> {
+};
+int main()
+{
+    A<100> ax;
+}
+```
+
+
+```cpp
+#include <iostream>
+
+template <typename T>
+void func(T x)
+{
+    std::cout << "primary template for type\n";
+}
+template <>
+void func(int x)
+{
+    std::cout << "primary template for type\n";
+}
+int main()
+{
+    func(2.3);
+    func('A');
+    func(5);
+}
+```
+
+Template explicit specialization function overload sete dahil edilmiyor.
+```cpp
+template <typename T>
+void func(T x)
+{
+    std::cout << "1\n";
+}
+template <>
+void func(int *x)
+{
+    std::cout << "2\n";
+}
+template <typename T>
+void func(T *x)
+{
+    std::cout << "3\n";
+}
+int main()
+{
+    int x{};
+    func(&x); 
+}
+// ÇIKTI:3
+```
+## PARTIAL SPECIALIZATION
+Daha sınırlı bir tür kümesi için alternatif template in kullanılmasını istiyoruz. Burada artık template kod artık bir tür için değil, bir tür ailesi için kullanılıyor. Sınıf şablonları için var. Function şablonları için yok.
+```cpp
+#include <utility>
+template<typename T>
+class Myclass{
+};
+// Pointer için partial specialization
+template<typename T>
+class Myclass<T *>
+{
+};
+// Referans için partial specialization
+template <typename T>
+class Myclass<T&> {
+};
+// Pair türleri için partial specialization
+template <typename T, typename U>
+class Myclass< std::pair <T,U>> {
+};
 ```
