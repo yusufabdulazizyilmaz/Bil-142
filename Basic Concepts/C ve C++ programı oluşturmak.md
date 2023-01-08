@@ -1,7 +1,7 @@
 C ve C++ dilinde yazılan bir programın çalıştırılabilir hale getirilebilmesi için, çoğunlukla aşağıdaki
 süreçlerden geçilir:
 
-Kaynak dosyanın oluşturulması:
+1- Kaynak dosyanın oluşturulması:
 
 Kaynak dosya, metin düzenleyici bir programda (text editörü) yazılır. Kaynak dosya bir
 metin dosyasıdır. Özellikle büyük programlar, modül ismi verilen ayrı ayrı parçalar halinde yazılır. Bu
@@ -11,7 +11,7 @@ Fonksiyon tanımlamaları, global değişken tanımlamaları uzantısı .c ya da
 dosyaya, kodlama dosyası (implementation file) denir. Hizmet alacak kodları (client codes) ilgilendiren bildirimler ise 
 bir başka dosyada tutulur. Bu dosyaya, başlık dosyası (header file) denir ve uzantısı .h şeklindedir. 
 
-Kaynak dosyanın önişlemci (preprocessor) program tarafından düzenlenmesi:
+2- Kaynak dosyanın önişlemci (preprocessor) program tarafından düzenlenmesi:
 
 C++ derleyicileri iki ayrı modülden oluşur: Önişlemci Modülü ve Derleme Modülü. Önişlemci modülü, kaynak dosyada çeşitli metinsel düzenlemeler, değişiklikler yapar. C++ programlama dilinde # 
 ile başlayan bütün satırlar, önişlemci programa verilen komutlardır. Kendisine verilen komutları yerine getirdikten sonra, #
@@ -24,7 +24,7 @@ ile başlayan satırları kaynak dosyadan siler. Derleme modülüne girecek prog
 #define SIZE 100   //(find - replace) işlemidir.
 ```
 
-Önişlemci çıktısının derleyici program (compiler) tarafından derlenmesi:
+3- Önişlemci çıktısının derleyici program (compiler) tarafından derlenmesi:
 
 Bir programlama dilinde yazılmış programı başka bir programlama diline çeviren
 programlara "çevirici" (translator) denir. Dönüştürülmek istenen programın yazıldığı dile
@@ -38,7 +38,7 @@ dosyadan bir "amaç dosya" (object file) üretir. Unix/Linux sistemlerinde oluş
 Derleyici programın derleme işlemini yapma sürecine "derleme zamanı" (compile time)
 denir. Derleme işlemi başarısızlık ile de sonuçlanabilir. gcc, clang, MSVC önemli compilerlardır.
 
-Amaç dosyalarının bağlayıcı (linker) program ile birleştirilmesi:
+4- Amaç dosyalarının bağlayıcı (linker) program ile birleştirilmesi:
 
 Daha önce elde edilmiş amaç dosyalar "bağlayıcı" (linker) program tarafından
 birleştirilerek çalıştırılabilir bir dosya elde edilir. UNIX sistemlerinde genellikle
