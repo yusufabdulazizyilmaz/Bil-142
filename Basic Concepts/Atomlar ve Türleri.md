@@ -9,7 +9,7 @@ Değişkenler, işlevler, makrolar, değişmezler gibi yazılımsal varlıklara 
 tarafından belirlenmiş kurallara uyulmak koşuluyla isimler verilebilir. Yazılımsal bir varlığa
 verilen isme ilişkin atomlar isimlerdir (identifier).
 ## 3. İşleçler (Operators)
-İşleçler (operators) önceden tanımlanmış bir takım işlemleri yapan atomlardır.Operatörler ve öncelik ilişkilerini [inceleyiniz](https://en.cppreference.com/w/cpp/language/operator_precedence).
+İşleçler (operators) önceden tanımlanmış bir takım işlemleri yapan atomlardır. Operatörler ve öncelik ilişkilerini [inceleyiniz](https://en.cppreference.com/w/cpp/language/operator_precedence).
 ## 4. Değişmezler (Constants)
 Değişmezler (constants) doğrudan işleme sokulan, değişken bilgi içermeyen atomlardır. 
 ```cpp
@@ -34,17 +34,20 @@ int main()
 }
 ```
 Bu kaynak kod aşağıdaki gibi atomlarına ayrılabilir:  
-include         <     stdio.h     >   int    main    (     )      {       
-int   number     ,     k     ;    int     total     =     0    ;  
-printf   (     "lütfen bir sayı girin\n"     )    ;      
-scanf    (     "%d"     ,      &    number      )     ;  
-for     (    k    =    1    ;    k    <=    ;    ++    k   )  
-total     +=     k   ;  
-printf    (     "toplam = %d\n"     ,     toplam    )    ;   
-return      0     ;    }  
-Keywords: include int for return  
-Identities: main k toplam printf scanf  
-Operators: = <= ++ +=  
-Constants: 0 1 0  
-String: "lütfen bir sayı girin\n" "%d" "toplam = %d\n"  
-Ayraçlar, noktalama işaretleri: < > ( ) , ; { }  
+include         <        stdio.h          >   
+int         main         (         )          {       
+int        number         ,         k         ;    
+int         total          =          0           ;  
+printf        (            "lütfen bir sayı girin\n"          )            ;      
+scanf         (          "%d"           ,          &         number            )           ;  
+for         (         k          =          1         ;        k         <=         ;         ++          k          )  
+total            +=            k            ;  
+printf          (             "toplam = %d\n"             ,             toplam           )          ;   
+return            0          ;       
+}    
+* Keywords: include      int      for       return  
+* Identities: main     k      toplam       printf       scanf  
+* Operators: =       <=       ++        +=  
+* Constants: 0      1       0  
+* String: "lütfen bir sayı girin\n"         "%d"         "toplam = %d\n"  
+* Ayraçlar, noktalama işaretleri: <     >     (     )    ,    ;     {     }  
