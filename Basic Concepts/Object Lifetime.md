@@ -1,10 +1,10 @@
 ### Nesnelerin Ömürleri (storage duration / lifespan)
 Ömür (storage duration / lifespan), nesnelerin, programın çalışma zamanı içinde bellekte yer kapladığı süreyi anlatmak için kullanılan bir terimdir. 
 Bir kaynak kod içinde tanımlanmış değişkenlerin hepsi, program çalışmaya başladığında aynı zamanda yaratılmaz. C++'da 4 çeşit ömür kategorisi vardır:  
-Otomatik  
-Statik  
-Dinamik  
-Thread_local  
+* Otomatik  
+* Statik  
+* Dinamik  
+* Thread_local  
 
 Aşağıdaki örnekleri anlayabilmemiz için nesnelerimizin kurallarını açıklayalım.  
 S object_1("First Name", "Last Name");  
@@ -17,7 +17,7 @@ Her zaman geçerli bir kuralı ifade edelim öncelikle:
 
 **Otomatik ömürlü nesneler** programın çalışmasının belli bir zamanında yaratılan, belli süre etkinlik gösterdikten sonra yok olan, yani ömürlerini
 tamamlayan nesnelerdir. Bu tür nesnelerin ömürleri, programın toplam çalışma süresinden kısadır. Yerel değişkenler, otomatik ömürlüdür. 
-Programın çalışma zamanında tanımlandıkları bloğun çalışması başladığında yaratılırlar, bloğun çalışması bitince yok olurlar, yani ömürleri sona erer.
+Programın çalışma zamanında tanımlandıklarında yaratılırlar, bloğun çalışması bitince yok olurlar, yani ömürleri sona erer.
 ```cpp
 void run() {
     S object_1("1", "2"); // 1 is printed
