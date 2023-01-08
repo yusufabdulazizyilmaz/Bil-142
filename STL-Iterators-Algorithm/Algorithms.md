@@ -129,3 +129,5 @@ bulundu ...7 indisli oge igdir
 [len] (const string &s){return s.size() == len;} -> Burada derleyici bir sınıf yazacak ve bunu o sınıf türünden bir geçici nesne ifadesine döüştürecek
 Bu derleyicinin yazdığı sınıf türden nesne olduğu için find_if algoritmasının ikinci tempalte tür parametresi bu sınıf türünden nesne olacak.
 Bu nesne func call operatörünün operandı olacak için algoritma içinde.
+* Lambdaları daha detaylı anlayabilmek ve öğrenebilmek için mutlaka [inceleyiniz.](https://www.youtube.com/watch?v=ZIPNFcw6V9o)
+* Algoritmaları daha detaylı anlayabilmek ve öğrenebilmek için mutlaka [inceleyiniz.](https://www.fluentcpp.com/getthemap/)
