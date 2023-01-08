@@ -47,6 +47,14 @@ nested type ının ne olduğuna bakmak. **vector<int>::iterator::iterator_catego
 |						  |	it1 < it2   it1 <= it2   it1 > it2   it1 >= it2   |						      |
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 ```cpp
-
+template<class InputIt, class OutputIt>
+OutputIt copy(InputIt first, InputIt last, OutputIt d_first)
+{
+    while (first!=last) {
+        *d_first++ = *first++;
+    }
+    return d_first;
+}
 ```
-
+Bu algoritma ile bir bağlı listeden bir dinamik dinamik diziye kopyalama yapılabilir mi?
+Çünkü bağlı listenin iteratörleri Bidirectional (inputu kapsıyor), Vectorunkide Random access zaten.
