@@ -47,3 +47,62 @@ Neden diğer dillerden farklı olarak böyle tuhaf isimler almışlar. Görece o
 stack queue priority_queue bunlar kesinlikle container değil. Böyle veri yapılarına Abstract Data Type (ADT) denir. 
 Bunlar STL de containerları eleman olarak (composition ilişkisi ile) aldığı containerın interface ini bu soyut veriyapısına adapte eden yardımcı sınıflar.
       
+RANGE: İki konumun oluşturduğu birime range denir. Birinci konumu artırdığımda bir süre sonra ikinci konuma eşitlenmeli. Range sözkonusu olduğunda konum1 
+dahil ama konum2 dahil değil. [konum1,konum2).     ] Öge sayısı konum2-konum1 kadardır.
+
+```cpp
+#include <vector>
+#include <string>
+#include <iostream>
+
+// val değeri range'de aranacak bulursa konumu bulamazsa end konumunu döndürülecek.
+template<typename Iter, typename T>
+Iter Find(Iter beg, Iter end, const T& val)
+{
+    while (beg!=end) {
+        if (*beg==val)
+            return beg;
+        ++beg;
+    }
+    return end;
+}
+/*Algoritmanın gücü : Birkaç satırlık func şablonu bu.Bu şablondan yazılacak function, bir int dizide int te arayabilir
+bir bağlı listede tarihte arayabilir, oyun programındaki fighter sınıf türünden nesneler tutan dizide
+bir fighterda arayabilir.Derleyici bu template ten kodu gönderdiğimiz türe göre yazacak.*/
+
+// Iter sınıfının != * ++ operatörlerini overload etmesi lazım.
+int main()
+{
+
+    std::vector<std::string> svec{"dogus", "necati", "ayse", "gizem", "can", "umut"};
+    std::string name = "gizem";
+    if (std::vector<std::string>::iterator iter = Find(svec.begin(), svec.end(), name);
+            iter!=svec.end()) // end değilse öğeyi bulmuştur.
+    {
+        std::cout << "bulundu ... " << *iter << "\n"; // bulduysa değer yazılacak.
+    }
+    else {
+        std::cout << "bulunamadi\n";
+    }
+}
+
+namespace std {
+    template<typename T, typename Allocator = std::allocator<T>>
+    class Vector {
+    public:
+        //bunun iterator gibi nesned typeları var
+        class iterator {
+        public:
+            bool operator!=(const iterator&);
+
+            iterator& operator*();
+
+            iterator& operator++();
+        };
+
+        iterator begin(); //konumları tutuyorlar. ilk öğenin konumunu tutuyor
+        iterator end();    // bu son öğeden bir sonraki konumu döndürüyor.
+    };
+}
+
+```
