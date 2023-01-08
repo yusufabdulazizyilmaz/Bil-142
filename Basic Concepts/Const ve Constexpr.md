@@ -50,10 +50,11 @@ constexpr int square(int x)
 	return x * x;
 }
 ```
- Eğer bir constexpr fonksiyona gönderilen tüm argümanlar constant expr ise bu durumda fonksiyonun geri dönüş değeri COMPILE TIME DA ELDE EDILIYOR. 
- BU DA ŞU DEMEK FONKSİYONA YAPILAN ÇAĞRI İFADESİ BİR CONSTANT EXPR OLUŞTURUYOR. Ayrıca constexpr funksiyonu sabit ifadesi ile çağırmak zorunlu değil.  
- square(5) mesela burası bir sabit ifadesi oldu.RETURN DEĞERİ COMPILE TIME DA HESAPLANACAK
-square(x + 5) burası sabit ifadesi değil.RETURN DEGERI RUNTIME DA HESAPLANACAK.
+Eğer bir constexpr fonksiyona gönderilen tüm argümanlar constant expr ise bu durumda fonksiyonun geri dönüş değeri COMPILE TIME DA ELDE EDILIYOR. 
+Bu da şu demek fonksiyona yapilan çağrı ifadesi bir constant expr oluşturuyor. Ayrıca constexpr fonksiyonu sabit ifadesi ile çağırmak zorunlu değil.  
+**square(5);** burası bir sabit ifadesi oldu. Return değeri compile time da hesaplanacak
+Square(x + 5) burası sabit ifadesi değil. Return degeri runtime da hesaplanacak.
+
 ```cpp
 constexpr int sum_square(int x, int y)
 {
@@ -87,9 +88,7 @@ constexpr bool isprime(int val)
 constexpr bool b = isprime(43);
 ```
 C++'TA ASIL OLAN VERİM  
-bu durumda derleme zamanında hesaplanacak değerler için gereksiz yere
-runtime da kaynak harcanmıyor. Ne kadar mükemmel. Bu dilin kuralı. eksiler neler peki
-C++ TA BAZI KODLARIN BAŞLIK DOSYASINDA BULUNMASI GEREKİYOR.
-MESELA CONSTEXPR BİR FONKSİYON VAR DİYELİM.COMPİLERIN BUNU GÖRMESİ LAZIM.
-BUNA GÖRE COMPİLE TİME DA HESAPLAMA YAPACAK.
-YANİ FUNCTION DEFINITION HEADER FILE DA OLMALI. KODU GÖSTERMEK İSTEMİYORSAK BU BİR DEZAVANTAJ OLABİLİR.
+Bu durumda derleme zamanında hesaplanacak değerler için gereksiz yere runtimeda kaynak harcanmıyor. Ne kadar mükemmel. Bu dilin kuralı. Eksileri neler peki
+C++ ta bazı kodların başlık dosyasında bulunması gerekiyor. Mesela constexpr bir fonksiyon var diyelim. compilerin bunu görmesi lazım. Buna göre compile time da hesaplama yapacak.
+Yani function definition header fileda olmalı. Kodu göstermek istemiyorsak bu bir dezavantaj olabilir.
+
