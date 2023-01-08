@@ -176,15 +176,53 @@ int main()
 }
 ```
 Container con olsun
- con.begin ->					return değeri : container::iterator
- con.cbegin -> const iterator			return değeri : container::const_iterator
- con.rbegin -> Reverse itetator			return değeri : container::reverse_iterator
- con.crbegin -> const reverse iterator		return değeri : container::const_reverse_iterator
+ * con.begin ->					return değeri : container::iterator
+ * con.cbegin -> const iterator			return değeri : container::const_iterator
+ * con.rbegin -> Reverse itetator			return değeri : container::reverse_iterator
+ * con.crbegin -> const reverse iterator		return değeri : container::const_reverse_iterator
 
 ## ITERATORLER ÜZERİNDE İŞLEM YAPAN ALGORİTMALAR
   
+ * advance
+ * distance
+ * next
+ * prev
+ * iter_swap 
+ ```cpp
+
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    auto vi = v.begin();
+    std::advance(vi, 5);
+    std::cout << "advance(v.begin(), 5) = " << *vi << '\n';
+
+    vi = v.end();
+    std::advance(vi, -6);
+    std::cout << "advance(v.end(), -6) = " << *vi << '\n';
+
+    auto nx = std::next(vi);
+    std::cout << "next(vi) = " << *nx << '\n';
+    nx = std::next(vi, 2);
+    std::cout << "next(vi,2) = " << *nx << '\n';
+
+    auto pv = std::prev(vi);
+    std::cout << "prev(vi) = " << *pv << '\n';
+    pv = std::prev(vi, 2);
+    std::cout << "prev(vi,2) = " << *pv << '\n';
+
+    std::cout << "distance(pv,nx) = " << std::distance(pv, nx) << '\n';
   
-  
-  
-  
+    // Iter_swap doesnt swap iterators. İterator konumundaki 2 nesneyi swap ediyor.
+    std::iter_swap(v.begin(), prev(v.end()));
+
+    std::cout << "v.begin() = " << *v.begin() << '\n';
+    std::cout << "prev(v.end()) = " << *prev(v.end()) << '\n';
+}
+ ```
   
