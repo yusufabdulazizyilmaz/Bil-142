@@ -32,9 +32,9 @@ sistemlerin çoğunda, derleyici ve programı yükleyen işletim sistemi tarafı
 belirlenir. Nesnelerin adresleri program yüklenmeden önce kesin olarak bilinemez ve
 programcı tarafından da önceden saptanamaz. Programcı nesnelerin adreslerini ancak
 programın çalışması sırasında (run time) öğrenebilir.  
-Adres bilgilerinin saklanması için kullanılan nesnelere gösterici (pointer) denir. Bir adres bilgisi C'de int, long
-türlerde tutulamaz. Ancak gösterici denilen türlerde tutulabilir. Benzer biçimde göstericiler de adi birer int, long
-türleri tutamazlar. Ancak adres tıtarlar. Gösterici bildiriminin genel biçimi şöyledir:  
+Adres bilgilerinin saklanması için kullanılan nesnelere gösterici (pointer) denir. Bir adres bilgisi C++'da int, long
+türlerde tutulamaz. Ancak gösterici denilen türlerde tutulabilir. Benzer biçimde göstericiler de birer int, long
+türleri tutamazlar. Ancak adres tutarlar. Gösterici bildiriminin genel biçimi şöyledir:  
 **<tür> *<gösterici ismi>;**
 ```cpp
 int *p;
@@ -86,7 +86,8 @@ p[n] ifadesi ile *(p + n) tamamen eşdeğer ifadelerdir. Yani köşeli ayraç i�
 Dizi isimleri dizilerin başlangıç adresini belirttiği için dizi elemanlarına köşeli parantez operatörü ile erişilebilmektedir. (**array to pointer conversion**)
 ```cpp
 int a[3] = {10, 20, 30};
-// a[2] ifadesi a adresinden 2 ilerinin (yani 2 * sizeof(*a) kadar byte ilerinin) içeriği anlamına gelir. Yani a[2] ile *(a + 2) aynı anlamdadır 30.
+// a[2] ifadesi a adresinden 2 ilerinin (yani 2 * sizeof(*a) kadar byte ilerinin) içeriği anlamına gelir. 
+// Yani a[2] ile *(a + 2) aynı anlamdadır 30.
 ```
 ```cpp
 #include <stdio.h>
