@@ -105,3 +105,4 @@ int main()
     //
 }
 ```
+Kapsam sızıntısı için [izleyiniz.](https://www.youtube.com/watch?v=BrpALxoTmL4)
