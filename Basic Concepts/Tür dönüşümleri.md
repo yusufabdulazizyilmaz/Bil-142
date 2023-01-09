@@ -33,20 +33,16 @@ double func(int val)
 ## İşlem Öncesi Aritmetik Tür Dönüşümleri
 Bilgi kaybını engellemek için genel olarak daha küçük türden olan terim, daha büyük türde olan terimin türünde ifade edilir.
 
-İşleme giren operandlardan bir tanesi gerçek sayı türünden (float, double, long double), diğeri tamsayı türünden ise tamsayı türünden operand o gerçek sayı türüne dönüştürülerek işlem yapılmaktadır.
+* İşleme giren operandlardan bir tanesi gerçek sayı türünden (float, double, long double), diğeri tamsayı türünden ise tamsayı türünden operand o gerçek sayı türüne dönüştürülerek işlem yapılmaktadır.
 
-İşleme giren operandlar tam sayı türlerindense: unsigned signed versiyonlardan üstündür. Özellikle, aritmetik operatörler int'den daha küçük türleri argüman olarak kabul etmezler.
-
-integral promotion: short int, unsigned short int, char, signed char, unsigned char ve kapsamlandırılmamış numaralandırma sabitlerinden (unscoped enumeration)türlerinden int türüne dönüşüm.
-Floating-point promotion: float türünden double türüne yapılan dönüşüm.
+* İşleme giren operandlar tam sayı türlerindense: unsigned signed versiyonlardan üstündür. Özellikle, aritmetik operatörler int'den daha küçük türleri argüman olarak kabul etmezler. **integral promotion:** short int, unsigned short int, char, signed char, unsigned char ve kapsamlandırılmamış numaralandırma sabitlerinden (unscoped enumeration)türlerinden int türüne dönüşüm. **Floating-point promotion:** float türünden double türüne yapılan dönüşüm.
 
 ## Atama Tür Dönüşümleri
 Bu tür dönüşümlerin çok basit bir kuralı vardır: Atama öncesinde, atama işlecinin sağ tarafındaki ifade, atama işlecinin sol tarafındaki nesnenin türünde ifade edilir: 
 
-Küçük türlerin büyük türlere dönüştürülmesinde bilgi kaybı söz konusu değildir.
-Derleyici tarafından yapılan atama tür dönüşümlerinde, atama öncesi, büyük türün küçük
-türe dönüştürülmesi durumunda bilgi kaybı söz konusu olabilir. Eğer atama işlecinin her iki tarafı da tam sayı türlerinden ise Bilgi kaybı, yüksek anlamlı byte'ların
-kaybolması şeklinde ortaya çıkar. 
+* Küçük türlerin büyük türlere dönüştürülmesinde bilgi kaybı söz konusu değildir.
+* Büyük türün küçük türe dönüştürülmesi durumunda bilgi kaybı söz konusu olabilir. Eğer atama işlecinin her iki tarafı da tam sayı türlerinden ise Bilgi kaybı, yüksek anlamlı byte'ların kaybolması şeklinde ortaya çıkar. 
+```cpp
 #include <stdio.h>
 int main()
 {
@@ -58,9 +54,8 @@ int main()
     printf("yanlış!\n");
   return 0;
 }
-
-Atama işlecinin sağ terimi, bir gerçek sayı türünden ise(float, double, long double) ve sol
-terimi tam sayı türünden ise önce gerçek sayı değerinin ondalık kısmı kaybedilir.
+```
+* Atama işlecinin sağ terimi, bir gerçek sayı türünden ise(float, double, long double) ve sol terimi tam sayı türünden ise önce gerçek sayı değerinin ondalık kısmı kaybedilir.
 
 ```cpp
 #include <iostream>
@@ -100,9 +95,9 @@ C++'da dönüşüm yapacağımız zaman aşağıdaki tür dönüştürme operat�
 // static_cast < new-type > ( expression )		
 int n = static_cast<int>(3.14);
 // const_cast < new-type > ( expression )
- int i = 3;                 // i is not declared const
- const int& rci = i; 
- const_cast<int&>(rci) = 4; // OK: modifies i
+int i = 3;                 // i is not declared const
+const int& rci = i; 
+const_cast<int&>(rci) = 4; // OK: modifies i
 // reinterpret_cast < new-type > ( expression )   pointer to any type
 // dynamic_cast < new-type > ( expression )		   about inheritance
  ```
