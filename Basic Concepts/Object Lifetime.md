@@ -15,7 +15,7 @@ object_1 : The object’s ID
 Her zaman geçerli bir kuralı ifade edelim öncelikle:  
 **İLK HAYATA GELEN EN SON VEDA EDER.** ya da **İŞE EN SON GİREN İLK ATILIR.**    
 
-**Otomatik ömürlü nesneler** programın çalışmasının belli bir zamanında yaratılan, belli süre etkinlik gösterdikten sonra yok olan, yani ömürlerini
+* **Otomatik ömürlü nesneler** programın çalışmasının belli bir zamanında yaratılan, belli süre etkinlik gösterdikten sonra yok olan, yani ömürlerini
 tamamlayan nesnelerdir. Bu tür nesnelerin ömürleri, programın toplam çalışma süresinden kısadır. Yerel değişkenler, otomatik ömürlüdür. 
 Programın çalışma zamanında tanımlandıklarında yaratılırlar, bloğun çalışması bitince yok olurlar, yani ömürleri sona erer.
 ```cpp
@@ -67,7 +67,7 @@ void run() {
 
 ```
 
-**Statik ömürlü varlıklar** (static duration – static storage class), otomatik ömürlü nesneler gibi programın kendilerine geldikleri zaman 
+* **Statik ömürlü varlıklar** (static duration – static storage class), otomatik ömürlü nesneler gibi programın kendilerine geldikleri zaman 
 bellekte yerlerini alırlar, fakat programın çalışması  bitene kadar varlıklarını sürdürürler, yani bellekte yer kaplar. Scopeları bitince ölmezler.
 global değişkenler dizgeler (çift tırnak içindeki yazılar) statik yerel değişkenler  
 ```cpp
@@ -109,7 +109,7 @@ void run()
 
 // Answer: ctype_base::mask
 ```
-**Dinamik ömürlü varlıklar** ömürleri new ifadesi ile başlayıp, delete ifadesi ile biten nesnelerdir. Hayatlarının kontrolü tamamen
+* **Dinamik ömürlü varlıklar** ömürleri new ifadesi ile başlayıp, delete ifadesi ile biten nesnelerdir. Hayatlarının kontrolü tamamen
 yazılımcıya aittir. Eğer öldürülmezse kaynak sızıntısına neden olur.
 
 ```cpp
