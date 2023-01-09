@@ -13,7 +13,7 @@ enum class ScopedColor {white, red, magenta, black};
 enum class ScopedTrafficLight {red, yellow, green};
 // red için hata alamayız çünkü artık red kapsamlandırılmıştır. ScopedColor::red ya da ScopedTrafficLight::red yazmalıyız.
 ```
-2- Kapsamsız numaralandırma türlerinden tam sayı ve gerçek sayı türlerine örtülü (implicit) tür dönüşümü var. Enum class için örtülü dönüşüm yoktur. 
+2- Kapsamsız numaralandırma türlerinden tam sayı ve gerçek sayı türlerine örtülü (implicit) tür dönüşümü varken Enum class için örtülü dönüşüm yoktur. 
 Explicit dönüşüm yani programcının bilerek isteyerek yaptığı dönüşümler ikisi için de geçerlidir. Çünkü enum türlerinden underlying type dönüşüm promotion kategorisindedir. (Hatırla integral promotion floating-point promotion)
 
 Bir numaralandırma türüne ilişkin derleyici tarafından arka planda kullanılan tam sayı türüne underlying type (baz tür)deniyor. C’de numaralandırma türlerinin baz türü her zaman int türüdür. C++03'de bir numaralandırma türüne ilişkin baz türün ne olacağına karar veren derleyicidir. C++11 ile baz türü programcı belirleyebilmektedir.
@@ -32,7 +32,7 @@ int x = mycolor; //geçerli
 
 enum class ScopedColor {white = 3, red, magenta = 12, black};
 ScopedColor myclor = 5; //geçersiz
-ScopedColor myclor = static_cast<Color>(12); //geçerli
+ScopedColor myclor = static_cast<ScopedColor>(12); //geçerli
 int x = ScopedColor::mycolor; //geçersiz 
 ```
 ## Forward Decleration (Ön Bildirim) ve Enum 
