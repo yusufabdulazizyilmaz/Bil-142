@@ -1,8 +1,8 @@
 # REFERANSLAR
 C++ dilinde pointer kullanımı C ye göre çok çok daha az. Pointerlar C++ ta maalesef generic programlama tarafındaki araçlarla çok uyum sağlamıyor. Bunun yerine  Referans Semantiği ve Smart Pointer kullanılıyor. 
 Referans Modern C++ tan önce 1 taneydi. Şimdi 2 ayrı referans kategorisi oldu. 
-R Value reference (Taşıma/Move Semantics ve Mükemmel gönderim / Perfect forwarding)
-L Value reference (Nesnenin yerine geçen bir isim)
+* R Value reference (Taşıma/Move Semantics ve Mükemmel gönderim / Perfect forwarding)
+* L Value reference (Nesnenin yerine geçen bir isim)
 
 ## L Value Referans
 L value referanslar için [inceleyiniz](https://necatiergin2019.medium.com/referanslar-references-1-8770705b8673). 
@@ -73,8 +73,8 @@ const olmayan bir sol taraf referansı const bir nesneye bağlanamaz. const bir 
 geçer:
 
  Fonksiyon çağrılarında öncelikle
- **void foo(T&);** L value ile çağrılır
- **void func(const T&);** bu fonksiyon Lvalue hemde prvalue expr ile yani her Şeyle çağrılır.
+ * **void foo(T&);** const olmayan L value ile çağrılır.
+ * **void func(const T&);** bu fonksiyon Lvalue hem de PRvalue expr ile yani her şeyle çağrılır.
  ```cpp
  int x{};
  foo(x); // x L value olabilir
@@ -190,8 +190,8 @@ wherever you can, use pointers when you have to!).
 C++‟da, a bir nesne olmak üzere aşağıdaki gibi bir işlev çağrısının yapıldığını düşünelim:  
 func(a);  
 Argüman olan ifadede a nesnesinin ismi yazılmıştır. Bu durumda iki olasılık söz konusudur:   
-İşlevin parametre değişkeni aynı türden bir nesnedir. (call by value) Bu durumda derleyici argüman olan nesnenin değerini parametre değişkenine kopyalayacak bir kod üretir.  
-İşlevin parametre değişkeni aynı türden bir referanstır. (call by value) Bu durumda gizli bir adres aktarımı söz
+* İşlevin parametre değişkeni aynı türden bir nesnedir. (call by value) Bu durumda derleyici argüman olan nesnenin değerini parametre değişkenine kopyalayacak bir kod üretir.  
+* İşlevin parametre değişkeni aynı türden bir referanstır. (call by value) Bu durumda gizli bir adres aktarımı söz
 konusudur. Yani derleyici, çağrı ifadesinde argüman olarak kullanılan nesnenin adresini çağrılan işlevin
 referans parametresine kopyalayacak bir kod üretir. 
 Hangisi olduğunu bilmemiz için bildirimi görmemiz gerekmektedir.  
