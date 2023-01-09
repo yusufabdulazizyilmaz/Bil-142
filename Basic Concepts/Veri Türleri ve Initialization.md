@@ -4,28 +4,32 @@ Bir nesnenin türü onun bellekteki uzunluğu hakkında da bilgi verir. Her tür
 ne kadar uzunlukta bir yer kapladığı programlama dillerinde önceden belirtilmiştir.  Bir
 nesnenin türü, ayrıca o nesne üzerinde hangi işlemlerin yapılabileceği bilgisini de verir.  
 Veri türleri için [inceleyiniz](https://en.cppreference.com/w/cpp/language/type)    
-fundamental types: void; std::nullptr_t; arithmetic;  
-compound types: function; array; pointer; pointer-to-member; reference; union; enumeration; class;  
-arithmetic types: floating-point(float, double, long double); integral(bool, char, signed char, unsigned char, 
-(unsigned) short int, (unsigned) int, (unsigned) long int, (unsigned) long long int);  
+* fundamental types: void; std::nullptr_t; arithmetic;  
+    arithmetic types: floating-point(float, double, long double); integral(bool, char, signed char, unsigned char, 
+(unsigned) short int, (unsigned) int, (unsigned) long int, (unsigned) long long int); 
+* compound types: function; array; pointer; pointer-to-member; reference; union; enumeration; class;  
+ 
 Hap bilgiler:  
 1. en çok kullanılan veri türleri tamsayılar için int türüyken, gerçek sayılar için double veri türüdür.
 2. char türü 1 byte uzunluğunda olmak zorundadır.
 3. short <= int <= long (byte olarak)
 4. float <= double <= long double
-5. Gerçek sayılarla yapılan işlemler tam sayılarla yapılan işlemlere göre çok daha yavaştır.  
+5. Gerçek sayılarla yapılan işlemler tam sayılarla yapılan işlemlere göre çok daha yavaştır. 
+ 
 ## Değişmezlerin Türleri
-Değişmezler nesne olmayan, programcı tarafından doğrudan sayısal büyüklük olarak girilen verilerdir. Nesnelerin türleri olduğu gibi değişmezlerin de türleri vardır. Nesnelerin türleri bildirim yapılırken belirlenir. Değişmezlerin türlerini ise derleyici, belirli kurallara uyarak
-değişmezlerin yazılış biçimlerinden saptar. Değişmezlerin türleri önemlidir, çünkü C++ dilinde değişmezler, değişkenler ve operatörler bir araya getirilerek ifadeler (expressions) oluşturulur. C++'da ifadelerin de türü vardır. İfadelerin türleri, içerdikleri değişmez ve değişkenlerin türlerinden elde edilir.  
-**Tamsayı Değişmezleri** varsayılan yazım onluk sayı sistemidir. Onaltılık sayı sisteminde yazım: 0Xbbb.. ya da 0xbbb.. Sekizlik sayı sisteminde yazım: 0bbbb.. Bir tamsayı değişmezi, hangi sayı sisteminde yazılırsa yazılsın, u, U, l ya da L soneklerini alabilir. u ya da U sonekleri tamsayı değişmezinin işaretsiz tamsayı türünden olduğunu belirler. l ya da L sonekleri tamsayı değişmezinin long türden olduğunu belirler. Taşma olmaksızın ilgili değeri tutabilecek ilk tür, değişmezin türüdür. 
-Sayı DOS  (int 2 byte) / Windows - Unix  (int 4 byte)  
-456 signed int/signed int  
-59654 signed long/signed int   
-1245800U unsigned long/unsigned int   
-0X130268U unsigned long/unsigned int  
-**Karakter Değişmezleri** tipik olarak char türden nesnelere atanan değişmezlerdir. 'a' char türündendir.  
-**Gerçek Sayı Değişmezleri** yalnızca onluk sayı sistemi kullanılarak yazılabilir. Sayı nokta içeriyorsa ve sayının sonunda hiçbir ek yoksa değişmez double türdendir (-24.5). Nokta içeriyorsa ve sayının sonunda küçük harf ya da büyük harf F varsa sabit float türdendir (1.31F). Sayı nokta içeriyorsa ve sonunda küçük harf ya da büyük harf L varsa sabit long double türdendir (10.2L).  
-Özetle öncelikle ondalık sistemdeki sayıların nokta içerip içermediğine ve son eklerine bakacağız.
+Değişmezler nesne olmayan, programcı tarafından doğrudan sayısal büyüklük olarak girilen verilerdir. Nesnelerin türleri olduğu gibi değişmezlerin de türleri vardır. Nesnelerin türleri bildirim yapılırken belirlenir. Değişmezlerin türlerini ise derleyici, belirli kurallara uyarak değişmezlerin yazılış biçimlerinden saptar. Değişmezlerin türleri önemlidir, çünkü C++ dilinde değişmezler, değişkenler ve operatörler bir araya getirilerek ifadeler (expressions) oluşturulur. C++'da ifadelerin de türü vardır. İfadelerin türleri, içerdikleri değişmez ve değişkenlerin türlerinden elde edilir. 
+
+* Tamsayı Değişmezleri varsayılan yazım onluk sayı sistemidir. Onaltılık sayı sisteminde yazım: 0Xbbb.. ya da 0xbbb.. Sekizlik sayı sisteminde yazım: 0bbbb.. Bir tamsayı değişmezi, hangi sayı sisteminde yazılırsa yazılsın, u, U, l ya da L soneklerini alabilir. u ya da U sonekleri tamsayı değişmezinin işaretsiz tamsayı türünden olduğunu belirler. l ya da L sonekleri tamsayı değişmezinin long türden olduğunu belirler. Taşma olmaksızın ilgili değeri tutabilecek ilk tür, değişmezin türüdür. 
+
+| Sayı DOS  | (int 2 byte) | Windows - Unix  (int 4 byte)|
+| ----------- | ----------- | ----------- |
+| 456 | signed int|signed int|  
+| 59654 |signed long|signed int|   
+| 1245800U |unsigned long|unsigned int|   
+| 0X130268U |unsigned long|unsigned int|  
+
+* Karakter Değişmezleri tipik olarak char türden nesnelere atanan değişmezlerdir. 'a' char türündendir.  
+* Gerçek Sayı Değişmezleri yalnızca onluk sayı sistemi kullanılarak yazılabilir. Sayı nokta içeriyorsa ve sayının sonunda hiçbir ek yoksa değişmez double türdendir (-24.5). Nokta içeriyorsa ve sayının sonunda küçük harf ya da büyük harf F varsa sabit float türdendir (1.31F). Sayı nokta içeriyorsa ve sonunda küçük harf ya da büyük harf L varsa sabit long double türdendir (10.2L). Özetle öncelikle ondalık sistemdeki sayıların nokta içerip içermediğine ve son eklerine bakacağız.
 ## Değişkenler
 ### Bildirim ve Tanımlama (Declaration & Definitions)
 C, C++, C# ve Java gibi katı tür kontrolünün uygulandığı dillerde (strongly typed languages) bir değişken
