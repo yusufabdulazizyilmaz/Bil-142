@@ -27,6 +27,8 @@ int a[10];
 a[3] ifadesi int türdendir. a ifadesi ise int[10] türündendir.
   
 # GÖSTERİCİLER
+  
+Pointer için detaylı açıklamalar için [izleyiniz.](https://www.youtube.com/watch?v=0zd8eznWv4k)  
 Her nesne bellekte yer kapladığına göre belirli bir adrese sahiptir. Nesnelerin adresleri,
 sistemlerin çoğunda, derleyici ve programı yükleyen işletim sistemi tarafından ortaklaşa
 belirlenir. Nesnelerin adresleri program yüklenmeden önce kesin olarak bilinemez ve
