@@ -90,7 +90,8 @@ C tarzı tür dönüştürme operatörü, bir ayraç ve ayraç içine yazılan b
 int ival = 10; 
 double dval = (double) ival;
 ```
-C++'da dönüşüm yapacağımız zaman aşağıdaki tür dönüştürme operatörlerini kullanacağız. C tarzı tür dönüştürme yapmamalıyız.
+C++'da dönüşüm yapacağımız zaman aşağıdaki tür dönüştürme operatörlerini kullanacağız. C tarzı tür dönüştürme yapmamalıyız. 
+Tür dönüşümleri için [izleyiniz.](https://www.youtube.com/watch?v=2h2hdRqRIRk)
 ```cpp
 // static_cast < new-type > ( expression )		
 int n = static_cast<int>(3.14);
