@@ -32,7 +32,7 @@ int main()
 
     int a[x1]; //geçersiz, dizi boyutu sabit ifadesi değil
     int b[x2]; //geçerli, dizi boyutu sabit ifadesi.
-    int c[cx3]; //geçerli, dizi boyutu sabit ifadesi.
+    int c[cx2]; //geçerli, dizi boyutu sabit ifadesi.
 
     return 0;
 }
@@ -51,9 +51,9 @@ constexpr int square(int x)
 }
 ```
 Eğer bir constexpr fonksiyona gönderilen tüm argümanlar constant expr ise bu durumda fonksiyonun geri dönüş değeri COMPILE TIME DA ELDE EDILIYOR. 
-Bu da şu demek fonksiyona yapilan çağrı ifadesi bir constant expr oluşturuyor. Ayrıca constexpr fonksiyonu sabit ifadesi ile çağırmak zorunlu değil.  
-**square(5);** burası bir sabit ifadesi oldu. Return değeri compile time da hesaplanacak
-Square(x + 5) burası sabit ifadesi değil. Return degeri runtime da hesaplanacak.
+Bu da şu demek fonksiyona yapilan çağrı ifadesi bir constant expr oluşturuyor. Ayrıca constexpr fonksiyonu sabit ifadesi ile çağırmak zorunlu değil. 
+**square(5);** burası bir sabit ifadesi oldu. Return değeri compile time da hesaplanacak  
+**square(x + 5)** burası sabit ifadesi değil. Return degeri runtime da hesaplanacak.
 
 ```cpp
 constexpr int sum_square(int x, int y)
