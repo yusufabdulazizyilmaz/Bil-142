@@ -5,7 +5,7 @@ Referans Modern C++ tan önce 1 taneydi. Şimdi 2 ayrı referans kategorisi oldu
 * L Value reference (Nesnenin yerine geçen bir isim)
 
 ## L Value Referans
-L value referanslar için [inceleyiniz](https://necatiergin2019.medium.com/referanslar-references-1-8770705b8673). 
+L value referanslar için [inceleyiniz](https://necatiergin2019.medium.com/referanslar-references-1-8770705b8673).  
 Referans bir nesnenin yerine geçen bir isim olarak düşünülebilir. Öyle ki biz referans olan ismi kullandığımızda aslında o ismin bağlandığı (yerine geçtiği) nesneyi kullanmış oluyoruz.
 Referanslar & atomu (declarator) ile tanımlanır. T bir tür olmak üzere 
 ```cpp
@@ -41,57 +41,57 @@ int& r3 = ++x;
 
 !!!!OKUMA AMAÇLI ERİŞİM!!!!
 ```cpp
-	int x = 10;
-	const int& r = x; // const reference
-	int const & r = x; // const reference. aynısı.
-  r = 20; ////sentaks hatası r yoluyla x değiştirilemez sadece x'i ben okumak için bağlandım.
+int x = 10;
+const int& r = x; // const reference
+int const & r = x; // const reference. aynısı.
+r = 20; ////sentaks hatası r yoluyla x değiştirilemez sadece x'i ben okumak için bağlandım.
 ```
 
 5- Const L Value referans her şeye bağlanabilir. (Sağ taraf değerine ve farklı türe) 
 ```cpp
-	double dval = 1.2;
-	const int &r = dval;
-  /*
-	int temp_val = dval;
-	const int &r = temp_val;
-	referans derleyicinin oluşturduğu temp değişkenin refere etti.Onun yerine geçti */
+double dval = 1.2;
+const int &r = dval;
+/*
+int temp_val = dval;
+const int &r = temp_val;
+referans derleyicinin oluşturduğu temp değişkenin refere etti.Onun yerine geçti */
   
-  const int& r2 = 10;
-  /*
-  int temp_val{10};
-  cosnt int &r = temp_val; */
+const int& r2 = 10;
+/*
+int temp_val{10};
+cosnt int &r = temp_val; */
 
 ```
-const olmayan bir sol taraf referansı const bir nesneye bağlanamaz. const bir nesnenin ancak const bir referansa bağlanabilir. 
+const olmayan bir sol taraf referansı const bir nesneye bağlanamaz. const nesne ancak const referansa bağlanabilir. 
 ```cpp
-  const int x = 10;
-  int &r1 = x; //geçersiz!
-  const int &r2 = x; //geçerli
+const int x = 10;
+int &r1 = x; //geçersiz!
+const int &r2 = x; //geçerli
 ```
- 6- **Referansların Parametre Değişkeni Olarak Kullanılması** 
+ 6- **Referansların Parametre Değişkeni Olarak Kullanılması**  
  Parametre değişkeni referans olan işlevler, aynı türden bir nesne ile çağrılmalıdır. Böyle bir çağrı sonucunda parametre değişkeni olan referans argüman olan nesnenin yerine
 geçer:
 
  Fonksiyon çağrılarında öncelikle
- * **void foo(T&);** const olmayan L value ile çağrılır.
- * **void func(const T&);** bu fonksiyon Lvalue hem de PRvalue expr ile yani her şeyle çağrılır.
+ * **void foo(T& arg);** const olmayan L value ile çağrılır.
+ * **void func(const T& arg);** bu fonksiyon Lvalue hem de PRvalue expr ile yani her şeyle çağrılır.
  ```cpp
  int x{};
  foo(x); // x L value olabilir
  foo(10); //10 PR value geçersiz
  foo(x*x); //x*x PR value geçersiz
  const int y = 10;
- foo(y); //y  
+ foo(y); //y const oldugu icin gecersiz. int& arg = y; sentaks hatasi
  ```
- **void access(const T &r);** 
+ **void access(const T &r);**  
 access isimli işlev, T türünden bir nesne üzerinde işlem yapabilir, ama söz konusu nesneyi değiştiremez. access işlevi T türünden bir nesnenin 
 yalnızca değerinden faydalanır. access isimli işlev T türünden bir nesneye salt okuma (read/get/access) amaçlı erişim talep etmektedir. 
 Böyle fonksiyonlara İngilizcede getter/accessor/get function gibi terimler yakıştırıldığını hatırlayalım. 
 const T& biçiminde tanımlanan parametrelere “input paramete” de denmektedir. 
 
- **void mutate(T &r);** 
-Ancak mutate isimli işlev de T türünden bir nesne üzerinde işlem yapar ama söz konusu nesneyi değiştirebilir.
-mutate isimli işlev T türünden bir nesneye bir değer aktarma onu değiştirme (write/set/mutate) amaçlı erişim talep etmektedir.
+ **void mutate(T &r);**  
+Ancak mutate isimli işlev de T türünden bir nesne üzerinde işlem yapar ve büyük ihtimal söz konusu nesneyi değiştirecektir.
+mutate isimli işlev T türünden bir nesneye değiştirme (write/set/mutate) amaçlı erişim talep etmektedir.
 Yine böyle fonksiyonlara İngilizcede setter/mutator/set function gibi terimler yakıştırıldığını hatırlayalım. 
 T& biçiminde tanımlanan parametrelere “output parameter” de denmektedir.
 Sözdizim kuralları açısından bakıldığında şüphesiz mutate işlevinin kendisine gelen T türünden nesneyi
