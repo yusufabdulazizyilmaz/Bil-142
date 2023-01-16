@@ -1,15 +1,13 @@
 # Tür Çıkarımı
-Tamamen derleme zamanıyla ilgili. Runtime ile ilgili değil. Değişkenin türünü açıkça yazmasakta, derleyici değişkenin türünü compile time da
-anlıyor.
+Tamamen compile time (derleme zamanıyla) ilgili dolayısıyla runtime(çalışma zamanıyla) ile ilgili değil. Değişkenin türünü açıkça yazmak yerine, derleyicinin değişkenin türünü compile time da bizim için çıkarmasını anlamasını istiyoruz.
 ## Auto Belirleticisi
-C++11 standartlarıyla gelen en önemli eklentilerden biri auto belirleyicisidir. 
-auto belirleyicisi ile tanıtılan bir değişkenin tür bilgisini derleyici, derleme zamanında yapacağı bir çıkarımla anlar.
+C++11 standartlarıyla gelen en önemli eklentilerden biri auto belirleyicisidir. **Akronim**: Her bir harf bir kelimeye denk gelen ifadeler. mesela **AAA** = Almost Always Auto. auto belirleyicisi ile tanıtılan bir değişkenin tür bilgisini derleyici, derleme zamanında yapacağı bir çıkarımla anlar.
 ```cpp
 auto x = 10; // x int olacak bu durumda.
-```
-akronim Her bir harf bir kelimeye denk gelen keilmeler. mesela AAA = Almost Always Auto.  
+```  
 AUTO ÇIKARIMI NASIL YAPILIR  
-1. auto nun yanında & yok. auto tek başına olduğu durumda Tür bilgisinden constluk ve referans düşer.
+1. auto nun yanında & yok. 
+* auto tek başına olduğu durumda tür bilgisinden constluk ve referans düşer.
 ```cpp
 int ival = 10;
 const double cdval = 2.1987;
@@ -18,7 +16,7 @@ auto x = cdval; //cdval türü const double constluk düşer x değişkeni doubl
 auto y = cdr; //cdr türü const double& constluk ve ref düşer y değişkeni double türden.
 auto z = &ival; //&ival türü int * z değişkeni int* türden.
 ```
-Ayrıca Array to pointer ve function to pointer dönüşümleri olur. Array to pointer dönüşümü dizi isimlerinin ilk elemanlarının adresi olarak kullanılabilmesidir.
+* Array to pointer ve function to pointer dönüşümleri olur. Array to pointer dönüşümü dizi isimlerinin ilk elemanlarının adresi olarak kullanılabilmesidir.
 ```cpp
 int a1[10]{};
 auto x1 = a1;  // a1 nın türü int [10] array to pointer dönüşümü ile int* x1 = a1;
@@ -26,9 +24,10 @@ auto x2 = "mert"; // "mert" ifadesinin türü const char [5] array to pointer d�
 int func(int);
 auto f = func;  // func türü int(int) function to pointer dönüşümü ile int (*f) (int) = func;
 ```
-2. auto nun yanında & var. auto ile tanıtılan değişkeninin bir referans olarak çıkarımının yapılması için auto anahtar sözcüğü ile birlikte & bildirgeçi (declarator) kullanılmalıdır. 
-auto & x = buraya ne gelirse gelsin x ref türünden olacak. Bu durumda referansa ilk deger verme konusundaki kurallar geçerli olur:
-Tür bilgisinden constluk ve referans düşmez ve Array to pointer function to pointer dönüşümleri olmaz.
+2. auto nun yanında & var. 
+auto ile tanıtılan değişkeninin bir referans olarak çıkarımının yapılması için auto anahtar sözcüğü ile birlikte & bildirgeçi (declarator) kullanılmalıdır. 
+auto & x = buraya ne gelirse gelsin x ref türünden olacak.  
+Bu durumda referansa ilk deger verme konusundaki kurallar geçerli olur: Tür bilgisinden constluk ve referans düşmez ve Array to pointer function to pointer dönüşümleri olmaz.
 ```cpp
 int ival = 10;
 auto& r1 = ival;  //ival int türü int& r1 = x;
@@ -67,8 +66,9 @@ for (const auto &r : namelist) {
 }
 ```
 ## Decltype Belirleticisi
-C++11 ile birlikte decltype dile eklendi. decltype anahtar sözcüğü “declaration type” (bildirim türü) sözcüklerinden uydurulmuş. Bir tür kullanılması söz konusu olan her yerde decltype kullanabiliyoruz.  (decltype(expr))
-1- decltype operandı isim formundaysa Bu isim hangi türden declere edildiyse bizim elde ettiğimizde o tür.
+C++11 ile birlikte decltype dile eklendi. decltype anahtar sözcüğü “declaration type” (bildirim türü) sözcüklerinden uydurulmuş. Bir tür kullanılması söz konusu olan her yerde decltype kullanabiliyoruz.  
+**decltype(expr)**     
+1- decltype operandı isim formundaysa bu isim hangi türden declere edildiyse bizim elde ettiğimiz de o tür.
 ```cpp
 int x = 56;
 int& r = x;
@@ -83,13 +83,13 @@ decltype(b) // const int[3] türü
 
 const int y{ 12 };
 decltype(y) // const int türü
-decltype(r) t; //
+decltype(r) t; // sentaks hatası referans initialize edilmeli
 decltype(a) k; // sentaks hatası yok. int k[10] demek;
 
 const int x = 56;
 decltype(x) y; // hatalı çünkü const nesneye ilk değer verme şartı var.
 ```
-2- İsim formunda değilse Bu durumda decltype karşılığı elde edilen tür parantez içindeki ifadenin value kategorisine bağlı.  
+2- İsim formunda değilse decltype karşılığı elde edilen tür parantez içindeki ifadenin value kategorisine bağlı.  
 a - eğer ifade pr value expr ise, decltype yerine gelen tür 	T türü  
 b - eğer ifade L value exp.ise decltype yerine gelen tür 	T & türü  
 c - eğer ifade X value exp.ise decltype yerine gelen tür 	T && türü  
@@ -110,5 +110,4 @@ decltype(++x) z = y;
 
 std::cout << x << " " << y << " " << z; 
 ```
-decltype unevaluated contex oluşturuyor. sizeof gibi. & gibi.
-burada ++x için compiler işlem kodu üretmiyor.birkaç yerde daha var unevaluated contex.
+decltype unevaluated contex oluşturuyor. sizeof gibi. & gibi. burada ++x için compiler işlem kodu üretmiyor.
