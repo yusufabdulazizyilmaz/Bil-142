@@ -1,8 +1,8 @@
 # Fonksiyon Yüklenmesi (function Overloading)
-C++ in en önemli özelli̇klerinden biri. kodları birbirinden farkli birden fazla fonksi̇yon isimlerinin aynı seçilmesine deniyor. 
-Amaç aynı işi yapan fonksi̇yonların ayni ismi alarak programcıya rahat kod yazma imkani vermek. aynı bilinirlik alanı içinde aynı isimli fakat farklı imzaya sahip işlevlerin
-bir arada bulunması durumu. Dikkat edelim fonksiyon yüklenmesi olması için 2 koşul vardır. 1- aynı scope 2- farklı fonksiyon imzaları 
-bir fonksi̇yonun geri dönüş değeri türü dışındaki parametrik yapısına o fonksiyonun imzasi denir.
+C++ in en önemli özelli̇klerinden biri. kodları birbirinden farklı birden fazla fonksiyon isimlerinin aynı seçilmesine deniyor. 
+Amaç aynı işi yapan fonksi̇yonların ayni ismi alarak programcıya rahat kod yazma imkani vermek. aynı bilinirlik alanı içinde aynı isimli fakat farklı imzaya sahip işlevlerin bir arada bulunması durumu. Dikkat edelim fonksiyon yüklenmesi olması için 2 koşul vardır:    
+* aynı scope 
+* farklı fonksiyon imzaları (bir fonksi̇yonun geri dönüş değeri türü dışındaki parametrik yapısına o fonksiyonun imzası denir.)
 ```cpp
 // imzaları aynı sentaks hatası
 int func(long);
@@ -39,11 +39,9 @@ geçerli kod oluşur ve hangi fonksi̇yonun çağrıldığını anlar ve program
 sentaks hatası olur. ya NO MATCH: uygun fonksiyon olmaması durumu sentaks hatasıdır. ya da AMBIGUITY(çift anlamlılık):öncelik verilemiyor.
 function overload resolution süreci̇ 3 aşamada ele alınıyor.  
 1 - Candidate functions: function çağrı aşamasinda görülebilir olan ayni isimdeki tüm functionlari bir listeye koyuyor.   
-2 - Viable functions: bu fonksiyon tek başina olsaydi bu çağri legal olur muydu ? evet i̇se bu viable function nasil olacak bu  
-	a - function çağrısında kullanılan argüman sayısı ile
-	function parametre sayisi uyumlu olacak. default argument dahil.
-	veri̇kaybi da olabilir sorun deği̇l.  
-	b - her argümandan her parametreye geçerli bi̇r tür dönüşümü olacak.  
+2 - Viable functions: bu fonksiyon tek başına olsaydı bu çağrı legal olur muydu? evet i̇se bu viable function peki nasıl olacak bu  
+* function çağrısında kullanılan argüman sayısı ile function parametre sayisi uyumlu olacak.  
+* her argümandan her parametreye geçerli bi̇r tür dönüşümü olacak.  
   SORU : HANGİSİ VIABLE ?
 ```cpp
 void func(long double); //1
@@ -56,10 +54,9 @@ int main()
 }
 ```
 3- Best Match function: viableların içerisinden en uygun olanın seçilmesi 1 den fazla best match varsa arasında seçme yapamazsa Ambigiuty hatası olacak.
-argümandan parametreye yapilan dönüşüm beli̇rli̇ kategori̇lere ayriliyor. bunlar daha i̇yi̇ veya daha kötü  
-3.1- STANDART CONVERSION  
-3.1.1 EXACT MATCH - TAM UYUM   
-Argüman türü ile parametre türünün tamamen ayni olması durumu, const dönüşümü, array to pointer conversion, function to pointer conversion ve Referans semantiği
+argümandan parametreye yapilan dönüşüm beli̇rli̇ kategori̇lere ayriliyor. bunlar daha i̇yi̇ veya daha kötü    
+* EXACT MATCH - TAM UYUM   
+Argüman türü ile parametre türünün tamamen aynı olması durumu, const dönüşümü, array to pointer conversion, function to pointer conversion ve Referans semantiği
 ```cpp
 void func(long double); //1
 void func(char);  //2
@@ -73,10 +70,10 @@ void func(int (*)(int));
 int foo(int);
 func(foo); 
 ```
-3.1.2 PROMOTION (YÜKSELME)  
-Integral Promotion (Tam sayıya yükseltme) char, signed char, unsigned char, bool, short, unsigned short türlerinden int türüne yapılacak dönüşüm.  
-Floating Point Promotion float türünün double türüne dönüştürülmesi
-Bir numaralandırma (enum) türünden o numaralandırma türüne baz olan (underlying type) türe yapılan dönüşüm de yükseltme olarak değerlendirilir.  
+* PROMOTION (YÜKSELME)  
+** Integral Promotion (Tam sayıya yükseltme): char, signed char, unsigned char, bool, short, unsigned short türlerinden int türüne yapılacak dönüşüm.  
+** Floating Point Promotion float türünün double türüne dönüştürülmesi.  
+** Bir numaralandırma (enum) türünden o numaralandırma türüne baz olan (underlying type) türe yapılan dönüşüm de yükseltme olarak değerlendirilir.  
 ```cpp
 void func(int);
 void foo(double);
@@ -95,14 +92,14 @@ int main()
     f(Blue);     // yükseltme  (enum to underlying type)
 }
 ```
-3.1.3 Diğer Standart Dönüşümler   
-Dilin kurallarınca geçerli olan ve örtülü (implicit) olarak yapılabilen diğer dönüşümlerdir. 
-Tam sayı türlerine ilişkin dönüşümler Bir tam sayı türünden ya da bir numaralandırma (enum) türünden başka bir tam sayı türüne yapılan dönüşümler.    
-Gerçek sayı dönüşümleri Bir gerçek sayı türünden başka bir gerçek sayı türüne yapılan dönüşümler.  
-Gerçek sayı türleri ile tam sayı türleri arasında yapılan dönüşümler.  
-Adres türlerine ilişkin dönüşümler void türden olmayan herhangi bir adresin void türden bir adrese dönüştürülmesi. (T * ---> void *)
-ve 0 tam sayı sabitinin herhangi türden bir adres türüne kopyalanması için nullptr sabitine dönüştürülmesi.  
-bool türüne yapılan dönüşümler Herhangi bir tam sayı, gerçek sayı, numaralandırma ya da adres türünden bool türüne yapılan dönüşümler.
+* Diğer Standart Dönüşümler   
+Dilin kurallarınca geçerli olan ve örtülü (implicit) olarak yapılabilen diğer dönüşümlerdir.   
+** Tam sayı türlerine ilişkin dönüşümler Bir tam sayı türünden ya da bir numaralandırma (enum) türünden başka bir tam sayı türüne yapılan dönüşümler.     
+** Gerçek sayı dönüşümleri Bir gerçek sayı türünden başka bir gerçek sayı türüne yapılan dönüşümler.    
+** Gerçek sayı türleri ile tam sayı türleri arasında yapılan dönüşümler.   
+** Adres türlerine ilişkin dönüşümler void türden olmayan herhangi bir adresin void türden bir adrese dönüştürülmesi. (T * ---> void *)
+ve 0 tam sayı sabitinin herhangi türden bir adres türüne kopyalanması için nullptr sabitine dönüştürülmesi.    
+** bool türüne yapılan dönüşümler Herhangi bir tam sayı, gerçek sayı, numaralandırma ya da adres türünden bool türüne yapılan dönüşümler.   
 ```cpp
 void func(int);
 void foo(long);
@@ -120,7 +117,7 @@ int main()
     vfunc(&x)	//standart dönüşüm (int * türden void * türüne)
 }
 ```
-3.2- User-defined conversions 
+* User-defined conversions 
 Derleyici bildirilen bir fonksiyona çağrı yaparak bir dönüşümü gerçekleştirir. 
 Yani dönüşümü gerçekleştiren aslında derleyicinin çağıracağı bir fonksiyondur. 
 Böyle fonksiyonlara çağrı yapılması ile, sınıf türleri ile temel türler arasında ya da farklı sınıf türleri arasında tür dönüşümleri yapılabilir. 
