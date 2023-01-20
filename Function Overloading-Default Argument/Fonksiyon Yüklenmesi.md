@@ -1,4 +1,4 @@
-# Fonksiyon Yüklenmesi (function Overloading)
+# Fonksiyon Yüklenmesi (Function Overloading)
 C++ in en önemli özelli̇klerinden biri. kodları birbirinden farklı birden fazla fonksiyon isimlerinin aynı seçilmesine deniyor. 
 Amaç aynı işi yapan fonksi̇yonların ayni ismi alarak programcıya rahat kod yazma imkani vermek. aynı bilinirlik alanı içinde aynı isimli fakat farklı imzaya sahip işlevlerin bir arada bulunması durumu. Dikkat edelim fonksiyon yüklenmesi olması için 2 koşul vardır:    
 * aynı scope 
