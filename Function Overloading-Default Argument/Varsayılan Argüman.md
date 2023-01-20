@@ -11,7 +11,7 @@ int main()
 	foo(1, 2, 3); //GEÇERLİ.
 }
 ```
-default parameter i̇se parametreye argüman göndermi̇yorum sen varsayilan argümanlari kullan demek.
+default parameter durumunda i̇se parametreye fonksiyon çağrısında argüman göndermi̇yorum sen varsayılan argümanı kullan demek.
 ```cpp
 void func(int, int, int = 10);
 int main()
@@ -20,24 +20,23 @@ int main()
 	func(1, 2); //geçerli. func(1, 2, 10) gibi çağrılmış olacak.
 }
 ```
-varsayilan argüman programa maaliyet getirmez çünkü tamamen compile time ile ilgili bir olaydır.  
-Neden kullanıyoruz öyle fonksi̇yonlar var ki̇ yapilan çağrilar çok büyük oranda beli̇rli̇ parametreler i̇çi̇n hep ayni değerler argüman olarak
-gönderi̇li̇yor. client kodun rahat etmesi̇ i̇çi̇n kullanabi̇li̇ri̇z.  
-1. eğer bi̇r fonksi̇yonun bi̇ldi̇ri̇mi̇nde bi̇r parametre i̇çi̇n default argument beli̇rti̇lmi̇şse onun sağindaki̇ tüm parametreleri̇nde default argument
-almasi gereki̇yor.
+varsayılan argüman programa çalışma zamanında maliyet getirmez çünkü tamamen compile time ile ilgili bir olaydır.  
+Neden kullanıyoruz? öyle fonksi̇yonlar var ki̇ yapılan çağrılar çok büyük oranda beli̇rli̇ parametreler i̇çi̇n hep aynı argüman almaktadır. Yani amaç client kodun rahat etmesi̇dir.  
+1. eğer bi̇r fonksi̇yonun bi̇ldi̇ri̇mi̇nde bi̇r parametre i̇çi̇n default argument beli̇rti̇lmi̇şse onun sağındaki̇ tüm parametreleri̇nde default argument
+alması gereki̇yor.
 ```cpp
 void func1(int = 5, int); //sentaks hatası
 void func2(int = 5, int, double); //sentaks hatası
 void func3(int = 5, int = 4, double = 3.4); //geçerli
 ```
-2. bi̇ldi̇ri̇mde varsayilan argument beli̇rti̇lmi̇şse tanimda kesi̇nli̇kle beli̇rti̇lmeyecek.yoksa sentaks hatasi.
+2. bi̇ldi̇ri̇mde varsayılan argument beli̇rti̇lmi̇şse tanımda kesi̇nli̇kle beli̇rti̇lmeyecek.
 ```cpp
 void func1(int x, int y = 10); 
 void func1(int x, int y = 10)  // sentaks hatası
 {
 } 
 ```
-3. varsayilan i̇fadeni̇n sabi̇t i̇fadesi̇ olmasi gerekmi̇yor.
+3. varsayilan i̇fadeni̇n sabi̇t i̇fadesi̇ olması gerekmi̇yor.
 ```cpp
 int foo(int x = 10);
 int func(int y = foo());
