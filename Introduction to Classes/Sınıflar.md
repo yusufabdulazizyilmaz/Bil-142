@@ -1,10 +1,10 @@
 # SINIFLAR (CLASSES)
 Sınıf (class) nesne yönelimli programlama tekniğinin uygulanmasına olanak sağlayan, C dilinde olmayan yeni bir
-yazılımsal birimdir. Sınıflar, C‟deki yapılara benzetilebilir. Ancak C‟deki yapılar yalnızca eleman (member)
-içerirken, C++‟da sınıflar yapılardan fazla olarak hem veri elemanı hem de üye işlevleri (member function) içerir.
-Sınıflar, yapılara göre ek bir çok özelliğe sahiptir. Bu özelliklerin çoğu Nesne Yönelimli Programlama Tekniği‟ni
+yazılımsal birimdir. Sınıflar, C'deki yapılara benzetilebilir. Ancak C'deki yapılar yalnızca eleman (member)
+içerirken, C++'da sınıflar yapılardan fazla olarak hem veri elemanı hem de üye işlevleri (member function) içerir.
+Sınıflar, yapılara göre ek bir çok özelliğe sahiptir. Bu özelliklerin çoğu Nesne Yönelimli Programlama Tekniği'ni
 destekleme amacıyla eklenmiştir.  
-Nasıl bir "yapı" türü programcı tarafından tanımlanmış bir tür (user defined type) ise, sınıflar da programcının
+Nasıl bir yapı (struct) türü programcı tarafından tanımlanmış bir tür (user defined type) ise, sınıflar(classes) da programcının
 tanımlamış olduğu türdür. Programcı, önce yeni bir türü derleyiciye tanıtır, daha sonra bu yeni türden nesne,
 gösterici, referans tanımlayabilir. Sınıfları kullanabilmek için ilk yapılması gereken işlem, bir sınıfın tanımını
 yapmaktır. Bir sınıfın tanımını yapmak, bu sınıf hakkında derleyiciye bilgi vermek anlamına gelir.
@@ -95,10 +95,10 @@ int main()
 
 ```
 ## ACCESS CONTROL - ERİŞİM KONTROLÜ
-Sınıfın herhangi bir üyesi erişim kontrolü açısından 3 kategoriden birine ait olmalıdır.
-a - Public members: Herkese açık kodlar
-b - Private members: Sadece sınıfın kendisinin kullanacağı kodlar.
-c - Protected members: Inheritance konusunda görülecek. Clientlara yasak ama kalıtım yoluyla elde edilen sınıflara açık.
+Sınıfın herhangi bir üyesi erişim kontrolü açısından 3 kategoriden birine ait olmalıdır.  
+a - Public members: Herkese açık kodlar  
+b - Private members: Sadece sınıfın kendisinin kullanacağı kodlar.   
+c - Protected members: Inheritance konusunda görülecek. Clientlara yasak ama kalıtım yoluyla elde edilen sınıflara açık.   
 ```cpp
 class Myclass {
 public:
@@ -139,7 +139,7 @@ func fonksiyonlarının farkları nedir?
 
 1- Scope farklı 1 numaralı fonksiyon Myclass scope içerisinde (class scope) 2 numaralı fonksiyon namespace scope (global) 
 Fonksiyon yüklenmesi var mıdır? Kesinlikle HAYIR!!! (Scope farklı)    
-2- Parametre sayısı. 2 numaralı fonksiyonun sadece 1 adet int parametresi varken sınıfın nonstatic üye fonksiyonlarının sınıf türünden pointer olan (Myclas*) gizli bir parametre değişkeni vardır. Aslında void func(Myclass * p, int x); yani bu fonksiyonu sınıf nesnesi olmadan kullanamayız. Sınıf nesnesinin adresi ile arka planda bu fonksiyona erişeceğiz.
+2- Parametre sayısı. 2 numaralı fonksiyonun sadece 1 adet int parametresi varken sınıfın nonstatic üye fonksiyonlarının sınıf türünden pointer olan (Myclass*) gizli bir parametre değişkeni vardır. Aslında void func(Myclass * p, int x); yani bu fonksiyonu sınıf nesnesi olmadan kullanamayız. Sınıf nesnesinin adresi ile arka planda bu fonksiyona erişeceğiz.
 ```cpp
 class Fighter {
 public:
@@ -162,9 +162,9 @@ Context control		2. adım
 Access control  	3. adım  
 C++'da isimler **nitelenmiş(qualified)** ve **nitelenmemiş(unqualified) name** bu ikisinin arama kuralları farklıdır.    
 Nitelenmiş isimler çözünürlük operatörün (::) sağ tarafında görülen isimlerdir. Çözünürlük operatörü unary ya da binary olarak kullanılabilir.
-Çözünürlük operatörü binary olduğunda nün sol operandi bir değişken ismi olamaz!! Sadece namespace, class ya da enum ismi olur. Arama işlemi de öncelikle varsa sol operand (Nec) bulunacak sonra **onun scopunda** sağ operand(x) aranacak.
+Çözünürlük operatörü binary olduğunda sol operandi bir değişken ismi olamaz!! Sadece namespace, class ya da enum ismi olur. Arama işlemi de öncelikle varsa sol operand (Nec) bulunacak sonra **onun scopunda** sağ operand(x) aranacak.
 ```cpp
-::x;  //bu direk Namespace scopeta aranır.
+::x;  //bu direk global Namespace scopeta aranır.
 Nec::x; // Nec ya namespace ya class ya da enum.
 ```
 Nitelenmemiş isimler olduğunda normalde isim nasıl aranırdı blok onu kapsayan blok ... namespace'e bakılırdı. İşin içine sınıfla ilgili bir arama geldiğinde blok onu kapsayan blok ... **CLASS scope** ve Namespace'e bakılır.
