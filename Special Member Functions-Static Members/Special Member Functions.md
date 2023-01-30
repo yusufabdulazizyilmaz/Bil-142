@@ -1,12 +1,12 @@
 # SPECIAL MEMBER FUNCTIONS
 Bu fonksiyonlar dilin kuralları tarafından garanti altına alınmış, belirli koşullar sağlandığında derleyici tarafından yazılabilen fonksiyonlara
 Special Member Functions denir. Buna derleyicinin bu kodu default etmesi deniyor.   
-DEFAULT CONSTRUCTOR.   
-DESTRUCTOR.   
-COPY CONSTRUCTOR.  
-COPY ASSIGNMENT OPERATOR FUNCTION.  
-MOVE CONSTRUCTOR C++11.
-MOVE ASSIGNMENT OPERATOR FUNCTION C++11. 
+* DEFAULT CONSTRUCTOR   
+* DESTRUCTOR   
+* COPY CONSTRUCTOR 
+* COPY ASSIGNMENT OPERATOR FUNCTION  
+* MOVE CONSTRUCTOR C++11
+* MOVE ASSIGNMENT OPERATOR FUNCTION C++11 
 ```cpp
 class A {
 public:
@@ -111,12 +111,12 @@ Rule of Five : Özel üye fonksiyonlarından birisini yazdıysan geri kalan heps
 
 NE ZAMAN DERLEYİCİ BİZİM İÇİN SPECİAL MEMBER FUNCTİON FUNCTİON YAZAR NE ZAMAN YAZMAZ ?  
 Belirli koşullar oluştuğunda compiler special member functionların yazılmasını garanti ediyor.  
-1.NOT DECLARED(Yok - Bildirilmemiş)  
-2.IMPLICITLY DECLARED (Derleyicinin bu fonksiyonu kendisinini bildirmesi).  
-- Defaulted (Derleyici durumdan vazife çıkarıp fonk. kodunu kendisinin yazması demek).   
-- Deleted (Belirli durumlarda derleyici kurallar gereği bir özel fonksiyonu yazıyor / default ediyor ama)
-		  (default ettiğinde dilin kurallarını çiğneyen bir sentaks hatası oluşunca, o fonksiyonu delete ediyor)
-3.USER DECLARED (DEFINED/DEFAULTED/DELETED)
+* NOT DECLARED (Yok - Bildirilmemiş)  
+* IMPLICITLY DECLARED (Derleyicinin bu fonksiyonu kendisinin bildirmesi).  
+** Defaulted (Derleyici durumdan vazife çıkarıp fonk. kodunu kendisinin yazması demek).   
+** Deleted (Belirli durumlarda derleyici kurallar gereği bir özel fonksiyonu yazıyor / default ediyor ama)
+		  (default ettiğinde dilin kurallarını çiğneyen bir sentaks hatası oluşunca, o fonksiyonu delete ediyor)   
+* USER DECLARED (DEFINED/DEFAULTED/DELETED)
 ```cpp
 class Myclass {
 public:
