@@ -1,9 +1,9 @@
 # Sınıfların Const Üyeleri
 Const doğruluğu kodun kalitesini birinci dereceden etkileyen bir konudur ve const olması gereken her şey const olmalıdır.
 Const üye fonksiyonlar için const anahtar sözcüğünü hem fonksiyonunun bildiriminde hem de tanımında, parametre ayracının sağına yerleştirmek gerekir.  
-Const üye fonksiyonlar içinde sınıfın nonconst veri elemanlarını değiştiremeyiz ama erişebiliriz.  
-Const üye fonksiyonlar içinde sınıfın nonconst fonksiyonlarını çağıramayız.  
-Const sınıf nesneleri için sınıfın nonconst fonksiyonlarını çağıramayız.  
+* Const üye fonksiyonlar içinde sınıfın nonconst veri elemanlarını değiştiremeyiz ama erişebiliriz.  
+* Const üye fonksiyonlar içinde sınıfın nonconst fonksiyonlarını çağıramayız.  
+* Const sınıf nesneleri için sınıfın nonconst fonksiyonlarını çağıramayız.  
 ```cpp
 class Nec {
 public:
