@@ -104,12 +104,11 @@ Myclass destructor this = 0x16b45f7b8 */
 ```
 
 Rule of Zero : Özel üye fonksiyonların mümkünse hiç birisini programcı olarak sen yazma bırak senin yerine derleyici yazsın.  
-Rule of Five : Özel üye fonksiyonlarından birisini yazdıysan geri kalan hepsini yaz.
-
-Özel üye fonksiyonlar için [inceleyiniz](http://plepa.com/2017/03/15/siniflarin-ozel-islevlerinin-derleyici-tarafindan-yazilmasi/).  
-
+Rule of Five : Özel üye fonksiyonlarından birisini yazdıysan geri kalan hepsini yaz.  
+Rule of zero/five için [inceleyiniz](https://www.modernescpp.com/index.php/rule-of-zero-or-six) 
 
 NE ZAMAN DERLEYİCİ BİZİM İÇİN SPECİAL MEMBER FUNCTİON FUNCTİON YAZAR NE ZAMAN YAZMAZ ?  
+Özel üye fonksiyonların ne zaman yazıldığı ile ilgili [inceleyiniz](http://plepa.com/2017/03/15/siniflarin-ozel-islevlerinin-derleyici-tarafindan-yazilmasi/).  
 Belirli koşullar oluştuğunda compiler special member functionların yazılmasını garanti ediyor.  
 * NOT DECLARED (Yok - Bildirilmemiş)  
 * IMPLICITLY DECLARED (Derleyicinin bu fonksiyonu kendisinin bildirmesi).  
