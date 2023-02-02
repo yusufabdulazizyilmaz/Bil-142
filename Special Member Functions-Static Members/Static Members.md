@@ -1,19 +1,19 @@
 # Static Data Members
-Nonstatic veri elemanları instanceları ilgilendirir. Sınıfın storage ihtiyacını da belirler. static veri elemaları fiilen class nesnesinin içinde değil. Öyle değişken olacak ki instance ı değilde sınıfın genelini ilgilendirecek. Yani hangi nesne olursa olsun aynı öğeyi kullanacak. Her sınıf için bir tane. C deki global değişkenler gibi. Sadece class scope a alınmış. Global yerine static değişken kullanmak avantaj olabiliyor.  
+Nonstatic veri elemanları instanceları(nesneleri) ilgilendirir Dolayısıyla sınıfın storage ihtiyacını da belirler. Static veri elemaları fiilen class nesnesinin içinde değildir. Öyle değişken olacak ki instance'ı değil de sınıfın genelini ilgilendirecek. Yani hangi nesne olursa olsun aynı öğeyi kullanacak. Yani C deki global değişkenler gibi her sınıf için bir tane olacak. Temel fark class scope'a alınmış. Global yerine static değişken kullanmak avantaj olabiliyor.  
 1 - Diğer isimlerle karışmıyor ve üye fonksiyonlar içinde bulunmasını sağlıyor.  
-2 - Access control sözkonusu. Duruma göre client kodlardan gizlenebilir.  
+2 - Access control söz konusu. Duruma göre client kodlardan gizlenebilir.  
 
 ```cpp
 /*
 Derleyicinin varlığından haberdar olduğu ancak henüz tanımını görmediği bir türe “tamamlanmamış tür” (incomplete type) denir. 
- * ICOMPLETE İLE NELER YAPILIR ?
+ * INCOMPLETE İLE NELER YAPILIR?
 class Myclass;
-Myclass* p = nullptr; pointer yada referans değişken tanımında.
-Myclass func(Myclass x); // fonksiyon bildiriminde.
+Myclass* p = nullptr; pointer yada referans değişken tanımlanabilir.
+Myclass func(Myclass x); // fonksiyon bildiriminde kullanılabilir.
 extern int x; // Extern bildirimi.
-typedef Myclass c1; // tür eş ismi bildirimleri.
+typedef Myclass c1; // tür eş isim bildirimleri.
 using c1 = Myclass*; // using ile tür eş isim bildiriminde
-static Myclass m1; veri elemanında
+static Myclass m1; static veri elemanında
 
 değişken veya instance tanımlanamaz
 pointer dereference edilemez
@@ -36,8 +36,6 @@ private:
     A myA;  // non-static nesne olduğu için complete type olmalı
 
     static int s_array[]; //Incomplete type olduğu için boyut yazmaya gerek yok.
-
-
 
 };
 
