@@ -57,14 +57,14 @@ public:
     }
 
     // Move constructor
-    Myclass(Myclass&& other)
+    Myclass(Myclass&& other) noexcept
             :ma{std::move(other.ma)}, mival{other.mival}
     {
         std::cout << "Myclass move Ctor  this = " << this << " &other = " << &other << "\n";
     }
 
     // MOVE ASSIGNMENT FUNCTION
-    Myclass& operator=(Myclass&& other)
+    Myclass& operator=(Myclass&& other) noexcept
     {
         ma = std::move(other.ma);
         mival = other.mival;
