@@ -55,8 +55,8 @@ int main()
   print_val_cat(static_cast<double>(x));
   print_val_cat(static_cast<int&>(x));
   print_val_cat(static_cast<int&&>(x));
-  print_val_cat(r, *ptr);
-  print_val_cat(r, &ptr);
+  print_val_cat((r, *ptr));
+  print_val_cat((r, &ptr));
   
   print_val_cat(f1);
   print_val_cat(f1());
