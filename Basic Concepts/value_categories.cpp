@@ -67,3 +67,35 @@ int main()
   print_val_cat(*f5());
   print_val_cat(**f5());
 }
+/*
+value category of expr 'x' is : L value
+value category of expr '&x' is : PR value
+value category of expr '+x' is : PR value
+value category of expr 'x + 5' is : PR value
+value category of expr '++x' is : L value
+value category of expr 'y--' is : PR value
+value category of expr 'a[3]' is : L value
+value category of expr 'r' is : L value
+value category of expr 'rr' is : L value
+value category of expr '*ptr' is : L value
+value category of expr '&ptr' is : PR value
+value category of expr 'ptr' is : L value
+value category of expr 'y += x' is : L value
+value category of expr 'y == x' is : PR value
+value category of expr ''A'' is : PR value
+value category of expr '"a"' is : L value
+value category of expr 'nullptr' is : PR value
+value category of expr 'static_cast<double>(x)' is : PR value
+value category of expr 'static_cast<int&>(x)' is : L value
+value category of expr 'static_cast<int&&>(x)' is : X value
+value category of expr '(r, *ptr)' is : L value
+value category of expr '(r, &ptr)' is : PR value
+value category of expr 'f1' is : L value
+value category of expr 'f1()' is : PR value
+value category of expr 'f2()' is : L value
+value category of expr 'f3()' is : X value
+value category of expr 'f4()' is : PR value
+value category of expr 'f5()' is : PR value
+value category of expr '*f5()' is : L value
+value category of expr '**f5()' is : L value
+*/
