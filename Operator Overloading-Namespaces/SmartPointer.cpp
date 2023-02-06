@@ -12,7 +12,7 @@ public:
 	}
 	~SmartPtr() 
 	{
-		if(mp)
+		if(mp != nullptr)
 			delete mp;
 	}
 	Mint& operator*()
@@ -22,6 +22,10 @@ public:
 	Mint* operator->()
 	{
 		return mp;
+	}
+	explicit operator bool()noexcept
+	{
+		return mp != nullptr;
 	}
 private:
 	Mint* mp;
