@@ -39,6 +39,11 @@ int main()
 		int ival = (*p1) + (*p2) ;
 		p1->operator+();
 		p1.operator->()->operator+(); // bununla yukarıdaki aynı.
+		
+		if(p2)
+		{
+			std::cout << "p2 bir nesneyi göstermektedir";
+		}
 	}
 	std::cout << "Kaynaklar geri verildi\n";
 }
