@@ -1,0 +1,249 @@
+C++17 standartlarına göre aşağıdaki C++ programı çalıştırıldığında bu programın çıktısı ne olur?
+#include <iostream>
+
+class Myclass {
+public:
+	Myclass()
+	{
+		static int x{};
+		std::cout << x++ << " ";
+	}
+	
+};
+
+int main()
+{
+	Myclass a[100];
+}
+a arrayi Myclass türünden 100 adet nesne oluşturacak. Static int x{} ile x 0 değeri ile hayata başlıyor x++ olduğundan önce x yazılacak sonra değer artacak 0den 99 kadar yazar
+0 1 2 3 4 5 .. 98 99
+eğer ++x olsaydı 1den 100e kadar yazardı
+
+#include <iostream>
+struct Nec {
+	Nec() { std::cout << "1"; }
+	Nec(const Nec &a) { std::cout << "2"; }
+	void func() { std::cout << "3"; }
+};
+int main() {
+	Nec a[2];
+	for (auto n : a) {
+		n.func();
+	}
+}
+Çıktı: 112323
+
+#include <iostream>
+ 
+class Nec {
+public:
+	Nec() { std::cout << "A"; }
+	Nec(const Nec&) { std::cout << "B"; }
+	Nec(Nec&&) { std::cout << "C"; }
+	~Nec() { std::cout << "D"; }
+};
+ 
+Nec func()
+{
+	return Nec{};
+}
+ 
+int main()
+{
+	func();
+}
+Çıktı: AD yazar
+
+#include <iostream>
+ 
+struct A {
+	A() 
+	{
+		std::cout << "1";
+	}
+ 
+	A(const A &x) 
+	{
+		std::cout << "2";
+	}
+	
+	const A &operator=(const A &x)
+	{
+		std::cout << "3";
+		return *this;
+	}
+};
+ 
+int main()
+{
+	A x;
+	A y(x);
+	A z = y;
+	z = x;
+}
+Çıktı: 1223
+A x; ile A(); 1 yazar
+A y(x); ile A(const A &x) ile 2
+A z = y; ile A(const A &x) ile 2
+z = x; ile const A &operator=(const A &x) ile 3
+
+#include <iostream>
+#include <vector>
+struct A {
+	A(){	std::cout << "d";}
+	A(const A&){std::cout << "c";}
+};
+ 
+int main(){ std::vector<A> avec(4);}
+Çıktı: dddd
+
+#include <iostream>
+struct A {
+	A() { std::cout << "a"; }
+	~A() { std::cout << "A"; }
+};
+struct B {
+	B() { std::cout << "b"; }
+	~B() { std::cout << "B"; }
+};
+struct C {
+	C() { std::cout << "c"; }
+	~C() { std::cout << "C"; }
+};
+struct D {
+	D() { std::cout << "d"; }
+	~D() { std::cout << "D"; }
+};
+A a;
+void f1() { static C c; }
+void f2() { D d; }
+int main()
+{
+	B b;
+	f1();
+	f2();
+}
+Çıktı: abcdDBCA
+A a; ile a
+B b; ile b
+f1(); ile c
+f2(); ile d
+nesneler yıkılırken DB C ve A global scope önce hayata gelen C en son A
+
+#include <iostream>
+using namespace std;
+struct Member1 {
+	Member1(){ std::cout << "M1";}
+};
+ 
+struct Member2 {
+	Member2(){std::cout << "M2";}
+};
+ 
+class Owner{
+public:
+	Owner() :m1(), m2() {}
+private:
+	Member2 m2;
+	Member1 m1;
+};
+ 
+int main() 
+{
+	Owner x;
+}
+Çıktı: M2M1
+bildirim sırasına göre ilk değer verilecek M2M1
+
+#include <iostream>
+struct Nec
+{
+	Nec() { std::cout << "1"; }
+	Nec(const Nec&) { std::cout << "2"; }
+	~Nec() { std::cout << "3"; }
+};
+Nec func() { return Nec(); }
+int main() 
+{ 
+	func(); 
+}
+Çıktı: 13
+Copy elisiondan dolayı 1 ve 3 13
+
+#include <iostream>
+#include <utility>
+struct Nec {
+	Nec() { std::cout << "1"; }
+	Nec(Nec &) { std::cout << "2"; }
+	Nec(const Nec &) { std::cout << "3"; }
+	Nec(Nec &&) { std::cout << "4"; }
+	~Nec() { std::cout << "5"; }
+};
+struct A {
+	mutable Nec x;
+	A() = default;
+	A(const A &) = default;
+};
+int main() 
+{
+	A a1;
+	A a2 = std::move(a1);
+}
+Çıktı: 1255
+A a1 ile A() çağrılır Nec x için 1 yazar
+A a2 = std::move(a1); ile kopyalama burada ifade const olmadığı için 2  
+a1 ve a2 için ~Nec() iki kez çağrılır 55 
+eğer Nec(Nec &) { std::cout << "2"; } olmasaydı  1355
+
+#include <iostream>
+class A {
+public:
+	static int x;
+	static int foo() {
+		return 1;
+	}
+};
+int foo() {
+	return 2;
+}
+int A::x = foo();
+int main()
+{
+	std::cout << A::foo();
+	A::x = foo();
+	std::cout << A::x;
+}
+Çıktı: 12
+A sınıfı x değişkeni ve foo metodu statik yani nesneden bağımsız tanımlanmış.
+int A::x =foo(); x statik olmasaydı syntax hatası olur. x isminin başındaki int önemli, ayrıca A::x ile qualified yapılarak foo() fonksiyonunun Adaki foo() fonksiyonu olması sağlanıyor. Böylelikle A::x = 1 değeri atanıyor. Global foo fonksiyonu tanımlanıyor. 
+std::cout << A::foo();  1
+A::x = foo();  buradaki foo() global foo() fonksiyonu A::x = 2 oluyor.
+std::cout << A::x;  ile 2 yazar
+
+
+#include <iostream>
+#include <utility>
+
+struct A
+{
+	A() { std::cout << "1"; }
+	A(const A&) { std::cout << "2"; }
+	A(A&&) { std::cout << "3"; }
+};
+
+struct B
+{
+	A a;
+	B() { std::cout << "4"; }
+	B(const B& b) : a(b.a) { std::cout << "5"; }
+	B(B&& b) : a(b.a) { std::cout << "6"; }
+};
+
+int main()
+{
+	B b1;
+	B b2 = std::move(b1);
+}
+Çıktı: 1426
+B b1; ile b nesnesi içerisindeki önce A nesnesi A() ile hayata gelir 1 sonra parantez içi 4
+B b2 = std::move(b1); move constr a(b.a) ifadesi copy const 2 6
