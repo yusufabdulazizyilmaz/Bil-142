@@ -15,7 +15,8 @@ int main()
 {
 	Myclass a[100];
 }
-a arrayi Myclass türünden 100 adet nesne oluşturacak. Static int x{} ile x 0 değeri ile hayata başlıyor x++ olduğundan önce x yazılacak sonra değer artacak 0den 99 kadar yazar
+a arrayi Myclass türünden 100 adet nesne oluşturacak. Static int x{} ile x 0 değeri ile hayata başlıyor 
+x++ olduğundan önce x yazılacak sonra değer artacak 0den 99 kadar yazar
 0 1 2 3 4 5 .. 98 99
 eğer ++x olsaydı 1den 100e kadar yazardı
 
@@ -215,7 +216,9 @@ int main()
 }
 Çıktı: 12
 A sınıfı x değişkeni ve foo metodu statik yani nesneden bağımsız tanımlanmış.
-int A::x =foo(); x statik olmasaydı syntax hatası olur. x isminin başındaki int önemli, ayrıca A::x ile qualified yapılarak foo() fonksiyonunun Adaki foo() fonksiyonu olması sağlanıyor. Böylelikle A::x = 1 değeri atanıyor. Global foo fonksiyonu tanımlanıyor. 
+int A::x =foo(); x statik olmasaydı syntax hatası olur. x isminin başındaki int önemli, 
+ayrıca A::x ile qualified yapılarak foo() fonksiyonunun Adaki foo() fonksiyonu olması sağlanıyor. 
+Böylelikle A::x = 1 değeri atanıyor. Global foo fonksiyonu tanımlanıyor. 
 std::cout << A::foo();  1
 A::x = foo();  buradaki foo() global foo() fonksiyonu A::x = 2 oluyor.
 std::cout << A::x;  ile 2 yazar
@@ -326,3 +329,25 @@ r1 *= r2;  r1{10}
 ++f2(r1, r2);  r1{10} r2{5} f2(r1, r2) ile r1{15} r2{5} ++ r1{16} r2{5}
 ++f2(r2, r1);  r2{5} r1{16} f2(r2, r1) ile r2{21} r1{16} ++ r2{22} r1{16}
 std::cout << x << " " << y << "\n";  16 22
+
+
+#include <iostream>
+class C {
+public:
+  C(int i) : i(i) { std::cout << i; }
+  ~C() { std::cout << i + 5; }
+
+private:
+  int i;
+};
+
+int main() {
+  const C &c = C(1);
+  C(2);
+  C(3);
+}
+Çıktı: 127386
+const C&c = C(1); ile C(1) geçici nesnesinin hayatı uzar life extension ekrana 1 yazar
+C(2) ile geçici nesne hayata gelir ve destruct edilir 27
+c(3) ile geçici nesne hayata gelir ve destruct edilir 38
+hayatı uzayan C(1) için destructor çağrılır ve ekrana 6 yazar
