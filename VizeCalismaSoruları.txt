@@ -247,3 +247,82 @@ int main()
 Çıktı: 1436
 B b1; ile b nesnesi içerisindeki önce A nesnesi A() ile hayata gelir 1 sonra parantez içi 4
 B b2 = std::move(b1); move constr a(std::move(b.a)) ifadesi move constr 3 6
+
+
+#include <iostream>
+int main()
+{
+	int x = 5;
+	decltype((x)) y{ x };
+	decltype(y *= 2) z = x;
+	decltype(y--) t = x;
+	int &rx{ x };
+	auto ax{ rx };
+	++y;
+	z *= 2;
+	t *= 5;
+	ax += 10;
+	std::cout << "x = " << x << "\n";
+}
+Çıktı: 12
+decltype((x)) y{ x }; (x) kompleks lvalue ve int, y int& ve x’e bağlanmış.
+decltype(y *= 2) z = x; y*=2 kompleks lvalue ve int, z int& ve x’ bağlanmış.
+decltype(y--) t = x; y-- kompleks prvalue ve int, t int ve ilk değeri x(5).
+int &rx{ x }; rx referansı x’e bağlanmış.
+auto ax{ rx }; ax int türünden ve ilk değeri x(5)
+++y; x 6 oldu.
+z *= 2; x 12 oldu
+t *= 5; t 25 oldu 
+ax += 10; ax 15 oldu
+std::cout << "x = " << x << "\n"; ekrana 12 yazar
+
+#include <iostream>
+
+int main() 
+{
+	int x = 0;
+	decltype((x)) y = x;
+	decltype(x) z = x;
+	++x;
+	y += 2;
+	z += 5;
+
+	std::cout << x << y << z;
+}
+Çıktı: 335
+int x{0}, 
+decltype((x)) y = x; (x) kompleks lvalue ve int int& y =x; y demek x demek
+decltype(x) z = x;  int z = x;  z{0}
+++x; x{1} y{1}
+y += 2;  x{3} y{3}
+z += 5; z{5}
+std::cout << x << y << z;  3 3 5
+
+
+int &f2(int &r1, int &r2)
+{
+	r1 += r2;
+	return r1;
+}
+void f1(int &r1, int &r2)
+{
+	r1 *= r2;
+	++f2(r1, r2); 
+	++f2(r2, r1); 
+}
+#include <iostream>
+int main()
+{
+	int x = 2, y = 5;
+f1(x, y);
+	std::cout << x << " " << y << "\n";
+}
+Çıktı:16 22
+f2 r1 ve r2 referanslarını alıp r1 referansına r2 değerini ekleyip r1 değerinde değişiklik yapıp r1 gönderiyor
+f1 r1 ve r2 referanslarını alıp f2 fonksiyonunu kullanıp r1 ve r2yi değiştiriyor
+int x = 2, y = 5;   x{2}   y{5}
+f1(x, y); r1 {2} r2{5}
+r1 *= r2;  r1{10}
+++f2(r1, r2);  r1{10} r2{5} f2(r1, r2) ile r1{15} r2{5} ++ r1{16} r2{5}
+++f2(r2, r1);  r2{5} r1{16} f2(r2, r1) ile r2{21} r1{16} ++ r2{22} r1{16}
+std::cout << x << " " << y << "\n";  16 22
