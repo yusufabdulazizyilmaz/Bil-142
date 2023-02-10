@@ -236,7 +236,7 @@ struct B
 	A a;
 	B() { std::cout << "4"; }
 	B(const B& b) : a(b.a) { std::cout << "5"; }
-	B(B&& b) : a(b.a) { std::cout << "6"; }
+	B(B&& b) : a(std::move(b.a)) { std::cout << "6"; }
 };
 
 int main()
@@ -244,6 +244,6 @@ int main()
 	B b1;
 	B b2 = std::move(b1);
 }
-Çıktı: 1426
+Çıktı: 1436
 B b1; ile b nesnesi içerisindeki önce A nesnesi A() ile hayata gelir 1 sonra parantez içi 4
-B b2 = std::move(b1); move constr a(b.a) ifadesi copy const 2 6
+B b2 = std::move(b1); move constr a(std::move(b.a)) ifadesi move constr 3 6
