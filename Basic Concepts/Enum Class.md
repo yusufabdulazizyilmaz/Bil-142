@@ -1,5 +1,6 @@
 # Numaralandırma Sabitleri (ENUM)
-
+Scoped Enum için [inceleyiniz](https://necatiergin2019.medium.com/numaraland%C4%B1rma-s%C4%B1n%C4%B1flar%C4%B1-enum-classes-a6276c93f06d)  
+Enumların C++ ile değişimi için [inceleyiniz.](https://www.sandordargo.com/blog/2023/02/15/evolution-of-enums)  
 ## Enum vs Scoped Enum (Enum Class)  
 1- Numaralandırma türlerinde (Enum) tanıtılan numaralandırma sabitlerinin kapsamları (scope) ilgili türün kapsamı iken Numaralandırma sınıfı(Enum Class) türlerinin kendi kapsamları var ve tanıtılan numaralandırma sabitleri numaralandırma sınıfının kendi kapsamında yer alıyor.
 
@@ -58,7 +59,7 @@ class Myclass{
 #include "ScopedColor.h";
 ScopedColor::mycolor = static_cast<ScopedColor>(12);
 ```
-Scoped Enum için [inceleyiniz](https://necatiergin2019.medium.com/numaraland%C4%B1rma-s%C4%B1n%C4%B1flar%C4%B1-enum-classes-a6276c93f06d) 
+
 ## C++20 Using Enum Declerations
 
 ```cpp
