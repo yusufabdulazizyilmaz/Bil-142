@@ -30,7 +30,7 @@ if(Fiat *p = dynamic_cast<Fiat *>(carptr))
 }
 /*
 Fiat *p = dynamic_cast<Fiat *>(carptr)
-if (!p).   //(p != nullptr)
+if (p)   //(p != nullptr)
 {
 }
 */
