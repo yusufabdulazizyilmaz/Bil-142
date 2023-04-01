@@ -282,27 +282,28 @@ int main()
 
 Template explicit specialization function overload sete dahil edilmiyor.
 ```cpp
+#include <iostream>
 template <typename T>
 void func(T x)
 {
-    std::cout << "1\n";
+    std::cout << "T\n";
 }
 template <>
 void func(int *x)
 {
-    std::cout << "2\n";
+    std::cout << "int*\n";
 }
 template <typename T>
 void func(T *x)
 {
-    std::cout << "3\n";
+    std::cout << "T*\n";
 }
 int main()
 {
     int x{};
     func(&x); 
 }
-// ÇIKTI:3
+// ÇIKTI:T*
 ```
 ## PARTIAL SPECIALIZATION
 Daha sınırlı bir tür kümesi için alternatif template in kullanılmasını istiyoruz. Burada artık template kod artık bir tür için değil, bir tür ailesi için kullanılıyor. Sınıf şablonları için var. Function şablonları için yok.
@@ -315,10 +316,6 @@ class Myclass{
 template<typename T>
 class Myclass<T *>
 {
-};
-// Referans için partial specialization
-template <typename T>
-class Myclass<T&> {
 };
 // Pair türleri için partial specialization
 template <typename T, typename U>
