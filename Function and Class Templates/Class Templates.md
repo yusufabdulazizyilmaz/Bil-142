@@ -210,7 +210,7 @@ int main()
 }
 ```
 ## EXPLICIT SPECIALIZATION
-Sınıf ve fonksiyon şablonlarında, bir şablonun belirli tür açılımı için derleyicinin kod yazması yazması yerine benim verdiğim kodun kullanılmasını sağlayabilirim. Buna TEMPLATE EXPLICIT SPECIALIZATION denir. Belirli bir tür template in ana yapisina uymuyorsa ve o tür için özel bir koda ihtiyaç varsa onu specialization olarak verebiliriz.
+Sınıf ve fonksiyon şablonlarında, bir şablonun belirli tür açılımı için derleyicinin kod yazmasi yerine benim verdiğim kodun kullanılmasını sağlayabilirim. Buna TEMPLATE EXPLICIT SPECIALIZATION denir. Belirli bir tür template in ana yapisina uymuyorsa ve o tür için özel bir koda ihtiyaç varsa onu specialization olarak verebiliriz.
 
 ```cpp
 template<typename T, int n> // burası görünür durumda olmalı.
