@@ -218,11 +218,20 @@ Sınıf ve fonksiyon şablonlarında, bir şablonun belirli tür açılımı iç
 template<typename T, int n> // burası görünür durumda olmalı.
 class Myclass {
 public:
+	Myclass()
+	{
+		std::cout << "primary template Myclass<T>\n";
+	}
 };
 // <> (diamond) explicit specialization
 template <>
 class Myclass<int, 5>
 {
+public:
+	Myclass()
+	{
+		std::cout << "Myclass<int,5> explicit specialization\n";
+	}
 };
 
 int main()
@@ -261,7 +270,7 @@ void func(T x)
 template <>
 void func(int x)
 {
-    std::cout << "primary template for type\n";
+    std::cout << "func<int> explicit specialization\n";
 }
 int main()
 {
