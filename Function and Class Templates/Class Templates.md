@@ -17,22 +17,23 @@ public:
     {
         std::cout << typeid(*this).name() << "\n";
     }
-
-    //  T int ise int f(int x );
-    Myclass f(T x);
-
-    T foo(const T& arg)
-    {
-        f(arg);
-        return mx;
-    }
-
+    
     // EĞER FUNC IÇINDE SINIFIN ISMINI DOĞRUDAN KULLANIRSAK HANGI AÇILIMSA O AÇILIMI KULLANMIŞ OLURUZ.
-    void func(T)
+    void func(T arg)
     {
         Myclass x; // Myclass <T> x;
         Myclass<T> y;
+	square(arg);
     }
+
+    //  T int ise int square(int x );
+    T square(T x);
+
+    T foo(const T& arg)
+    { 
+        return mx;
+    }
+
 
 private:
     T mx;
@@ -40,9 +41,10 @@ private:
 
 // buradan başlıyor tanım
 template<typename T>
-Myclass<T> Myclass<T>::f(T x)
+T Myclass<T>::square(T x)
 {
-    Myclass a; // Myclass<T> a;
+    Myclass temp; //Myclass<T> temp;
+    return x*x;
 }
 
 int main()
@@ -53,13 +55,13 @@ int main()
     //x = y; // bu atama yapılamaz çünkü aynı sınıf türünden değil.
 
     // NOT : SINIFIN ÜYE FONKSIYONLARI ÇAĞRILMADIĞI SÜRECE YAZILMAYACAK !!!!!!!!!!!!
-    Myclass<float> mz;  // şuan da foo func veya f kodu yazılmayacak
-    mz.foo(12.f); // Artık burada sadece foo functionu yazılacak f ve func yazılmayacak.
+    Myclass<float> mz;  // şuan da foo func veya square kodu yazılmayacak
+    mz.foo(12.f); // Artık burada sadece foo functionu yazılacak square ve func yazılmayacak.
 
     // std::vector<double> bir sınıf yani tür olduğu için T yerine kullanılabilir
     Myclass<std::vector<double>> w1;
 
-    std::vector<Myclass<int>>w2;
+    std::vector<Myclass<int>> w2;
 }
 ```
 class şablonları, default template argument alabiliyor.
