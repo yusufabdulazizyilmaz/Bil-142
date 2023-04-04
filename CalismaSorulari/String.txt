@@ -1,0 +1,266 @@
+Soru-1
+
+#include <string>
+#include <iostream>
+#include <algorithm>
+
+void print(const std::string& s)
+{
+	std::cout << "'" << s << "' [" << s.length() << "]\n";
+}
+
+int main()
+{
+	std::string s;
+
+	std::cout << "bir yazi giriniz: ";
+	std::getline(std::cin, s);
+	print(s);
+	//Yazının ilk karakterini silin.
+	// s.erase(0, 1); s.erase(begin(s));
+	
+	// Yazının son karakterini silin.
+	//s.pop_back();
+	//s.erase(s.length()-1);
+	 
+	// Yazının ilk ve son karakterleri dışında tüm karakterlerini silin.
+	//s.erase(1, s.length() - 2);
+	 
+	// Yazının ikinci karakterini silin.
+	//s.erase(1, 1);
+	 
+	//Yazının sondan ikinci karakterini silin.
+	//s.erase(s.length()-2, 1);
+	
+	// idx yazının geçerli bir indeksi olmak üzere yazının idx indisli karakterini silin.
+	//int idx = 5; s.erase(idx, 1);
+	
+	// Yazıdaki ilk a karakterini silin.
+	//s.erase(s.find('a'), 1);
+	
+	//Yazıdaki son a karakterini silin.
+	//s.erase(s.rfind('a'), 1);
+	
+	// Yazıdaki ilk a karakteri ile başlayan ve son a karakteri ile biten yazıyı silin.
+	//s.erase(s.find('a'),s.rfind('a')- s.find('a')+1);
+	
+	//Yazıda bulunan ilk "kan" yazısını silin
+	//s.erase(s.find("kan"), 3);
+	
+	// Yazıda bulunan son "kan" yazısını silin
+	//s.erase(s.rfind("kan"), 3);
+	
+	//Yazıda bulunan ilk rakam karakterini silin
+	//s.erase(s.find_first_of("0123456789"), 1);
+	
+	// Yazıda bulunan son rakam karakterini silin
+	//s.erase(s.find_last_of("0123456789"), 1);
+	
+	// Yazının ilk karakteri ile son karakteri aynı ise bunları silin.
+	/*if (s[0] == s[s.length() - 1]) {
+		s.erase(begin(s));
+		s.pop_back();
+	}*/
+
+	// Yazının ilk 3 karakteri ile son 3 karakteri aynı ise bunları silin.
+	/*if (s.substr(0,3) == s.substr(s.length()-3,3)) {
+		s.erase(0,3);
+		s.erase(s.length() - 3, 3);
+
+	}*/
+
+	// Yazıdaki tüm a karakterlerini silin.
+	//s.erase(std::remove(s.begin(), s.end(), 'a'), s.end());
+	//std::erase(s, 'a');  //C++20 erase algorithm
+	
+	//  Yazıdaki tüm boşluk (whitespace) karakterlerini silin.
+	//s.erase(std::remove(s.begin(), s.end(), ' '), s.end());
+	//std::erase(s, ' ');  //C++20 erase algorithm
+	
+	// Yazıdaki ilk a karakterinden önce gelen ve sonra gelen 2 karakteri silin.
+	//s.erase(s.find('a') - 2, 2);
+	//s.erase(s.find('a') + 1, 2);
+
+	
+	// Yazıdaki tüm rakam karakterlerini silin.
+	/*for (int i = 0; i < s.length(); i++) {
+		auto idx = s.find_first_of("0123456789");
+		if (idx < s.length()) {
+			s.erase(idx, 1);
+		}
+		else
+			exit;
+	}*/
+	// std::erase_if(s, [](char x) { return isdigit(x); });
+
+
+	//  Yazıdaki ardışık eşit karakterlerden sadece bir tane kalacak şekilde silme işlemi yapın. (unique)
+	/*for (int i = 0; i < s.length(); i++) {
+
+		if (s[i] == s[i+1]) {
+			s.erase(i, 1);
+		}
+	}*/
+	//s.erase(std::unique(s.begin(), s.end()), s.end());
+
+	print(s);
+
+}
+
+Soru-2
+// uzantı gif ise png yap xls ise uzantıyı sil uzantı yoksa jpg ekle
+#include <iostream>
+#include <string>
+
+void print(const std::string& s)
+{
+	std::cout << "'" << s << "' [" << s.length() << "]\n";
+}
+
+int main()
+{
+	std::string filename;
+	std::cout << "bir yazi giriniz: ";
+	std::getline(std::cin, filename);
+	print(filename);
+
+	if (filename.substr(filename.length() - 4, 4) == ".gif")
+		filename.replace(filename.length() - 4, 4, ".png");
+	else if (filename.substr(filename.length() - 4, 4) == ".xls")
+		filename.erase(filename.length() - 4, 4);
+	else
+		filename.insert(filename.length(), ".jpg");
+
+	// C++20 ends_with member function
+	/*if (filename.ends_with(".gif"))
+		filename.replace(filename.length() - 4, 4, ".png");
+	else if (filename.ends_with(".xls"))
+		filename.erase(filename.length() - 4, 4);
+	else
+		filename.insert(filename.length(), ".jpg");*/
+	print(filename);
+}
+
+Soru-3
+// stringten (source) verilen stringteki(scars) karakterleri siliniz
+#include <string>
+#include <iostream>
+#include <algorithm>
+
+void print(const std::string& s)
+{
+	std::cout << "'" << s << "' [" << s.length() << "]\n";
+}
+
+std::string remove_chars(const std::string& source, const std::string& scars) {
+	std::string temp{ source };
+	//for (int i = 0; i < scars.length(); ++i)
+	//	temp.erase(std::remove(temp.begin(), temp.end(), scars[i]), temp.end());
+	
+	//for (auto ch : scars)
+	//	temp.erase(std::remove(temp.begin(), temp.end(), ch), temp.end());
+
+	//C++20 erase algorithm
+	for (auto ch : scars)
+		std::erase(temp, ch);
+	return temp;
+}
+
+int main()
+{
+	std::string s1{ " ankaranin tasina bak gozlerimin yasina bak  " };
+	std::string s2{ "kain " };
+	print(remove_chars(s1, s2));
+}
+
+Soru-4
+// stringler birbirinin saga ya sola kaydirilmasiyla elde edilmis mi 
+
+#include <string>
+#include <iostream>
+
+bool isRotate(const std::string& s1, const std::string& s2) 
+{
+	return std::string{ s1 + s1 } .find(s2) != std::string::npos;
+}
+
+int main()
+{
+	std::string s1{ "atinec" };
+	std::string s2{ "necati" };
+	std::cout << std::boolalpha << isRotate(s1, s2) << "\n";
+}
+
+Soru-5
+//ilk stringin elemanlari silinerek ikinci string elde edilebilir mi
+
+#include <iostream>
+#include <string>
+
+bool isok(const std::string& r1, const std::string& r2) {
+	std::string::size_type idx = 0;
+	for (char ch : r2) {
+		if (std::string::npos != r1.find(ch, idx))
+			idx = r1.find(ch) + 1;
+		else
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	std::string s1{ "endepericarditis" }; //e d peri rdi s silinirse necati elde edilir
+	std::string s2{ "necati" };
+	std::cout << std::boolalpha << isok(s1, s2) << "\n";
+}
+
+Soru-6
+#include <string>
+#include <iostream>
+
+void print(const std::string& s)
+{
+	std::cout << "'" << s << "' [" << s.length() << "]\n";
+}
+
+int main()
+{
+	std::string s;
+	std::cout << "bir yazi giriniz: ";
+	std::getline(std::cin, s);
+	print(s);
+
+	//Yazının başına 'X' karakterini ekleyin.
+	//s.insert(begin(s), 'X');
+	// 
+	//Yazının sonuna 'X' karakterini ekleyin.
+	//s.insert(end(s), 'X'); 
+	//s.push_back('X'); 
+	//s.append("X");
+	
+	//Yazıya 'W' karakterini yazının 3 indeksli karakteri olacak biçimde ekleyin.
+	//s.insert(3,1, 'W');
+	
+	//Yazının başına "kendi isminizi" ekleyin.
+	//s.insert(0,"yusuf");
+	
+	//Yazının sonuna "kendi isminizi" ekleyin.
+	//s.append("yusuf");
+	
+	//Yazının sonuna yazının uzunluğunu ekleyin : necati---- > necati6
+	//s.append(std::to_string(s.length()));
+
+	//Yazıda bulunan rakam karakterlerinden bir tane daha ekleyin : a4b71p9eak23t---- > a44b7711p99eak2233t
+	/*std::string::size_type idx = 0;
+	for (int i = 0; i < s.length(); ++i) {
+		idx = s.find_first_of("0123456789", idx);
+		if (std::string::npos != idx)
+		{
+			s.insert(idx, 1, s[idx]);
+			idx += 2;
+		}
+	}*/
+
+	print(s);
+}
