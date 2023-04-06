@@ -84,6 +84,12 @@ Aynı zamanda copy asisgnment yazmamız lazım, bu atama operator fonksiyonu con
 template<typename C>
 class BackInsertIterator {
 public:
+    using iterator_category = std::output_iterator_tag;
+    using value_type = void;
+    using value_type = void;
+    using difference_type = void;
+    using pointer = void;
+    using reference = void;
     BackInsertIterator(C& c)
             :mc{c} { }
     BackInsertIterator& operator*() { return *this; }      // *destbeg ile destbeg aynı olması için
@@ -95,6 +101,12 @@ public:
     BackInsertIterator& operator=(const typename C::value_type& val)
     {                                    
         mc.push_back(val);                 
+        return *this;
+    }
+  
+    BackInsertIterator& operator=(typename C::value_type&& val)
+    {                                    
+        mc.push_back(std::move(val));                 
         return *this;
     }
 
