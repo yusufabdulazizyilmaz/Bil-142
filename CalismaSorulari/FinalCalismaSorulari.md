@@ -291,3 +291,15 @@ int main() {
 
 ```
 Çıktı: 0
+
+Lambda ifadelerinin avantajları nelerdir?  
+* Daha iyi okunabilir ve anlaşılabilir kodlar
+* Çağrılan kodu görmek için aşağı yukarı hareket etmeye gerek yok
+* İnline olarak açılabildikleri için function pointerlara göre daha verimli kod. 
+* Fonksiyon çağrısı için bir değişken oluşturmaya gerek yok. (IIFE)
+* Bir fonksiyondan geri dönüş değeri olarak alabiliriz.
+* std::function yoluyla başka bir fonksiyona argüman olarak geçebiliriz.
+
+İki nesneyi değiştirmek nasıl yapılabilir? 
+* Referans yoluyla :    std::swap(x,y);
+* Pointer yoluyla  :	std::iter_swap(&x, &y);
