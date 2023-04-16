@@ -42,5 +42,17 @@ LSP NİN ÇİĞNENDİĞİ NASIL ANLAŞILIR
 - Taban sınıfın bir metodunu override eden türemiş sınıf funcının tamamen yeni davranış sergilemesi.
 - Türemiş sınıfın taban sınıfın funcını override ediyor ama override edilmiş funcın kodu boş.
 - Taban sınıftan alınan bir func için bir dökümantasyon yapılmış."Clientlar tarafından bu func çağrılmasın"
+## Interface Segregation Prensibi(ISP)
+Client kodlar kullanmadıkları arayüzlere bağımlı olmaya zorlanmamalıdır. Sorumlulukların hepsini tek bir arayüze toplamak yerine daha özelleştirilmiş birden fazla arayüz oluşturmayı tercih etmemizi söyleyen prensiptir.
 
+## Dependancy Inversion Principle(DIP)
+Yüksek seviyeli modüller daha aşağı seviyedeki modüllere bağlı olmamalı. İkisi de soyutlamalara bağlı olmalı.  
+Üst Seviye Sınıflar -> Soyutlama Katmanı -> Düşük Seviye Sınıfları
 
+* Uygulamada kimlik doğrulama için farklı sınıflar olduğunu düşünelim. Bir kod yazacağız ve bu kod onlardan birini seçecek. Eğer böyle yaparsak üst seviyedeki modüller daha alt seviyedekilere bağımlı hale geliyor.
+
+Bu ilkeye göre yapılması gereken authentication hizmeti için bir soyutlama yapmak.
+Authentication bir abstract class olacak onlarda authentication sınıfından kalıtımla elde edilecek.
+Böylece daha üst seviyedeki katman doğrudan authentication interfaceini kullanacak.
+Oraya authentication interfaceinden kalıtım yoluyla gelen sınıf türünden nesne dışarıdan gönderilecek.
+Bu kural kodun esnekliğini koruyor ve tekrar kullanılabilirliğini sağlıyor.
