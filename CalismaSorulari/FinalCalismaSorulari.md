@@ -255,21 +255,6 @@ int main() {
 Çıktı: 127386
 ```cpp
 #include <iostream>
-#include <type_traits>
-
-int main() {
-    std::cout << std::is_same_v<
-        void(int),
-        void(const int)>;
-
-    std::cout << std::is_same_v<
-        void(int&),
-        void(const int&)>;
-}
-```
-Çıktı: 01
-```cpp
-#include <iostream>
 #include <vector>
 
 int main() {
@@ -303,3 +288,14 @@ Lambda ifadelerinin avantajları nelerdir?
 İki nesneyi değiştirmek nasıl yapılabilir? 
 * Referans yoluyla :    std::swap(x,y);
 * Pointer yoluyla  :	std::iter_swap(&x, &y);
+
+SOLID ilkelerini ve ne anlama geldiğini yazınız.
+
+
+Aşağıdaki akronimlerin açılımlarının İngilizcesini ve ne anlama geldiğini yazınız.
+* ADL
+* RAII
+* ODR
+* RTTI
+* SFINAE
+
